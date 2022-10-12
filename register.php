@@ -5,16 +5,13 @@ $user = new UserServices();
 $message = [];
 
 if(isset($_POST['save'])){
-    // if($user->validated()){
-    //     $message = array_merge($user->validated(),$message);
-    // }
-    // $message = $user->validate();
-    // if(!empty($message)) {
-    //     var_dump($message);
-    // } else {
-    //     echo "not valid";
-    // }
-    $user->register();
+
+    $data =  $user->register();
+        if($data) {
+            $message = 'register successfully!';
+        } else {
+            $message = 'register failed!';
+        }
 }
 
 ?>
@@ -78,6 +75,10 @@ if(isset($_POST['save'])){
 }
 </style>
 <div class="signup-form">
+    <?php if(isset($message)){
+            echo "<label class = 'text-danger'>".$message."</label>";
+        }
+    ?>
     <form action="" method="POST">
 		<h2>Register</h2>
 		<p class="hint-text">Create your account. It's free and only takes a minute.</p>

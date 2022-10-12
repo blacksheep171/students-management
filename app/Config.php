@@ -17,5 +17,9 @@ class Config {
         }
             return $con;
     }
+
+    // public function logError($error){
+    //     return $error;
+    // }
 }
 ?>

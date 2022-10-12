@@ -178,3 +178,9 @@ ul {
    margin-right: -15px;
    margin-left: -15px;
 }
+
+.wrap__inner {
+   display: block;
+   padding: 30px 40px;
+   margin: 0 auto;
+}

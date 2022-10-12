@@ -5,16 +5,16 @@ include_once "./app/Config.php";
 
 class UserServices {
     protected $db;
-    protected $con;
+    protected $connection;
     public function __construct()
     {
         $this->db = new Users();
     }
 
-    public function setConfig(){
-        $con = Config::connect();
-        return $con;
-    }
+    // public function setConfig(){
+    //     $con = Config::connect();
+    //     return $con;
+    // }
 
     public function isSession() {
         if(isset($_SESSION['user_name'])){
@@ -39,18 +39,12 @@ class UserServices {
     //                 break;
     //     }
        
-        // if(in_array($role,$roleList)){
-        //     return true;
-        // } else {
-        //     return false;
-        // }
-    // }
     public function login()
     {
         if (isset($_POST['login'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $userChecked = $this->db->isLogin($this->setConfig(),$email,$password);
+            $userChecked = $this->db->isLogin($email,$password);
             if($userChecked){
                 $_SESSION['user_name'] = $userChecked['name'];
                 $_SESSION['id'] = $userChecked['id'];
@@ -61,29 +55,21 @@ class UserServices {
             }
         }
     }
-
-    // public function login(){
-    //     return $this->db->index($this->setConfig());
-    // }   
     
     public function register(){
-        // if(isset($_POST['save'])){
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $passwordConfirm = $_POST['password_confirm'];
-            $role = 'student';
-            $createdAt = date('Y-m-d H:i:s');
-            $updatedAt = date('Y-m-d H:i:s');
+            $user = new Users();
+            
+            $user->setName($_POST['name']);
+            $user->setEmail( $_POST['email']);
+            $user->setPassword($_POST['password']);
+            // $passwordConfirm = $_POST['password_confirm'];
+            $user->setRole('student');
+            $user->setCreatedAt(date('Y-m-d H:i:s'));
+            $user->setUpdatedAt(date('Y-m-d H:i:s'));
           
-                $this->db->create($this->setConfig(),$name,$email,$password,$role,$createdAt,$updatedAt);
-            //     echo "success";
-            // } else {
-            //     echo "failed";
-
-            // }
-        }
-    // }
+            $data =  $this->db->create($user);
+            return $data;
+    }
 
     // public function validated() {
     //     $name = '';

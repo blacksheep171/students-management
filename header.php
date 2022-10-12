@@ -8,53 +8,10 @@ $user = new UserServices();
 <div id="top-navbar" class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand clearfix" href="index.php"><img class="pull-left" width="123" height="40" alt="Nicepage.com" src="//csite.nicepage.com/Images/logo-w.png"></a>
-            
+            <a class="navbar-brand clearfix" href="index.php"><img class="pull-left" width="123" height="40" alt="Nicepage.com" src="//csite.nicepage.com/Images/logo-w.png"></a>   
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="logon-block nav navbar-nav nav-list navbar-left u-unstyled">
-            <?php
-            if(isset($_SESSION['role'])) {
-                if($_SESSION['role'] == 'president'){
-            ?>
-                <li class="dropdown">
-                    <a href="/download">Created Subject</a>
-                </li>
-                
-                <li class="dropdown">
-                    <a href="/blog">Add Teacher</a>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">More<span class="caret"></span></a>
-                </li>
-            <?php
-            } else if($_SESSION['role'] == 'teacher'){
-            ?>
-                <li class="dropdown">
-                    <a href="/download">Add Student</a>
-                </li>
-                
-                <li class="dropdown">
-                    <a href="/blog">Download Exercise</a>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">More<span class="caret"></span></a>
-                </li>
-            <?php
-            } else if($_SESSION['role'] == 'student'){
-            ?>
-                <li class="dropdown">
-                    <a href="/download">My Exercise</a>
-                </li>
-
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">More<span class="caret"></span></a>
-                </li>
-            <?php
-                }
-            }
-            ?>
-            </ul>
+           <?php include "./view/header/navigation.php" ?> 
 
             <ul class="logon-block nav navbar-nav nav-list navbar-right u-unstyled">
                 <?php
