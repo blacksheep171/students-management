@@ -1,4 +1,5 @@
 <?php
+require_once "./app/Config.php";
 
 class Comments {
     private $table = 'comments';

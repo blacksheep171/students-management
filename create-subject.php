@@ -1,12 +1,18 @@
 <?php
 session_start();
 include_once "./app/Services/PresidentServices.php";
-$data = new PresidentServices();
 
-$courses = $data->getCourse();
+$data = new PresidentServices();
+$courses = $data->getAllCourse();
+$teachers = $data->getAllTeacher();
 
 if (isset($_POST['save'])) {
-    print_r($_POST);
+    $data->createSubject();
+    if($data) {
+        $message = 'Create successfully!';
+    } else {
+        $message = 'Create failed!';
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -38,6 +44,9 @@ if (isset($_POST['save'])) {
         .col-md-12 {
             margin-bottom: 20px;
         }
+        .col-md-12.teacher__select {
+            margin-bottom: 80px;
+        }
     </style>
     <div class="wrap wrap-fluid">
         <?php include "header.php" ?>
@@ -52,22 +61,47 @@ if (isset($_POST['save'])) {
                     <div class="row">
                         <div class="col-md-12 mb-md-0 mb-5">
                             <form id="subject-form" name="subject-form" action="" method="POST">
+                            <?php if(isset($message)){
+                                echo "<label class = 'text-danger'>".$message."</label>";
+                            }
+                            ?>
                                 <div class="row subject__content">
                                     <div class="col-md-12">
-                                        <select class="form-select" name="course" value="" aria-label="select" required>
-                                            <option disabled selected>Choose your course to apply this subject</option>
-                                            <?php
-                                            foreach ($courses as $course) { ?>
-                                                <option id="<?= $course['id'] ?>" value="<?= $course['name'] ?>"><?= $course['name'] ?></option>;
-                                            <?php  }
-                                            ?>
-                                        </select>
+                                        <div class="md-form mb-0">
+                                            <label for="course_name" class="">Course</label>
+                                        </div>
+                                        <div class="md-form mb-0">
+                                            <select class="form-select" name="course_id" aria-label="select" required="required">
+                                                <option disabled selected>Choose your course to apply this subject</option>
+                                                <?php
+                                                foreach ($courses as $course) { ?>
+                                                    <option id="course_<?= $course['id'] ?>" value="<?= $course['id'] ?>"><?= $course['name'] ?></option>
+                                                <?php  }
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="md-form mb-0">
                                             <label for="subject" class="subject__label">Subject</label>
-                                            <input type="text" id="subject" name="subject" class="form-control">
+                                            <input type="text" id="subject" name="title" class="form-control" placeholder="Subject Name" required="required">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 teacher__select">
+                                        <div class="md-form mb-0">
+                                            <label for="course_name" class="">Teacher</label>
+                                        </div>
+                                        <div class="md-form mb-0">
+                                            <select class="form-select" name="teacher_id" value="" aria-label="select" required="required">
+                                                <option disabled selected>Register teacher for this subject ?</option>
+                                                <?php
+                                                foreach ($teachers as $teacher) { ?>
+                                                    <option id="teacher_<?= $teacher['id'] ?>" value="<?= $teacher['id'] ?>"><?= $teacher['name'] ?></option>;
+                                                <?php  }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

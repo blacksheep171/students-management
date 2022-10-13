@@ -3,19 +3,19 @@
     if (isset($_SESSION['role'])) {
         if ($_SESSION['role'] == 'president') { ?>
             <li class="dropdown">
-                <a href="add-course.php">Add Course</a>
+                <a href="add-course.php">New Course</a>
             </li>
             <li class="dropdown">
-                <a href="add-subject.php">Created Subject</a>
+                <a href="create-subject.php">New Subject</a>
             </li>
             <li class="dropdown">
-                <a href="add-teacher.php">Add Teacher</a>
+                <a href="my-subjects.php">My Subjects</a>
             </li>
         <?php
         } else if ($_SESSION['role'] == 'teacher') {
         ?>
             <li class="dropdown">
-                <a href="/download">Add Student</a>
+                <a href="/download">New Student</a>
             </li>
 
             <li class="dropdown">
@@ -26,13 +26,15 @@
             </li>
         <?php
         } else if ($_SESSION['role'] == 'student') {
-        ?>
-            <li class="dropdown">
-                <a href="/download">My Exercise</a>
+        ?>  
+        <li class="dropdown">
+                <a href="#">My Subjects</a>
             </li>
-
             <li class="dropdown">
-                <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">More<span class="caret"></span></a>
+                <a href="#">My Exercise</a>
+            </li>
+            <li class="dropdown">
+                <a href="add-exercise.php">New Exercise</a>
             </li>
     <?php
         }

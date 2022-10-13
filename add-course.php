@@ -60,15 +60,27 @@ section.mb-4.subject__register {
                         }
                     ?>
                         <form id="course-form" name="course-form" action="" method="POST">
-                            <div class="row">
+                            <div class=" form-group row">
                                 <div class="col-md-12">
                                     <div class="md-form mb-0">
                                         <label for="course_name" class="">Course Name</label>
-                                        <input type="text" id="course_name" name="course_name" class="form-control">
+                                        <input type="text" id="course_name" name="course_name" class="form-control" placeholder="Courses Name" required="required">
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center text-md-left">
+                            <div class="form-group course__status">
+                                <div class="md-form mb-0">
+                                    <label for="course_name" class="">Status</label>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <select class="form-select" name="status" aria-label="select" required="required">
+                                        <option disabled selected>Please set your status</option>
+                                        <option id="status_1" value="0" >Disable</option>
+                                        <option id="status_2" value="1">Enable</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group text-center text-md-left">
                                 <input class="btn btn-primary" name="save" type="submit" value="Add"/>
                             </div>
                         </form>

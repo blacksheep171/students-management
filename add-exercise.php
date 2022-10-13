@@ -1,6 +1,18 @@
 
 <?php
 session_start();
+include_once "./app/Services/PresidentServices.php";
+
+$data = new StudentServices();
+
+if (isset($_POST['save'])) {
+    $data->createExercise();
+    if($data) {
+        $message = 'Create successfully!';
+    } else {
+        $message = 'Create failed!';
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -34,15 +46,14 @@ section.mb-4.subject__register {
     <?php include "header.php"?>
     <div class="wrap__inner">
         <div class="wrap__title">
-            <h1>Add Exercises</h1>    
+            <h1>Submit Exercises</h1>    
         </div>
         <div class="wrap__content">
         <!--Section: Contact v.2-->
 <section class="mb-4 subject__register">
 
-<!--Section heading-->
-<h2 class="h1-responsive font-weight-bold text-center my-4">New Exercises</h2>
-<!--Section description-->
+<h2 class="h1-responsive font-weight-bold text-center my-4">Your Exercises</h2>
+
 <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within
     a matter of hours to help you.</p>
 
@@ -73,17 +84,17 @@ section.mb-4.subject__register {
                     </div>
                 </div>
             </div>
+            <div class="text-center text-md-left">
+                <input type="submit" class="btn btn-primary" name="save" value="Submit"/>
+            </div>
         </form>
-        <div class="text-center text-md-left">
-            <a class="btn btn-primary" name="save" type="submit" >Add</a>
-        </div>
+        
     </div>
 </div>
 
 </section>
     </div>
 </div>
-
 
 </div>
     <?php include "footer.php"?>

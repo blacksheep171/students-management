@@ -4,17 +4,23 @@ include "./app/Model/Users.php";
 include_once "./app/Config.php";
 
 class UserServices {
-    protected $db;
-    protected $connection;
+    protected $user;
+
     public function __construct()
     {
-        $this->db = new Users();
+        $this->user = new Users();
+    }
+    public function getCurrentUser(){
+        $userData = [];
+        if(isset($_SESSION['id'])){
+            $userData = $this->user->getUser($_SESSION['id']);
+        }
+        return $userData;
     }
 
-    // public function setConfig(){
-    //     $con = Config::connect();
-    //     return $con;
-    // }
+    public function getCurrentId(){
+        return $this->user->getCurrentId();
+    }
 
     public function isSession() {
         if(isset($_SESSION['user_name'])){
@@ -23,28 +29,13 @@ class UserServices {
             return false;
         }
     }
-    // function isRole($role) {
-    //         switch($role){
-    //             case 1: 
-    //                 $role = 'president';
-    //                 break;
-    //             case 2: 
-    //                 $role = 'teacher';
-    //                 break;
-    //             case 3: 
-    //                 $role = 'student';
-    //                 break;
-    //             default: 
-    //                 $role = '';
-    //                 break;
-    //     }
        
     public function login()
     {
         if (isset($_POST['login'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $userChecked = $this->db->isLogin($email,$password);
+            $userChecked = $this->user->isLogin($email,$password);
             if($userChecked){
                 $_SESSION['user_name'] = $userChecked['name'];
                 $_SESSION['id'] = $userChecked['id'];
@@ -63,7 +54,7 @@ class UserServices {
             $user->setEmail( $_POST['email']);
             $user->setPassword($_POST['password']);
             // $passwordConfirm = $_POST['password_confirm'];
-            $user->setRole('student');
+            $user->setRole($_POST['role']);
             $user->setCreatedAt(date('Y-m-d H:i:s'));
             $user->setUpdatedAt(date('Y-m-d H:i:s'));
           

@@ -1,4 +1,5 @@
 <?php 
+require_once "./app/Config.php";
 
 class Courses {
     private $table = 'courses';
@@ -11,18 +12,55 @@ class Courses {
     public $createdAt;
     public $updatedAt;
 
+    public function setId($id) {
+        $this->id = $id;
+    }
+    public function getId() {
+        return $this->id;
+    }
+    public function setName($name) {
+        $this->name = $name;
+    }
+    public function getName() {
+        return $this->name;
+    }
+    public function setCreatedBy($createdBy) {
+        $this->createdBy = $createdBy;
+    }
+    public function getCreatedBy() {
+        return $this->createdBy;
+    }
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+    public function getStatus() {
+        return $this->status;
+    }
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+    public function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+    }
+    public function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+
     public function __construct(){
         $this->connection = Config::connect();
     }
-    public function create($name,$createdBy,$status,$createdAt,$updatedAt){
+    public function create($input){
         try {
             $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (name,created_by, status, created_at, updated_at) VALUES (:name, :created_by,:status, :created_at, :updated_at)");
             $data = [
-                ':name' => $name,
-                ':created_by' => $createdBy,
-                ':status' => $status,
-                ':created_at' => $createdAt,
-                ':updated_at' => $updatedAt,
+                ':name' => $input->getName(),
+                ':created_by' => $input->getCreatedBy(),
+                ':status' => $input->getStatus(),
+                ':created_at' => $input->getCreatedAt(),
+                ':updated_at' => $input->getUpdatedAt()
             ];
             if($stmt->execute($data)){
                 return true;
@@ -31,7 +69,9 @@ class Courses {
             }
 
         } catch(Exception $e){
-            return $e->getMessage();
+             // logError
+            error_log($e->getMessage());
+            return false;
         }
     }
     public function index(){
@@ -44,12 +84,13 @@ class Courses {
                 return false;
             }
         } catch(Exception $e) {
-            return $e->getMessage();
+             // logError
+             error_log($e->getMessage());
+             return false;
         }
     }
 
-    public function getCourse($id){
-
+    public function get($id){
         try{
             $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE id = :id");
             $data = [
@@ -62,7 +103,9 @@ class Courses {
             }
         }
         catch(Exception $e){
-            return $e->getMessage();
+             // logError
+            error_log($e->getMessage());
+            return false;
         } 
     }
 }

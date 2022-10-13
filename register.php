@@ -2,18 +2,16 @@
 require_once "./app/Services/UserServices.php";
 
 $user = new UserServices();
-$message = [];
+// $message = [];
 
 if(isset($_POST['save'])){
-
     $data =  $user->register();
         if($data) {
-            $message = 'register successfully!';
+            $message = 'Register successfully!';
         } else {
-            $message = 'register failed!';
+            $message = 'Register failed!';
         }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,6 +71,9 @@ if(isset($_POST['save'])){
     margin-right: -15px;
     margin-left: -15px;
 }
+.form-group.register__select {
+    margin-bottom: 80px;
+}
 </style>
 <div class="signup-form">
     <?php if(isset($message)){
@@ -95,9 +96,17 @@ if(isset($_POST['save'])){
         </div>
 		<div class="form-group">
             <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">
+        </div>
+        <div class="form-group register__select">
+            <select class="form-select" name="role" aria-label="select" required="required">
+                <option disabled selected>Choose your role</option>
+                <option id="role1" value="president">President</option>
+                <option id="role2" value="teacher">Teacher</option>
+                <option id="role3" value="student">Student</option>
+            </select>
         </div>        
 		<div class="form-group">
-            <button type="submit" name="save" class="btn btn-success btn-lg btn-block">Register Now</button>
+            <input type="submit" name="save" class="btn btn-success btn-lg btn-block" value="Register Now">
         </div>
     </form>
 	<div class="text-center">Already have an account? <a href="login.php">Sign in</a></div>
