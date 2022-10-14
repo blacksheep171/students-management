@@ -3,8 +3,10 @@ require_once "./app/Services/UserServices.php";
 
 session_start();
 $user = new UserServices();
-$user->login();
 
+if (isset($_POST['login'])) {
+    $user->login();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,6 +80,10 @@ p {
 </style>
     <div class="login-form">
     <form action="" method="POST">
+    <?php if(isset($message)){
+            echo "<label class = 'text-danger'>".$message."</label>";
+        }
+    ?>
         <h2 class="text-center">Sign in</h2>       
         <div class="form-group">
             <input type="email" name="email" class="form-control" placeholder="Email" required="required">

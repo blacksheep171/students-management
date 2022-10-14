@@ -99,7 +99,7 @@ class Subjects
 
     public function index(){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM .$this->table");
+            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects");
             
             if($stmt->execute()){
                 return $stmt->fetchAll();
@@ -113,16 +113,19 @@ class Subjects
         }
     }
     
-    public function get($id){
+    public function get($id,$courseId){
         try{
-            $stmt = $this->connection->prepare("SELECT ".$this->table.".*,courses.id FROM ((".$this->table." INNER JOIN course_subjects ON ".$this->table.".id = course_subjects.subject_id) INNER JOIN courses ON course_subjects.course_id = courses.id) WHERE ".$this->table.".id = :id");
+            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects WHERE (id = :id AND course_id = :course_id)");
             $data = [
-                ':id' => $id
+                ':id' => $id,
+                ':course_id' => $courseId,
             ];
             $stmt->execute($data);
             $data = $stmt->fetch();
-            if($stmt->rowCount() == 1) {
+            if(!empty($data)) {
                 return $data;
+            } else {
+                return $data = [];
             }
         }
         

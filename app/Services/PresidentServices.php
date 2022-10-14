@@ -16,29 +16,9 @@ class PresidentServices  extends UserServices{
         $this->subject = new Subjects();
     }
 
-    public function getCurrentUser(){
-        $userData = [];
-        if(isset($_SESSION['id'])){
-            $userData = $this->user->getUser($_SESSION['id']);
-        }
-        return $userData;
-    }
-
-    public function getTeacherName($id){
-        $data = $this->user->getUser($id);
-        if(!empty($data)){
-            return $data['name'];
-        } else {
-            return null;
-        }
-    }
-    public function getCurrentId(){
-        return $this->user->getCurrentId();
-    }
-
     public function getCurrentSubject(){
-        $data = $this->subject->get($this->getCurrentId());
-        if(isset($data)){
+        $data = $this->subject->get($this->getCurrentSubjectId(),$this->getCurrentCourseId());
+        if(!empty($data)){
             return $data;
         } else {
             return null;
@@ -93,6 +73,7 @@ class PresidentServices  extends UserServices{
         $data = $this->subject->updateTeacher($input);
         return $data;
     }
+    
     public function list(){
         $data = $this->subject->index();
         if(!empty($data)){
@@ -101,6 +82,5 @@ class PresidentServices  extends UserServices{
             return [];
         }
     }
-
     
 }

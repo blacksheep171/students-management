@@ -73,7 +73,7 @@ if (isset($_POST['save'])) {
                                             <label for="course_name" class="">Course</label>
                                         </div>
                                         <div class="md-form mb-0">
-                                            <select class="form-select" name="course_id" value="<?= $courseId = $subject['id'] ?>" aria-label="select" required="required" disabled>
+                                            <select class="form-select" name="course_id" value="<?= $courseId = $subject['course_id'] ?>" aria-label="select" required="required" disabled>
                                                 <option disabled selected>Choose your course to apply this subject</option>
                                                 <?php
                                                 foreach ($courses as $course) { ?>
@@ -119,5 +119,4 @@ if (isset($_POST['save'])) {
     </div>
     <?php include "footer.php" ?>
 </body>
-
 </html>

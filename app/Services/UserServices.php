@@ -1,14 +1,18 @@
 <?php
-
+include "./app/Config/db.php";
 include "./app/Model/Users.php";
+include_once "./app/Model/Courses.php";
+include_once "./app/Model/Subjects.php";
 include_once "./app/Config.php";
 
 class UserServices {
     protected $user;
+    protected $subject;
 
     public function __construct()
     {
         $this->user = new Users();
+        $this->subject = new Subjects();
     }
     public function getCurrentUser(){
         $userData = [];
@@ -19,9 +23,19 @@ class UserServices {
     }
 
     public function getCurrentId(){
-        return $this->user->getCurrentId();
+        $id = 0;
+        if(isset($_GET['id'])){
+             $id = $_GET['id'];
+        } 
+        return $id;
     }
-
+    public function getCurrentSubjectId(){
+        $id = 0;
+        if(isset($_GET['subject_id'])){
+             $id = $_GET['subject_id'];
+        } 
+        return $id;
+    }
     public function isSession() {
         if(isset($_SESSION['user_name'])){
             return true;
@@ -29,10 +43,26 @@ class UserServices {
             return false;
         }
     }
-       
+
+    public function isRole($params = '') {
+        if(isset($_SESSION['user_name']) && isset($_SESSION['role']) && ($_SESSION['role'] == $params)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function getCurrentCourseId(){
+        $courseId = 0;
+        if(isset($_GET['course_id'])){
+             $courseId = $_GET['course_id'];
+        } 
+        return $courseId;
+    }
+
     public function login()
     {
-        if (isset($_POST['login'])) {
+        
             $email = $_POST['email'];
             $password = $_POST['password'];
             $userChecked = $this->user->isLogin($email,$password);
@@ -42,9 +72,8 @@ class UserServices {
                 $_SESSION['role'] = $userChecked['role'];
                 header("Location:index.php");
             } else {
-                $message[] = "login failed";
+                error_log($message = "Login failed, please try again!");
             }
-        }
     }
     
     public function register(){
@@ -62,41 +91,20 @@ class UserServices {
             return $data;
     }
 
-    // public function validated() {
-    //     $name = '';
-    //     $email = '';
-    //     $password = '';
-    //     $passwordConfirm = '';
-    //     $errorMessages = [];
-
-    //     if (isset($_POST['name'])) {
-    //         $name = $_POST['name'];
-    //         if(empty($name)){
-    //             $errorMessages[0] = "Name required";
-    //         }
-    //     }
-    //     if(isset($_POST['email'])){
-    //         $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-    //         if(empty($email)){
-    //             $errorMessages[1] = "Email required";
-    //         }
-    //     }
-    //     if(isset($_POST['password']) && isset($_POST['password_confirm'])){
-    //         $password = strip_tags($_POST['password']);
-    //         $passwordConfirm = $_POST['password_confirm'];
-
-    //         if(empty($password)){
-    //             $errorMessages[2] = "Password required";
-    //         } else if(strlen($password) < 6 ){
-    //             $errorMessages[2] = "Password must be at least 6 characters";
-    //         }
-    //         if(empty($passwordConfirm)){
-    //             $errorMessages[3] = "Confirm password required";
-    //         } else if($password !== $passwordConfirm) {
-    //             $errorMessages[3] = "Confirm password not correct";
-    //         }
-    //     }
-    //     return $errorMessages;
-    // }
-    
+    public function getTeacherName($id){
+        $data = $this->user->getUser($id);
+        if(!empty($data)){
+            return $data['name'];
+        } else {
+            return null;
+        }
+    }
+    public function list(){
+        $data = $this->subject->index();
+        if(!empty($data)){
+            return $data;
+        } else {
+            return [];
+        }
+    }
 }

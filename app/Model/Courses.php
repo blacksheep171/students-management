@@ -76,7 +76,7 @@ class Courses {
     }
     public function index(){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table."");
+            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table);
             
             if($stmt->execute()){
                 return $stmt->fetchAll();

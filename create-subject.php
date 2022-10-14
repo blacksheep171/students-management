@@ -17,7 +17,6 @@ if (isset($_POST['save'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +71,7 @@ if (isset($_POST['save'])) {
                                         </div>
                                         <div class="md-form mb-0">
                                             <select class="form-select" name="course_id" aria-label="select" required="required">
-                                                <option disabled selected>Choose your course to apply this subject</option>
+                                                <option disabled selected>Choose your course</option>
                                                 <?php
                                                 foreach ($courses as $course) { ?>
                                                     <option id="course_<?= $course['id'] ?>" value="<?= $course['id'] ?>"><?= $course['name'] ?></option>

@@ -6,6 +6,9 @@
                 <a href="add-course.php">New Course</a>
             </li>
             <li class="dropdown">
+                <a href="my-course.php">My Courses</a>
+            </li>
+            <li class="dropdown">
                 <a href="create-subject.php">New Subject</a>
             </li>
             <li class="dropdown">
@@ -24,17 +27,12 @@
             <li class="dropdown">
                 <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">More<span class="caret"></span></a>
             </li>
+            
         <?php
         } else if ($_SESSION['role'] == 'student') {
         ?>  
-        <li class="dropdown">
-                <a href="#">My Subjects</a>
-            </li>
             <li class="dropdown">
-                <a href="#">My Exercise</a>
-            </li>
-            <li class="dropdown">
-                <a href="add-exercise.php">New Exercise</a>
+                <a href="my-exercise.php">My Subject</a>
             </li>
     <?php
         }

@@ -91,15 +91,39 @@ class Exercises {
     public function create($input){
         // if (!$input->isValid()) return false;
         try {
-            $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (`name`, `summary`, `content`,`course_id`, `subject_id`, `created_at`, `updated_at`) VALUES (:name, :summary, :content,:course_id, :subject_id, :created_at, :updated_at)");
+            $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (`name`, `summary`, `content`,`file_name`, `file_path`,`student_id`,`course_id`, `subject_id`, `created_at`, `updated_at`) VALUES (:name, :summary, :content, :file_name, :file_path  :student_id, :course_id, :subject_id, :created_at, :updated_at)");
             $data = [
                 ':name' => $input->getName(),
                 ':summary' => $input->getSummary(),
                 ':content' => $input->getContent(),
+                ':file_name' => $input->getFileName(),
+                ':file_path' => $input->getFilePath(),
+                ':student_id' => $input->getStudentId(),
                 ':course_id' => $input->getCourseId(),
                 ':subject_id' => $input->getSubjectId(),
                 ':created_at' => $input->getCreatedAt(),
                 ':updated_at' => $input->getUpdatedAt(),
+            ];
+            if($stmt->execute($data)){
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch(Exception $e){
+            // logError
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function upload($input){
+        try {
+            $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (`file_name`, `file_path`) VALUES (:file_name, :file_path) WHERE `id` = :id");
+            $data = [
+                ':file_name' => $input->getFileName(),
+                ':file_path' => $input->getFilePath(),
+                ':id' => $input->getId(),
             ];
             if($stmt->execute($data)){
                 return true;

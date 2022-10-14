@@ -5,7 +5,7 @@ include_once "./app/Services/PresidentServices.php";
 
 $president = new PresidentServices();
 if($president->isRole('president')) {
-    $data = $president->list();
+    $data = $president->getAllCourse();
 } else {
     $data = [];
 }
@@ -49,25 +49,28 @@ if($president->isRole('president')) {
                 <thead>
                     <th>ID</th>
                     <th>Course</th>
-                    <th>Subject</th>
-                    <th>Teacher</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </thead>
                 <tbody>
                     <?php
                         if(!empty($data)) {
                             foreach($data as $row){
-                                echo "
+                               if($row['status'] == 0) {
+                                 $status = 'Disable';
+                               } else if($row['status'] == 1){
+                                $status = 'Enable';
+                               }
+                    ?>
                                     <tr>
-                                        <td>".$row['id']."</td>
-                                        <td>".$row['name']."</td>
-                                        <td>".$row['title']."</td>
-                                        <td>".$president->getTeacherName($row['teacher_id'])."</td>
+                                        <td><?= $row['id']?></td>
+                                        <td><?= $row['name']?></td>
+                                        <td><?= $status ?></td>
                                         <td>
-                                            <a href='edit-subject.php?subject_id=".$row['subject_id']."&course_id=".$row['course_id']."' class='btn btn-success btn-sm'>Change Teacher</a>
+                                            <a href='edit-course.php?id="<?=$row['id']?>"' class='btn btn-success btn-sm'>Edit</a>
                                         </td>
                                     </tr>
-                                ";
+                    <?php
                             }
                         }
                     ?>

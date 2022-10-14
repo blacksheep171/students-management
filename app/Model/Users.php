@@ -109,13 +109,6 @@ class Users {
              return false;
         }
     }
-    public function getCurrentId(){
-        $id = 0;
-        if(isset($_GET['id'])){
-             $id = $_GET['id'];
-        } 
-        return $id;
-    }
 
     public function getUser($id){
         try{

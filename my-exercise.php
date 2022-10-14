@@ -3,13 +3,16 @@
 session_start();
 include_once "./app/Services/PresidentServices.php";
 
-$president = new PresidentServices();
-if($president->isRole('president')) {
-    $data = $president->list();
-} else {
-    $data = [];
-}
+$user = new UserServices();
 
+if($user->isRole('student')) {
+    $data = [];
+    if(!empty($user->list())){
+        $data = $user->list();
+    }
+} else {
+    header("Location:index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,9 +65,9 @@ if($president->isRole('president')) {
                                         <td>".$row['id']."</td>
                                         <td>".$row['name']."</td>
                                         <td>".$row['title']."</td>
-                                        <td>".$president->getTeacherName($row['teacher_id'])."</td>
+                                        <td>".$user->getTeacherName($row['teacher_id'])."</td>
                                         <td>
-                                            <a href='edit-subject.php?subject_id=".$row['subject_id']."&course_id=".$row['course_id']."' class='btn btn-success btn-sm'>Change Teacher</a>
+                                            <a href='add-exercise.php?subject_id=".$row['subject_id']."&course_id=".$row['course_id']."' class='btn btn-link btn-sm'>Submit Your Exercise</a>
                                         </td>
                                     </tr>
                                 ";
