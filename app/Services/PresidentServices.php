@@ -1,8 +1,6 @@
 <?php
 
-include_once "./app/Model/Courses.php";
-include_once "./app/Model/Subjects.php";
-include_once "./app/Services/UserServices.php";
+include_once dirname(__DIR__)."./Services/UserServices.php";
 
 class PresidentServices  extends UserServices{
     protected $course;
@@ -38,14 +36,20 @@ class PresidentServices  extends UserServices{
 
             return $data;
     }
-    public function getAllCourse(){
-        $data = $this->course->index();
+    
+    public function getCourse(){
+        $data = $this->course->get($this->getCurrentId());
         return $data;
     }
-    public function getAllTeacher(){
-        $data = $this->user->getUserWithRole('teacher');
+    public function changeStatus(){
+        $input = new Courses();
+        $input->setStatus($_POST['status']);
+        $input->setUpdatedAt(date('Y-m-d H:i:s'));
+        $input->setId($_POST['id']);
+        $data = $this->course->update($input);
         return $data;
     }
+   
 
     public function createSubject(){
         $input = new Subjects();
@@ -64,8 +68,8 @@ class PresidentServices  extends UserServices{
     public function updateTeacher(){
         $input = new Subjects();
         $user = $this->getCurrentUser();
-        $id = $this->getCurrentId();
-        $input->setId($id);
+        // $id = $this->getCurrentId();
+        $input->setId($_POST['id']);
         $input->setTeacherId($_POST['teacher_id']);
         $input->setCreatedBy($user['id']);
         $input->setUpdatedAt(date('Y-m-d H:i:s'));
@@ -73,7 +77,7 @@ class PresidentServices  extends UserServices{
         $data = $this->subject->updateTeacher($input);
         return $data;
     }
-    
+
     public function list(){
         $data = $this->subject->index();
         if(!empty($data)){

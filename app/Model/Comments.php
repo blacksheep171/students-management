@@ -1,5 +1,5 @@
 <?php
-require_once "./app/Config.php";
+require_once dirname(__DIR__)."./Config.php";
 
 class Comments {
     private $table = 'comments';

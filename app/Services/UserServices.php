@@ -1,17 +1,15 @@
 <?php
-include "./app/Config/db.php";
-include "./app/Model/Users.php";
-include_once "./app/Model/Courses.php";
-include_once "./app/Model/Subjects.php";
-include_once "./app/Config.php";
+include dirname(__DIR__).'./Config/main.php';
 
 class UserServices {
     protected $user;
+    protected $course;
     protected $subject;
 
     public function __construct()
     {
         $this->user = new Users();
+        $this->course = new Courses();
         $this->subject = new Subjects();
     }
     public function getCurrentUser(){
@@ -62,7 +60,6 @@ class UserServices {
 
     public function login()
     {
-        
             $email = $_POST['email'];
             $password = $_POST['password'];
             $userChecked = $this->user->isLogin($email,$password);
@@ -87,7 +84,7 @@ class UserServices {
             $user->setCreatedAt(date('Y-m-d H:i:s'));
             $user->setUpdatedAt(date('Y-m-d H:i:s'));
           
-            $data =  $this->db->create($user);
+            $data =  $this->user->create($user);
             return $data;
     }
 
@@ -99,12 +96,38 @@ class UserServices {
             return null;
         }
     }
+    public function getAllCourses(){
+        $data = $this->course->index();
+        if(!empty($data)){
+            return $data;
+        } else {
+            return [];
+        }
+    }
     public function list(){
         $data = $this->subject->index();
         if(!empty($data)){
             return $data;
         } else {
             return [];
+        }
+    }
+    
+    public function getAllTeachers(){
+        $data = $this->user->getUserWithRole('teacher');
+        return $data;
+    }
+    public function getAllStudents(){
+        $data = $this->user->getUserWithRole('student');
+        return $data;
+    }
+
+    public function getCurrentSubject(){
+        $data = $this->subject->get($this->getCurrentSubjectId(),$this->getCurrentCourseId());
+        if(!empty($data)){
+            return $data;
+        } else {
+            return null;
         }
     }
 }

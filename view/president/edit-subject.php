@@ -1,16 +1,17 @@
 <?php
 session_start();
-include_once "./app/Services/PresidentServices.php";
+include_once dirname(dirname(__DIR__))."./app/Services/PresidentServices.php";
 
 $data = new PresidentServices();
-$courses = $data->getAllCourse();
-$teachers = $data->getAllTeacher();
+$courses = $data->getAllCourses();
+$teachers = $data->getAllTeachers();
 $subject = $data->getCurrentSubject();
 
 if (isset($_POST['save'])) {
     $data->updateTeacher();
     if($data) {
         $message = 'Teacher has been added successfully!';
+        header("Location:my-subjects.php");
     } else {
         $message = 'Something went wrong, please try later!';
     }
@@ -25,8 +26,8 @@ if (isset($_POST['save'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./public/css/style.css" />
-    <link rel="stylesheet/less" type="text/css" href="./public/css/sources/styles.less" />
+    <link rel="stylesheet" type="text/css" href="<?=BASE_PATH?>./public/css/style.css" />
+    <link rel="stylesheet/less" type="text/css" href="<?=BASE_PATH?>./public/css/sources/styles.less" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
@@ -51,7 +52,7 @@ if (isset($_POST['save'])) {
         }
     </style>
     <div class="wrap wrap-fluid">
-        <?php include "header.php" ?>
+        <?php include  dirname(__DIR__)."/header.php" ?>
         <div class="wrap__inner">
             <div class="wrap__title">
                 <h1>Add Teacher</h1>
@@ -64,24 +65,13 @@ if (isset($_POST['save'])) {
                         <div class="col-md-12 mb-md-0 mb-5">
                             <form id="subject-form" name="subject-form" action="" method="POST">
                             <?php if(isset($message)){
-                                echo "<label class = 'text-danger'>".$message."</label>";
+                                echo '<div class="alert alert-danger" role="alert">'.$message.'</div>';
                             }
                             ?>
                                 <div class="row subject__content">
                                     <div class="col-md-12">
-                                        <div class="md-form mb-0">
-                                            <label for="course_name" class="">Course</label>
-                                        </div>
-                                        <div class="md-form mb-0">
-                                            <select class="form-select" name="course_id" value="<?= $courseId = $subject['course_id'] ?>" aria-label="select" required="required" disabled>
-                                                <option disabled selected>Choose your course to apply this subject</option>
-                                                <?php
-                                                foreach ($courses as $course) { ?>
-                                                    <option id="course_<?= $course['id'] ?>"<?php if($courseId == $course['id']){ echo ' selected="selected"'; } ?>  value="<?= $course['id'] ?>"><?= $course['name'] ?></option>
-                                                <?php  }
-                                                ?>
-                                            </select>
-                                        </div>
+                                        <input type="hidden" id="id" name="id" value="<?= $subject['id']?>" class="form-control" placeholder="Id">
+                                        <input type="hidden" id="course_id" name="course_id" value="<?= $subject['course_id']?>" class="form-control" placeholder="Courses id">
                                     </div>
 
                                     <div class="col-md-12">
@@ -108,7 +98,7 @@ if (isset($_POST['save'])) {
                                     </div>
                                 </div>
                                 <div class="text-center text-md-left">
-                                    <input class="btn btn-primary" name="save" type="submit" value="Add" />
+                                    <input class="btn btn-primary" name="save" type="submit" value="Save" />
                                 </div>
                             </form>
                         </div>
@@ -117,6 +107,6 @@ if (isset($_POST['save'])) {
             </div>
         </div>
     </div>
-    <?php include "footer.php" ?>
+    <?php include dirname(__DIR__)."/footer.php" ?>
 </body>
 </html>

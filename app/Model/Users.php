@@ -1,6 +1,6 @@
 <?php
 
-require_once "./app/Config.php";
+require_once dirname(__DIR__)."./Config.php";
 class Users {
     private $table = "users";
 
@@ -150,11 +150,7 @@ class Users {
              // logError
              error_log($e->getMessage());
             //  return false;
-            return [
-                // 'user_id' => '',
-                // 'name' => '',
-                // 'age' => 0,
-            ];
+            return [];
         } 
     }
 
@@ -176,5 +172,27 @@ class Users {
         } catch(Exception $e){
             return $e->getMessage();
         }
+    }
+
+    public function getStudentList($id){
+            try {
+                $sql ="SELECT * FROM students_subjects WHERE `subject_id` = :subject_id";
+                $stmt = $this->connection->prepare($sql);
+                $data = [
+                    ':subject_id' => $id,
+                ];
+
+                    if($stmt->execute($data)){
+                        $result = $stmt->fetchAll();
+                        return $result;
+                    } else {
+                        return [];
+                    }
+            } catch(Exception $e){
+                  // logError
+                error_log($e->getMessage());
+                return [];
+            }
+        
     }
 }

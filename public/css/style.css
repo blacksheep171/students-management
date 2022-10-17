@@ -127,6 +127,25 @@ input[type=button] {width: auto; overflow: visible;}
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
 
+*, *:before, *:after {
+   box-sizing: border-box;
+}
+* {
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+ul ul, ul ol, ol ul, ol ol {
+   margin-bottom: 0;
+}
+ul, ol {
+   padding-left: 20px;
+}
+ul, ol {
+   margin-top: 0;
+   margin-bottom: 10px;
+}
+
 ul {
     display: block;
     list-style-type: disc;
@@ -136,7 +155,121 @@ ul {
     margin-inline-end: 0px;
     padding-inline-start: 40px;
 }
+#top-navbar .navbar-nav {
+   position: relative;
+   display: block;
+}
 
+#top-navbar .navbar-nav > li:hover > a {
+   color: #000;
+   background-color: #ddd;
+   border-radius: 4px;
+}
+#top-navbar .navbar-nav > li > a {
+   padding-bottom: 10px;
+   padding-top: 10px;
+}
+#top-navbar .navbar-nav > li > a {
+   color: #333;
+}
+
+#top-navbar .navbar-nav > li > .dropdown-menu {
+   margin-top: -4px;
+   margin-left: -1px;
+   position: absolute;
+}
+#top-navbar .dropdown-menu > li > a {
+   padding: 3px 20px;
+}
+.dropdown-menu > li > a {
+   display: block;
+   padding: 3px 20px;
+   clear: both;
+   font-weight: normal;
+   line-height: 1.42857;
+   color: #333333;
+   white-space: nowrap;
+}
+
+.navbar a, .navbar ul {
+   margin: 0;
+}
+@media (min-width: 992px) {
+   .dropdown:hover .dropdown-menu-hover {
+      display: block;
+      margin-top: 0;
+   }
+}
+ul ul {
+   list-style-type: circle;
+   margin-block-start: 0px;
+   margin-block-end: 0px;
+}
+ul {
+   display: block;
+   list-style-type: disc;
+   margin-block-start: 1em;
+   margin-block-end: 1em;
+   margin-inline-start: 0px;
+   margin-inline-end: 0px;
+   padding-inline-start: 40px;
+}
+.navbar .logon-block .dropdown-menu {
+   min-width: inherit;
+}
+.navbar-nav > li > .dropdown-menu {
+   margin-top: 0;
+   border-top-right-radius: 0;
+   border-top-left-radius: 0;
+}
+.navbar a, .navbar ul {
+   margin: 0;
+}
+.dropdown-menu {
+   position: absolute;
+   top: 100%;
+   left: 0;
+   z-index: 1000;
+   display: none;
+   float: left;
+   min-width: 160px;
+   padding: 5px 0;
+   margin: 2px 0 0;
+   list-style: none;
+   font-size: 14px;
+   text-align: left;
+   background-color: #fff;
+   border: 1px solid #ccc;
+   border: 1px solid rgba(0, 0, 0, 0.15);
+   border-radius: 4px;
+   -webkit-box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+   box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+   background-clip: padding-box;
+}
+
+@media (min-width: 768px) {
+   .navbar-nav > li {
+      float: left;
+  }
+}
+@media (min-width: 767px){
+   #top-navbar .navbar-nav {
+      padding-top: 13px;
+      padding-bottom: 13px;
+      margin-left: 20px;
+      display: block;
+  }
+}
+
+.nav > li {
+    position: relative;
+    display: block;
+}
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
 /**register**/
 .signup-form {
    width: 450px;

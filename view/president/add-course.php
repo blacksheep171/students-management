@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-include_once "./app/Services/PresidentServices.php";
+include_once dirname(dirname(__DIR__))."./app/Services/PresidentServices.php";
 
 $president = new PresidentServices();
 
@@ -9,9 +9,9 @@ if((isset($_SESSION['user_name'])) && isset($_SESSION['role']) == 'president') {
     if(isset($_POST['save'])){
         $data = $president->createCourse();
         if($data){
-            $message = 'Update course successfully';
+            $message = 'Create course successfully';
         } else {
-            $message = 'Update course failed';
+            $message = 'Create course failed';
         }
     }
 }
@@ -24,8 +24,8 @@ if((isset($_SESSION['user_name'])) && isset($_SESSION['role']) == 'president') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./public/css/style.css"/>
-    <link rel="stylesheet/less" type="text/css" href="./public/css/sources/styles.less"/>
+    <link rel="stylesheet" type="text/css" href="<?=BASE_PATH?>./public/css/style.css"/>
+    <link rel="stylesheet/less" type="text/css" href="<?=BASE_PATH?>./public/css/sources/styles.less"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@ section.mb-4.subject__register {
 }
 </style>
 <div class="wrap wrap-fluid">
-    <?php include "header.php"?>
+    <?php include dirname(__DIR__)."/header.php"?>
     <div class="wrap__inner">
         <div class="wrap__title">
             <h1>Add Courses</h1>    
@@ -90,6 +90,6 @@ section.mb-4.subject__register {
         </div>
     </div>
 </div>
-    <?php include "footer.php"?>
+    <?php include dirname(__DIR__)."/footer.php"?>
 </body>
 </html>

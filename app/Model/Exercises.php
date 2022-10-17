@@ -1,5 +1,5 @@
 <?php 
-require_once "./app/Config.php";
+require_once dirname(__DIR__)."./Config.php";
 
 class Exercises {
     
@@ -91,7 +91,7 @@ class Exercises {
     public function create($input){
         // if (!$input->isValid()) return false;
         try {
-            $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (`name`, `summary`, `content`,`file_name`, `file_path`,`student_id`,`course_id`, `subject_id`, `created_at`, `updated_at`) VALUES (:name, :summary, :content, :file_name, :file_path  :student_id, :course_id, :subject_id, :created_at, :updated_at)");
+            $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (`name`, `summary`, `content`,`file_name`, `file_path`,`student_id`,`course_id`, `subject_id`, `created_at`, `updated_at`) VALUES (:name, :summary, :content, :file_name, :file_path, :student_id, :course_id, :subject_id, :created_at, :updated_at)");
             $data = [
                 ':name' => $input->getName(),
                 ':summary' => $input->getSummary(),

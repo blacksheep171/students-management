@@ -1,10 +1,14 @@
 <?php 
-require_once "./app/Config.php";
+require_once dirname(__DIR__)."./Config.php";
 
 class Courses {
     private $table = 'courses';
 
+    /**
+     * @return PDO
+     */
     private $connection;
+    
     public $id;
     public $name;
     public $createdBy;
@@ -12,6 +16,12 @@ class Courses {
     public $createdAt;
     public $updatedAt;
 
+    /**
+     * Set id.
+     *
+     * @param  string  $id
+     * @return boolean
+     */
     public function setId($id) {
         $this->id = $id;
     }
@@ -54,7 +64,8 @@ class Courses {
     }
     public function create($input){
         try {
-            $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (name,created_by, status, created_at, updated_at) VALUES (:name, :created_by,:status, :created_at, :updated_at)");
+            $sql = "INSERT INTO ".$this->table." (name,created_by, status, created_at, updated_at) VALUES (:name, :created_by,:status, :created_at, :updated_at)";
+            $stmt = $this->connection->prepare($sql);
             $data = [
                 ':name' => $input->getName(),
                 ':created_by' => $input->getCreatedBy(),
@@ -89,15 +100,31 @@ class Courses {
              return false;
         }
     }
+    public function getAll(){
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects");
+            
+            if($stmt->execute()){
+                return $stmt->fetchAll();
+            } else {
+                return false;
+            }
+        } catch(Exception $e) {
+             // logError
+             error_log($e->getMessage());
+             return false;
+        }
+    }
 
     public function get($id){
         try{
-            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE id = :id");
+            $sql = "SELECT * FROM ".$this->table." WHERE id = :id";
+            $stmt = $this->connection->prepare($sql);
             $data = [
                 ':id' => $id
             ];
             $stmt->execute($data);
-            $data = $stmt->fetchAll();
+            $data = $stmt->fetch();
             if($stmt->rowCount() == 1) {
                 return $data;
             }
@@ -107,5 +134,26 @@ class Courses {
             error_log($e->getMessage());
             return false;
         } 
+    }
+    public function update($input){
+        try {
+            $sql ="UPDATE ".$this->table." SET `status` = :status, `updated_at` = :updatedAt WHERE `id` = :id";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':status' => $input->getStatus(),
+                ':updatedAt' => $input->getUpdatedAt(),
+                ':id' => $input->getId(),
+            ];
+            if($stmt->execute($data)){
+                    return true;
+                } else {
+                    return false;
+                }
+            
+        } catch(Exception $e){
+              // logError
+            error_log($e->getMessage());
+            return false;
+        }
     }
 }

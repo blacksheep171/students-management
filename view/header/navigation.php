@@ -3,36 +3,37 @@
     if (isset($_SESSION['role'])) {
         if ($_SESSION['role'] == 'president') { ?>
             <li class="dropdown">
-                <a href="add-course.php">New Course</a>
+                <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle template-menu-item" href="#">Courses<span class="caret"></span></a>
+                <ul role="menu" class="dropdown-menu dropdown-menu-hover u-unstyled">
+                    <li><a href="<?=BASE_PATH?>view/president/add-course.php" class="courses-url">New Courses</a></li>
+                    <li><a href="<?=BASE_PATH?>view/president/my-courses.php" class="courses-url">My Courses</a></li>
+                </ul>
             </li>
             <li class="dropdown">
-                <a href="my-course.php">My Courses</a>
-            </li>
-            <li class="dropdown">
-                <a href="create-subject.php">New Subject</a>
-            </li>
-            <li class="dropdown">
-                <a href="my-subjects.php">My Subjects</a>
+                <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle template-menu-item" href="#">Subjects<span class="caret"></span></a>
+                <ul role="menu" class="dropdown-menu dropdown-menu-hover u-unstyled">
+                    <li><a href="<?=BASE_PATH?>view/president/create-subject.php" class="courses-url">New Subjects</a></li>
+                    <li><a href="<?=BASE_PATH?>view/president/my-subjects.php" class="courses-url">My Subjects</a></li>
+                </ul>
             </li>
         <?php
         } else if ($_SESSION['role'] == 'teacher') {
         ?>
             <li class="dropdown">
-                <a href="/download">New Student</a>
+                <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle template-menu-item" href="#">Exercises<span class="caret"></span></a>
+                <ul role="menu" class="dropdown-menu dropdown-menu-hover u-unstyled">
+                    <li><a href="<?=BASE_PATH?>view/teacher/teacher-subjects.php" class="teacher-url">My Subjects</a></li>
+                    <li><a href="" class="teacher-url">My Exercises</a></li>
+                </ul>
             </li>
-
-            <li class="dropdown">
-                <a href="/blog">Download Exercise</a>
-            </li>
-            <li class="dropdown">
-                <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">More<span class="caret"></span></a>
-            </li>
-            
         <?php
         } else if ($_SESSION['role'] == 'student') {
-        ?>  
+        ?>
             <li class="dropdown">
-                <a href="my-exercise.php">My Subject</a>
+                <a href="<?=BASE_PATH?>view/student/student-subjects.php">My Subjects</a>
+            </li>
+            <li class="dropdown">
+                <a href="student-exercises.php">My Exercises</a>
             </li>
     <?php
         }
