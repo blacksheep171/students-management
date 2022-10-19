@@ -5,6 +5,11 @@ class Subjects
 {
     private $table = "subjects";
     
+    /**
+     * connection to database
+     * @param string
+     * @return PDO
+     */
     private $connection;
 
     private $id;
@@ -117,21 +122,22 @@ class Subjects
 
     public function index(){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects");
+            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects ORDER BY subject_id");
             
             if($stmt->execute()){
-                return $stmt->fetchAll();
+                $data = $stmt->fetchAll();
             } else {
-                return false;
+                $data = [];
             }
+            return $data;
         } catch(Exception $e) {
              // logError
              error_log($e->getMessage());
-             return false;
+             return $data = [];
         }
     }
     
-    public function getAllCurrentSubjects($teacherId,$courseId){
+    public function getTeacherSubjects($teacherId,$courseId){
         try{
             $stmt = $this->connection->prepare("SELECT * FROM courses_subjects WHERE (teacher_id = :teacher_id AND course_id = :course_id)");
             $data = [
@@ -171,7 +177,6 @@ class Subjects
         }
         
         catch(Exception $e){
-             // logError
              error_log($e->getMessage());
             //  return false;
             return $data = [];
@@ -195,7 +200,6 @@ class Subjects
             }
             
         } catch(Exception $e){
-              // logError
             error_log($e->getMessage());
             return false;
         }
@@ -228,7 +232,6 @@ class Subjects
                 return false;
             }
         } catch(Exception $e){
-              // logError
             error_log($e->getMessage());
             return false;
         }

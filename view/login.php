@@ -79,26 +79,25 @@ p {
 }
 </style>
     <div class="login-form">
-    <form action="" method="POST">
-    <?php if(isset($message)){
-            echo "<label class = 'text-danger'>".$message."</label>";
-        }
-    ?>
-        <h2 class="text-center">Sign in</h2>       
-        <div class="form-group">
-            <input type="email" name="email" class="form-control" placeholder="Email" required="required">
-        </div>
-        <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="Password" required="required">
-        </div>
-        <div class="form-group">
-            <button type="submit" name="login" class="btn btn-primary btn-block">Sign in</button>
-        </div>        
-    </form>
-    <p class="text-center"><a href="register.php">Create an Account</a></p>
-</div>
-
-</div>
+        <form action="" method="POST">
+        <?php if(isset($message)){
+                echo "<label class = 'text-danger'>".$message."</label>";
+            }
+        ?>
+            <h2 class="text-center">Sign in</h2>       
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Email" required="required">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" name="login" class="btn btn-primary btn-block">Sign in</button>
+            </div>        
+        </form>
+        <p class="text-center"><a href="register.php">Create an Account</a></p>
+    </div>
+    </div>
     <?php include "footer.php"?>
 </body>
 </html>

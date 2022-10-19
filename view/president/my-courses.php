@@ -4,7 +4,7 @@ session_start();
 include_once dirname(dirname(__DIR__))."./app/Services/PresidentServices.php";
 
 $president = new PresidentServices();
-if($president->isRole('president')) {
+if($president->role('president')) {
     $data = $president->getAllCourses();
 } else {
     $data = [];
@@ -67,7 +67,7 @@ if($president->isRole('president')) {
                             <td><?= $row['name']?></td>
                             <td><?= $status ?></td>
                             <td>
-                                <a href='<?=BASE_PATH?>/view/president/edit-course.php?id=<?=$row['id']?>' class='btn btn-success btn-sm'>Change Status</a>
+                                <a href='<?=BASE_PATH?>view/president/edit-course.php?id=<?=$row['id']?>' class='btn btn-success btn-sm'>Change Status</a>
                             </td>
                         </tr>
                     <?php
@@ -86,3 +86,7 @@ if($president->isRole('president')) {
     <?php include dirname(__DIR__)."/footer.php"?>
 </body>
 </html>
+
+<script>
+    
+</script>

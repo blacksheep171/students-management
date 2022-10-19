@@ -5,7 +5,7 @@ include_once dirname(dirname(__DIR__))."./app/Services/PresidentServices.php";
 
 $president = new PresidentServices();
 
-if((isset($_SESSION['user_name'])) && isset($_SESSION['role']) == 'president') {
+if($president->role('president')) {
     if(isset($_POST['save'])){
         $data = $president->createCourse();
         if($data){

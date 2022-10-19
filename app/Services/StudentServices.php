@@ -1,13 +1,12 @@
 <?php
 
-include_once dirname(__DIR__)."./Services/UserServices.php";
+include dirname(__DIR__)."./Services/UserServices.php";
 
 class StudentServices  extends UserServices{
     protected $user;
     protected $subject;
     protected $exercise;
     protected $comment;
-    
 
     public function __construct()
     {   
@@ -41,6 +40,25 @@ class StudentServices  extends UserServices{
                 return $data;
     }
 
+    public function list() {
+        $data = $this->exercise->index();
+        if(!empty($data)){
+            return $data;
+        } else {
+            return [];
+        }
+    }
+    
+    public function getStudentSubjects(){
+        $user = $this->getCurrentUser();
+        $data = $this->user->getStudents($user['id'],$this->getCurrentParams('course_id'));
+        if(!empty($data)){
+            return $data;
+        } else {
+            return [];
+        }
+    }
+
     public function uploadFile(){
         $data = [];
         // declare
@@ -48,7 +66,7 @@ class StudentServices  extends UserServices{
         $fileName = $_FILES['fileToUpload']['name'];
         $filePath = $_FILES['fileToUpload']['tmp_name'];
         $fileSize = $_FILES['fileToUpload']['size'];
-        $targetDir = "public/uploads/";
+        $targetDir = dirname(dirname(__DIR__))."/public/uploads/";
         $targetFile = $targetDir.basename($fileName);
         $error = [];
         $fileUrl = BASE_PATH.$targetFile;

@@ -1,14 +1,14 @@
 
 <?php
 session_start();
-include_once dirname(dirname(__DIR__))."./app/Services/PresidentServices.php";
+include_once dirname(dirname(__DIR__))."./app/Services/StudentServices.php";
 
-$user = new UserServices();
+$user = new StudentServices();
 
-if($user->isRole('student')) {
+if($user->role('student')) {
     $data = [];
-    if(!empty($user->list())){
-        $data = $user->list();
+    if(!empty($user->getStudentSubjects())){
+        $data = $user->getStudentSubjects();
     }
 } else {
     header("Location:index.php");
@@ -48,30 +48,29 @@ if($user->isRole('student')) {
         <div class="wrap__content">
             <div class="subject__list">
             <div class="col-12">
+            <input type="hidden" id="id" name="id" value="<?= $course['id']?>" class="form-control" placeholder="Id">
             <table class="table table-bordered table-striped" style="margin-top:20px;">
                 <thead>
                     <th>ID</th>
                     <th>Course</th>
                     <th>Subject</th>
-                    <th>Content</th>
                     <th>Teacher</th>
-                    <th>Action</th>
+                    <th>Note</th>
                 </thead>
                 <tbody>
                 <?php
                     if (!empty($data)) {
                         foreach ($data as $row) {
                     ?>
-                            <tr>
-                                <td><?= $row['id'] ?></td>
-                                <td><?= $row['name'] ?></td>
-                                <td><?= $row['title'] ?></td>
-                                <td><?= $row['content'] ?></td>
-                                <td><?= $user->getTeacherName($row['teacher_id']) ?></td>
-                                <td>
-                                <a href='add-exercise.php?subject_id=<?=$row['subject_id']?>&course_id=<?=$row['course_id']?>' class='btn btn-link btn-sm'>Submit Your Exercise</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td><?= $row['id'] ?></td>
+                            <td><?= $row['title'] ?></td>
+                            <td><?= $row['content'] ?></td>
+                            <td><?= $user->getTeacherName($row['teacher_id']) ?></td>
+                            <td>
+                                <a href='subject-details.php?subject_id=<?=$row['subject_id']?>&course_id=<?=$_SESSION['course_id']?>' class='btn btn-link btn-sm'>Details</a>
+                            </td>
+                        </tr>
                     <?php
                         }
                     }

@@ -1,6 +1,6 @@
 <?php
 
-include_once dirname(__DIR__)."./Services/UserServices.php";
+include dirname(__DIR__)."./Services/UserServices.php";
 
 class PresidentServices  extends UserServices{
     protected $course;
@@ -15,7 +15,7 @@ class PresidentServices  extends UserServices{
     }
 
     public function getCurrentSubject(){
-        $data = $this->subject->get($this->getCurrentSubjectId(),$this->getCurrentCourseId());
+        $data = $this->subject->get($this->getCurrentParams('subject_id'),$this->getCurrentParams('course_id'));
         if(!empty($data)){
             return $data;
         } else {
@@ -44,7 +44,7 @@ class PresidentServices  extends UserServices{
     public function changeStatus(){
         $input = new Courses();
         $input->setStatus($_POST['status']);
-        $input->setUpdatedAt(date('Y-m-d H:i:s'));
+        // $input->setUpdatedAt(date('Y-m-d H:i:s'));
         $input->setId($_POST['id']);
         $data = $this->course->update($input);
         return $data;

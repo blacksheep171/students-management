@@ -5,6 +5,13 @@ class Exercises {
     
     private $table = 'exercises';
 
+    /**
+     * connection to database
+     * @param string
+     * @return PDO
+     */
+    private $connection;
+    
     public $id;
     public $name;
     public $summary;
@@ -117,6 +124,43 @@ class Exercises {
         }
     }
 
+    public function index(){
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM".$this->table);
+            
+            if($stmt->execute()){
+                $data = $stmt->fetchAll();
+            } else {
+                $data = [];
+            }
+            return $data;
+        } catch(Exception $e) {
+             // logError
+             error_log($e->getMessage());
+             return $data = [];
+        }
+    }
+
+    public function getStudentExercises($subjectId,$courseId,$studentId){
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE `subject_id`= :subject_id AND `course_id`= :course_id AND `student_id`= :student_id ");
+            
+            $data = [
+                'subject_id' => $subjectId,
+                'course_id' => $courseId,
+                ':student_id' => $studentId
+            ];
+            if($stmt->execute($data)){
+                $result = $stmt->fetchAll();
+                return $result;
+            } else {
+                return [];
+            }
+        } catch(Exception $e) {
+             error_log($e->getMessage());
+             return [];
+        }
+    }
     public function upload($input){
         try {
             $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (`file_name`, `file_path`) VALUES (:file_name, :file_path) WHERE `id` = :id");

@@ -3,17 +3,19 @@ session_start();
 include_once dirname(dirname(__DIR__))."./app/Services/StudentServices.php";
 
 $user = new StudentServices();
+
+if($user->role('student')) {
 $subject = $user->getCurrentSubject();
 if (isset($_POST['save'])) {
     if(!empty($_FILES)) {
         $data = $user->createExercise();
     }
     if (!empty($data)) {
-        $message = '<div class="alert alert-success" role="alert">Submit successfully!</div>';
+        $message = 'Submit successfully!';
     } else {
-        $message = '<div class="alert alert-danger" role="alert">Submit failed!</div>';
+        $error = 'Submit failed!';
     }
-   
+}
 }
 
 ?>
@@ -60,10 +62,12 @@ if (isset($_POST['save'])) {
                     <div class="row">
                         <div class="col-md-12 mb-md-0 mb-5">
                             <form id="exercises-form" name="exercises-form" action="" method="POST" enctype='multipart/form-data'>
-                                <?php if(isset($message)){
-                                    echo $message;
-                                }
-                                ?>
+                            <?php if(isset($message)){
+                                echo '<div class="alert alert-success" role="alert">'.$message.'</div>';
+                            } else if(isset($error)){
+                                echo '<div class="alert alert-success" role="alert">'.$error.'</div>';
+                            }
+                            ?>
                                 <div class="row exercises__content">
                                     <div class="col-md-12">
                                         <div class="md-form mb-0">

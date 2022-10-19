@@ -1,7 +1,7 @@
 <ul class="logon-block nav navbar-nav nav-list navbar-left u-unstyled">
     <?php
-    if (isset($_SESSION['role'])) {
-        if ($_SESSION['role'] == 'president') { ?>
+    if (isset($_SESSION['user'])) {
+        if ($_SESSION['user']['role'] == 'president') { ?>
             <li class="dropdown">
                 <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle template-menu-item" href="#">Courses<span class="caret"></span></a>
                 <ul role="menu" class="dropdown-menu dropdown-menu-hover u-unstyled">
@@ -17,23 +17,26 @@
                 </ul>
             </li>
         <?php
-        } else if ($_SESSION['role'] == 'teacher') {
+        } else if ($_SESSION['user']['role'] == 'teacher') {
         ?>
             <li class="dropdown">
-                <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle template-menu-item" href="#">Exercises<span class="caret"></span></a>
+                <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle template-menu-item" href="#">Subjects<span class="caret"></span></a>
                 <ul role="menu" class="dropdown-menu dropdown-menu-hover u-unstyled">
-                    <li><a href="<?=BASE_PATH?>view/teacher/teacher-subjects.php" class="teacher-url">My Subjects</a></li>
-                    <li><a href="" class="teacher-url">My Exercises</a></li>
+                    <li><a href="<?=BASE_PATH?>view/courses-option.php" class="teacher-url">My Subjects</a></li>
+                    <li><a href="#" class="teacher-url">My Exercises</a></li>
                 </ul>
             </li>
+            <!-- <li class="dropdown">
+                <a href="<?=BASE_PATH?>view/courses-option.php">My Courses</a>
+            </li> -->
         <?php
-        } else if ($_SESSION['role'] == 'student') {
+        } else if ($_SESSION['user']['role'] == 'student') {
         ?>
+            <!-- <li class="dropdown">
+                <a href="<?=BASE_PATH?>view/courses-option.php">My Courses</a>
+            </li> -->
             <li class="dropdown">
-                <a href="<?=BASE_PATH?>view/student/student-subjects.php">My Subjects</a>
-            </li>
-            <li class="dropdown">
-                <a href="student-exercises.php">My Exercises</a>
+                <a href="<?=BASE_PATH?>view/courses-option.php">My Subjects</a>
             </li>
     <?php
         }

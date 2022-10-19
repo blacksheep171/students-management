@@ -17,7 +17,7 @@ $user = new UserServices();
                 <?php
                 if($user->isSession()) {
                     ?>
-                    <li><a href='index.php'>Welcome <?=$_SESSION['user_name']?></a></li><li class='divider-vertical'></li>
+                    <li><a href='index.php'>Welcome <?=$_SESSION['user']['name']?></a></li><li class='divider-vertical'></li>
                     <li><a href='<?=BASE_PATH?>view/logout.php'>Logout</a></li><li class='divider-vertical'></li> 
                 <?php
                 } else {

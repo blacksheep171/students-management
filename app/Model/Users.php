@@ -2,8 +2,14 @@
 
 require_once dirname(__DIR__)."./Config.php";
 class Users {
+
     private $table = "users";
 
+    /**
+     * connection to database
+     * @param string
+     * @return PDO
+     */
     private $connection;
 
     private $id;
@@ -99,14 +105,15 @@ class Users {
             $stmt = $this->connection->prepare("SELECT * FROM .$this->table.");
             
             if($stmt->execute()){
-                return $stmt->fetchAll();
+               $data = $stmt->fetchAll();
             } else {
-                return false;
+                $data = [];
             }
+            return $data;
         } catch(Exception $e) {
              // logError
              error_log($e->getMessage());
-             return false;
+             return $data = [];
         }
     }
 
@@ -124,14 +131,8 @@ class Users {
         }
         
         catch(Exception $e){
-             // logError
              error_log($e->getMessage());
-            //  return false;
-            return [
-                'user_id' => '',
-                'name' => '',
-                'age' => 0,
-            ];
+            return $data = [];
         } 
     }
 
@@ -147,14 +148,12 @@ class Users {
         }
         
         catch(Exception $e){
-             // logError
              error_log($e->getMessage());
-            //  return false;
             return [];
         } 
     }
 
-    public function isLogin($email,$password){
+    public function logged($email,$password){
         try {
             $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE email = :email AND password = :password");
             $data = [
@@ -166,33 +165,52 @@ class Users {
                 $result = $stmt->fetch();
                 return $result;
             } else {
-                return false;
+                return [];
             }
         
         } catch(Exception $e){
-            return $e->getMessage();
+            $e->getMessage();
+            return [];
         }
     }
 
     public function getStudentList($id){
-            try {
-                $sql ="SELECT * FROM students_subjects WHERE `subject_id` = :subject_id";
-                $stmt = $this->connection->prepare($sql);
-                $data = [
-                    ':subject_id' => $id,
-                ];
+        try {
+            $sql ="SELECT * FROM subject_list WHERE `subject_id` = :subject_id";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':subject_id' => $id,
+            ];
+                if($stmt->execute($data)){
+                    $result = $stmt->fetchAll();
+                    return $result;
+                } else {
+                    return [];
+                }
+        } catch(Exception $e){
+                // logError
+            error_log($e->getMessage());
+            return [];
+        }
+    }
 
-                    if($stmt->execute($data)){
-                        $result = $stmt->fetchAll();
-                        return $result;
-                    } else {
-                        return [];
-                    }
-            } catch(Exception $e){
-                  // logError
-                error_log($e->getMessage());
-                return [];
-            }
-        
+    public function getStudents($id,$courseId){
+        try {
+            $sql =" SELECT * FROM subject_list WHERE `student_id` = :student_id AND `course_id` = :course_id ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':student_id' => $id,
+                ':course_id' => $courseId
+            ];
+                if($stmt->execute($data)){
+                    $result = $stmt->fetchAll();
+                    return $result;
+                } else {
+                    return [];
+                }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return [];
+        }
     }
 }

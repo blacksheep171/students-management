@@ -5,6 +5,8 @@ class Courses {
     private $table = 'courses';
 
     /**
+     * connection to database
+     * @param string
      * @return PDO
      */
     private $connection;
@@ -92,12 +94,11 @@ class Courses {
             if($stmt->execute()){
                 return $stmt->fetchAll();
             } else {
-                return false;
+                return [];
             }
         } catch(Exception $e) {
-             // logError
              error_log($e->getMessage());
-             return false;
+             return [];
         }
     }
     public function getAll(){
@@ -137,11 +138,10 @@ class Courses {
     }
     public function update($input){
         try {
-            $sql ="UPDATE ".$this->table." SET `status` = :status, `updated_at` = :updatedAt WHERE `id` = :id";
+            $sql ="UPDATE ".$this->table." SET `status` = :status WHERE `id` = :id";
             $stmt = $this->connection->prepare($sql);
             $data = [
                 ':status' => $input->getStatus(),
-                ':updatedAt' => $input->getUpdatedAt(),
                 ':id' => $input->getId(),
             ];
             if($stmt->execute($data)){

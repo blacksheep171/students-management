@@ -1,23 +1,21 @@
 <?php
 session_start();
-include_once dirname(dirname(__DIR__))."./app/Services/PresidentServices.php";
+include_once dirname(__DIR__)."./app/Services/UserServices.php";
 
-$data = new PresidentServices();
+$data = new UserServices();
 $courses = $data->getAllCourses();
-$teachers = $data->getAllTeachers();
-$subject = $data->getCurrentSubject();
 
-if($data->role('president')) {
-if (isset($_POST['save'])) {
-    $data->updateTeacher();
-    if($data) {
-        $message = 'Teacher has been added successfully!';
-        header("Location:my-subjects.php");
-    } else {
-        $message = 'Something went wrong, please try later!';
+if (isset($_GET['save'])) {
+    if(isset($_GET['course_id'])){
+        $_SESSION['course_id'] = $_GET['course_id'];
+        if($data->role('teacher')){
+            header("Location: teacher/teacher-subjects.php?course_id=".$_SESSION['course_id']);
+        } else if($data->role('student')) {
+            header("Location: student/student-subjects.php?course_id=".$_SESSION['course_id']);
+        }
     }
 }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +32,7 @@ if (isset($_POST['save'])) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
-    <title>Student Management</title>
+    <title>Courses Management</title>
 </head>
 
 <body>
@@ -53,53 +51,44 @@ if (isset($_POST['save'])) {
         }
     </style>
     <div class="wrap wrap-fluid">
-        <?php include  dirname(__DIR__)."/header.php" ?>
+        <?php include  __DIR__."/header.php" ?>
         <div class="wrap__inner">
             <div class="wrap__title">
-                <h1>Add Teacher</h1>
+                <h1>Courses</h1>
             </div>
             <div class="wrap__content">
                 <section class="mb-4 subject__register">
-                    <h2 class="h1-responsive font-weight-bold text-center my-4">Add Your Teacher To Subject</h2>
+                    <h2 class="h1-responsive font-weight-bold text-center my-4">Choose your current Course</h2>
                     <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.</p>
                     <div class="row">
                         <div class="col-md-12 mb-md-0 mb-5">
-                            <form id="subject-form" name="subject-form" action="" method="POST">
+                            <form id="subject-form" name="subject-form" action="" method="GET">
                             <?php if(isset($message)){
                                 echo '<div class="alert alert-danger" role="alert">'.$message.'</div>';
-                            }
+                                }
                             ?>
                                 <div class="row subject__content">
                                     <div class="col-md-12">
-                                        <input type="hidden" id="id" name="id" value="<?= $subject['id']?>" class="form-control" placeholder="Id">
-                                        <input type="hidden" id="course_id" name="course_id" value="<?= $subject['course_id']?>" class="form-control" placeholder="Courses id">
                                     </div>
-
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 courses__select">
                                         <div class="md-form mb-0">
-                                            <label for="subject" class="subject__label">Subject</label>
-                                            <input type="text" id="subject" name="title" class="form-control" placeholder="Subject Name" value="<?= $subject['title'] ?>" required="required" disabled>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 teacher__select">
-                                        <div class="md-form mb-0">
-                                            <label for="course_name" class="">Teacher</label>
+                                            <label for="course_name" class="">Courses</label>
                                         </div>
                                         <div class="md-form mb-0">
-                                            <select class="form-select" name="teacher_id" value="<?= $teacherId = $subject['teacher_id']?>" aria-label="select" required="required">
-                                                <option disabled selected>Register teacher for this subject?</option>
+                                            <select class="form-select" name="course_id" aria-label="select" required="required">
+                                                <option disabled selected>Please choose your courses</option>
                                                 <?php
-                                                foreach ($teachers as $teacher) { ?>
-                                                    <option id="teacher_<?= $teacher['id'] ?>"<?php if($teacherId == $teacher['id']){ echo ' selected="selected"'; } ?> value="<?= $teacher['id'] ?>"><?= $teacher['name'] ?></option>;
-                                                <?php  }
+                                                foreach ($courses as $course) { ?>
+                                                    <option id="teacher_<?= $course['id'] ?>" value="<?= $course['id'] ?>"><?= $course['name'] ?></option>;
+                                                <?php  
+                                                    }
                                                 ?>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="text-center text-md-left">
-                                    <input class="btn btn-primary" name="save" type="submit" value="Save" />
+                                    <input type="submit" name="save" class="btn btn-primary" value="save"/> 
                                 </div>
                             </form>
                         </div>
@@ -108,6 +97,6 @@ if (isset($_POST['save'])) {
             </div>
         </div>
     </div>
-    <?php include dirname(__DIR__)."/footer.php" ?>
+    <?php include __DIR__."/footer.php" ?>
 </body>
 </html>

@@ -6,6 +6,7 @@ $data = new PresidentServices();
 $courses = $data->getAllCourses();
 $teachers = $data->getAllTeachers();
 
+if($data->role('president')) {
 if (isset($_POST['save'])) {
     $data->createSubject();
     if($data) {
@@ -13,6 +14,7 @@ if (isset($_POST['save'])) {
     } else {
         $error = 'Create failed!';
     }
+}
 }
 ?>
 <!DOCTYPE html>

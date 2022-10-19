@@ -1,11 +1,11 @@
 
 <?php
 session_start();
-include_once dirname(dirname(__DIR__))."./app/Services/TeacherServices.php";
+include_once dirname(dirname(__DIR__))."./app/Services/StudentServices.php";
 
-$user = new TeacherServices();
+$user = new StudentServices();
 
-if($user->role('teacher')) {
+if($user->role('student')) {
     $data = [];
 
     if(!empty($user->getCurrentSubject())){
@@ -50,7 +50,7 @@ if($user->role('teacher')) {
         <div class="wrap__content">
             <div class="subject__list">
                 <div class="col-3">
-                <a href='edit-subjects.php?subject_id=<?=$data['subject_id']?>&course_id=<?=$data['course_id']?>' class='btn btn-primary btn-sm'>Add Student</a>
+                    <a href='add-exercise.php?subject_id=<?=$data['subject_id']?>&course_id=<?=$data['course_id']?>' class='btn btn-primary btn-sm'>Submit Your Exercises</a>
                 </div>
             <div class="col-12">
             <table class="table table-bordered table-striped" style="margin-top:20px;">

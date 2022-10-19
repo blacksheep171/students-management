@@ -4,6 +4,7 @@ include_once  dirname(dirname(__DIR__))."/app/Services/TeacherServices.php";
 
 $data = new TeacherServices();
 
+if($data->role('teacher')) {
 $students = $data->getAllStudents();
 $subject = $data->getCurrentSubject();
 
@@ -15,7 +16,7 @@ if (isset($_POST['save'])) {
         $error = 'Something went wrong, please try later!';
     }
 }
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -55,12 +55,12 @@ $user = new UserServices();
                                 if (!empty($data)) {
                                     foreach ($data as $row) {
                                 ?>
-                                        <tr>
-                                            <td><?= $row['id'] ?></td>
-                                            <td><?= $row['name'] ?></td>
-                                            <td><?= $row['title'] ?></td>
-                                            <td><?= $user->getTeacherName($row['teacher_id']) ?></td>
-                                        </tr>
+                                    <tr>
+                                        <td><?= $row['id'] ?></td>
+                                        <td><?= $row['name'] ?></td>
+                                        <td><?= $row['title'] ?></td>
+                                        <td><?= $user->getTeacherName($row['teacher_id']) ?></td>
+                                    </tr>
                                 <?php
                                     }
                                 }

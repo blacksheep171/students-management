@@ -5,7 +5,7 @@ include_once dirname(dirname(__DIR__))."./app/Services/PresidentServices.php";
 
 $president = new PresidentServices();
 
-if($president->isRole('president')) {
+if($president->role('president')) {
     $data = $president->getCourse();
     if(isset($_POST['save'])){
         $result = $president->changeStatus();

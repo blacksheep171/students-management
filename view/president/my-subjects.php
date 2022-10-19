@@ -3,7 +3,7 @@ session_start();
 include_once dirname(dirname(__DIR__))."./app/Services/UserServices.php";
 
 $president = new UserServices();
-if ($president->isRole('president')) {
+if ($president->role('president')) {
     $data = $president->list();
 } else {
     $data = [];
