@@ -7,6 +7,7 @@ class Comments {
 
     public $id;
     public $content;
+    public $userId;
     public $exerciseId;
     public $createdAt;
     public $updatedAt;
@@ -28,6 +29,12 @@ class Comments {
     }
     public function getContent() {
         return $this->content;
+    }
+    public function setUserId($userId) {
+        $this->userId = $userId;
+    }
+    public function getUserId() {
+        return $this->userId;
     }
     public function setExerciseId($exerciseId) {
         $this->exerciseId = $exerciseId;

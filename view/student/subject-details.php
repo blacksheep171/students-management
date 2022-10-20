@@ -41,42 +41,42 @@ if($user->role('student')) {
     }
 </style>
 
-<div class="wrap wrap-fluid">
-    <?php include  dirname(__DIR__)."/header.php" ?>
-    <div class="wrap__inner">
-        <div class="wrap__title">
-            <h1>My Subject: <?=$data['title']?></h1>
-        </div>
-        <div class="wrap__content">
-            <div class="subject__list">
-                <div class="col-3">
-                    <a href='add-exercise.php?subject_id=<?=$data['subject_id']?>&course_id=<?=$data['course_id']?>' class='btn btn-primary btn-sm'>Submit Your Exercises</a>
+        <div class="wrap wrap-fluid">
+            <?php include  dirname(__DIR__)."/header.php" ?>
+            <div class="wrap__inner">
+                <div class="wrap__title">
+                    <h1>My Subject: <?=$data['title']?></h1>
                 </div>
-            <div class="col-12">
-            <table class="table table-bordered table-striped" style="margin-top:20px;">
-                <thead>
-                    <th>ID</th>
-                    <th>Student</th>
-                    <th>Subject Content</th>
-                    <th>Note</th>
-                </thead>
-                <tbody>
-                    <?php foreach ($students as $student){
-                    ?>
-                    <tr>
-                        <td><?= $student['student_id'] ?></td>
-                        <td><?= $student['student_name'] ?></td>
-                        <td><?= $student['content'] ?></td>
-                        <td>
-                            <a href='<?=BASE_PATH?>view/exercise-details.php?subject_id=<?=$student['subject_id']?>&course_id=<?=$student['course_id']?>&student_id=<?=$student['student_id']?>' class='btn btn-outline-primary btn-sm'>Exercise</a>
-                        </td>
-                    </tr>
-                    <?php
-                        }
-                    ?>  
-                </tbody>
-            </table>
-        </div>
+                <div class="wrap__content">
+                    <div class="subject__list">
+                        <div class="col-3">
+                            <a href='add-exercise.php?subject_id=<?=$data['subject_id']?>&course_id=<?=$data['course_id']?>' class='btn btn-primary btn-sm'>Submit Your Exercises</a>
+                        </div>
+                    <div class="col-12">
+                    <table class="table table-bordered table-striped" style="margin-top:20px;">
+                        <thead>
+                            <th>ID</th>
+                            <th>Student</th>
+                            <th>Subject Content</th>
+                            <th>Note</th>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($students as $student){
+                            ?>
+                            <tr>
+                                <td><?= $student['student_id'] ?></td>
+                                <td><?= $student['student_name'] ?></td>
+                                <td><?= $student['content'] ?></td>
+                                <td>
+                                    <a href='<?=BASE_PATH?>view/exercise-details.php?subject_id=<?=$student['subject_id']?>&course_id=<?=$student['course_id']?>&student_id=<?=$student['student_id']?>' class='btn btn-outline-primary btn-sm'>Exercise</a>
+                                </td>
+                            </tr>
+                            <?php
+                                }
+                            ?>  
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

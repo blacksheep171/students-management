@@ -98,10 +98,10 @@ class CourseServices extends Courses {
                 ':id' => $input->getId(),
             ];
             if($stmt->execute($data)){
-                    return true;
-                } else {
-                    return false;
-                }
+                return true;
+            } else {
+                return false;
+            }
             
         } catch(Exception $e){
             error_log($e->getMessage());

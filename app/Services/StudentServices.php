@@ -120,12 +120,14 @@ class StudentServices  extends Services {
 
         $input->setContent($_POST['content']);
         $input->setExerciseId($this->getCurrentParams('exercise_id'));
+        $input->setUserId($_SESSION['user']['id']);
         $input->setCreatedAt(date('Y-m-d H:i:s'));
         $input->setUpdatedAt(date('Y-m-d H:i:s'));
 
         $data = $this->comment->create($input);
         if(!empty($data)){
-            return $data;
+            // return $data;
+            header("Location: comment-exercises.php?exercise_id=".htmlspecialchars($_POST['exercise_id']));
         } else {
             return $data = [];
         }

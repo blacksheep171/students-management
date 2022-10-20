@@ -5,6 +5,7 @@ class Services {
     protected $course;
     protected $subject;
     protected $exercise;
+    protected $comment;
 
     public function __construct()
     {
@@ -12,6 +13,7 @@ class Services {
         $this->course = new CourseServices();
         $this->subject = new SubjectServices();
         $this->exercise = new ExerciseServices();
+        $this->comment = new CommentServices();
     }
     public function getCurrentUser(){
         $userData = [];
@@ -58,7 +60,6 @@ class Services {
             $userChecked = $this->user->logged($email,$password);
             if($userChecked){
                 $_SESSION['user'] = $userChecked;
-             
                 header("Location:index.php");
             } else {
                 error_log($message = "Login failed, please try again!");
@@ -139,11 +140,16 @@ class Services {
     }
     public function getExercises(){
         $user = $this->getCurrentUser();
-        $data = $this->exercise->getStudentExercises($this->getCurrentParams('subject_id'),$this->getCurrentParams('course_id'),$this->getCurrentParams('student_id'),);
+        $data = $this->exercise->getStudentExercises($this->getCurrentParams('subject_id'),$this->getCurrentParams('course_id'),$this->getCurrentParams('student_id'));
         if(!empty($data)){
             return $data;
         } else {
             return [];
         }
+    }
+
+    public function getCommentList(){
+        $data = $this->comment->index();
+            return $data;
     }
 }

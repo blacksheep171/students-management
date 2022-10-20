@@ -23,7 +23,7 @@ class CommentServices extends Comments {
 
     public function index(){
         try {
-            $sql = "SELECT * FROM ".$this->comment->table;
+            $sql = "SELECT * FROM comment_list";
             $stmt = $this->connection->prepare($sql);
             
             if($stmt->execute()){
@@ -40,10 +40,11 @@ class CommentServices extends Comments {
 
     public function create($input){
         try {
-            $sql1 ="INSERT INTO ".$this->table." (`content`, `created_at`, `updated_at`) VALUES (:content, :created_at, :updated_at)";
+            $sql1 ="INSERT INTO ".$this->table." (`content`, `user_id`, `created_at`, `updated_at`) VALUES (:content, :user_id, :created_at, :updated_at)";
             $stmt = $this->connection->prepare($sql1);
             $data1 = [
                 ':content' => $input->getContent(),
+                ':user_id' => $input->getUserId(),
                 ':created_at' => $input->getCreatedAt(),
                 ':updated_at' => $input->getUpdatedAt(),
             ];
@@ -65,7 +66,6 @@ class CommentServices extends Comments {
                 return false;
             }
         } catch(Exception $e){
-              // logError
             error_log($e->getMessage());
             return false;
         }

@@ -68,7 +68,6 @@ class TeacherServices  extends Services
                 // die();
                 $checked = true;
             } else {
-
                 $checked = false;
             }
         }

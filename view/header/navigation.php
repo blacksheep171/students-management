@@ -26,15 +26,9 @@
                     <li><a href="#" class="teacher-url">My Exercises</a></li>
                 </ul>
             </li>
-            <!-- <li class="dropdown">
-                <a href="<?=BASE_PATH?>view/courses-option.php">My Courses</a>
-            </li> -->
         <?php
         } else if ($_SESSION['user']['role'] == 'student') {
         ?>
-            <!-- <li class="dropdown">
-                <a href="<?=BASE_PATH?>view/courses-option.php">My Courses</a>
-            </li> -->
             <li class="dropdown">
                 <a href="<?=BASE_PATH?>view/courses-option.php">My Subjects</a>
             </li>

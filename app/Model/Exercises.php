@@ -14,6 +14,7 @@ class Exercises {
     public $courseId;
     public $studentId;
     public $subjectId;
+    public $commentId;
     public $createdAt;
     public $updatedAt;
 
@@ -70,6 +71,12 @@ class Exercises {
     }
     public function getSubjectId() {
         return $this->subjectId;
+    }
+    public function setComment($commentId) {
+        $this->commentId = $commentId;
+    }
+    public function getComment() {
+        return $this->commentId;
     }
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
