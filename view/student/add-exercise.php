@@ -88,7 +88,7 @@ if (isset($_POST['save'])) {
                                     <div class="col-md-12">
                                         <div class="md-form mb-0">
                                             <label for="content">Content</label>
-                                            <textarea type="text" id="content" name="content" rows="2" class="form-control md-textarea" required="required"></textarea >
+                                            <textarea type="text" id="content" name="content" rows="2" class="form-control md-textarea" required="required"></textarea>
                                         </div>
                                     </div>
                                 </div>

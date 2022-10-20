@@ -1,7 +1,7 @@
 <?php
-require_once dirname(__DIR__)."./app/Services/UserServices.php";
+require_once dirname(__DIR__)."./app/Services/Services.php";
 
-$user = new UserServices();
+$user = new Services();
 
 ?>
 

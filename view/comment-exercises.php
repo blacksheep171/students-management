@@ -1,18 +1,16 @@
 <?php
 session_start();
-include_once dirname(__DIR__)."./app/Services/UserServices.php";
+include_once dirname(__DIR__)."./app/Services/StudentServices.php";
 
-$data = new UserServices();
-$courses = $data->getExercises();
+$user = new StudentServices();
+$courses = $user->getExercises();
 
-if (isset($_GET['save'])) {
-    if(isset($_GET['course_id'])){
-        $_SESSION['course_id'] = $_GET['course_id'];
-        if($data->role('teacher')){
-            header("Location: teacher/teacher-subjects.php?course_id=".$_SESSION['course_id']);
-        } else if($data->role('student')) {
-            header("Location: student/student-subjects.php?course_id=".$_SESSION['course_id']);
-        }
+if (isset($_POST['save'])) {
+    $data = $user->createComments();
+    if(!empty($data)){
+        $message = 'Comment created successfully!';
+    } else {
+        $error = 'Comment created failed!';
     }
 }
 
@@ -62,16 +60,18 @@ if (isset($_GET['save'])) {
                     <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.</p>
                     <div class="row">
                         <div class="col-md-12 mb-md-0 mb-5">
-                            <form id="subject-form" name="subject-form" action="" method="GET">
+                            <form id="comment-form" name="comment-form" action="" method="POST">
                             <?php if(isset($message)){
-                                echo '<div class="alert alert-danger" role="alert">'.$message.'</div>';
-                                }
+                                echo '<div class="alert alert-success" role="alert">'.$message.'</div>';
+                                } else if(isset($error)){
+                                    echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
+                                    }
                             ?>
-                                <div class="row comment__content text-center">
+                                <div class="row comment__content">
                                     <div class="col-md-12">
                                         <div class="md-form mb-0">
                                             <label for="name" class="font-weight-bold">Your Comment</label>
-                                            <input type="text" id="name" name="name" class="form-control" required="required">
+                                           <textarea type="text" id="comment-content" name="content" rows="2" class="form-control md-textarea" required="required"></textarea>
                                         </div>
                                     </div>
                                 </div>

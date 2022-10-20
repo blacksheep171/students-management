@@ -1,17 +1,15 @@
 <?php
-
-include dirname(__DIR__)."./Services/UserServices.php";
-
-class PresidentServices  extends UserServices{
+include dirname(__DIR__)."./Services/Services.php";
+class PresidentServices  extends Services{
     protected $course;
     protected $subject;
     protected $user;
 
     public function __construct()
     {   
-        $this->user = new Users();
-        $this->course = new Courses();
-        $this->subject = new Subjects();
+        $this->user = new UserServices();
+        $this->course = new CourseServices();
+        $this->subject = new SubjectServices();
     }
 
     public function getCurrentSubject(){
@@ -24,7 +22,7 @@ class PresidentServices  extends UserServices{
     }
 
     public function createCourse(){
-            $input = new Courses();
+            $input = new CourseServices();
             $user = $this->getCurrentUser();
             $input->setName($_POST['course_name']);
             $input->setStatus($_POST['status']);
@@ -42,17 +40,15 @@ class PresidentServices  extends UserServices{
         return $data;
     }
     public function changeStatus(){
-        $input = new Courses();
+        $input = new CourseServices();
         $input->setStatus($_POST['status']);
-        // $input->setUpdatedAt(date('Y-m-d H:i:s'));
         $input->setId($_POST['id']);
         $data = $this->course->update($input);
         return $data;
     }
-   
 
     public function createSubject(){
-        $input = new Subjects();
+        $input = new SubjectServices();
         $user = $this->getCurrentUser();
         $input->setTitle($_POST['title']);
         $input->setCourseId($_POST['course_id']);
@@ -66,12 +62,10 @@ class PresidentServices  extends UserServices{
     }
     
     public function updateTeacher(){
-        $input = new Subjects();
-        $user = $this->getCurrentUser();
-        // $id = $this->getCurrentId();
+        $input = new SubjectServices();
         $input->setId($_POST['id']);
         $input->setTeacherId($_POST['teacher_id']);
-        $input->setCreatedBy($user['id']);
+        $input->setCreatedBy($_SESSION['user']['id']);
         $input->setUpdatedAt(date('Y-m-d H:i:s'));
 
         $data = $this->subject->updateTeacher($input);

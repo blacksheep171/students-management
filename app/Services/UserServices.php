@@ -1,149 +1,161 @@
 <?php
-include dirname(__DIR__).'./Config/main.php';
 
-class UserServices {
+class UserServices extends Users {
+
+    /**
+     * connection to database
+     * @param string
+     * @return PDO
+     */
+    private $connection;
+
     protected $user;
     protected $course;
     protected $subject;
     protected $exercise;
+    protected $comment;
 
     public function __construct()
-    {
-        $this->user = new Users();
-        $this->course = new Courses();
-        $this->subject = new Subjects();
-        $this->exercise = new Exercises();
-    }
-    public function getCurrentUser(){
-        $userData = [];
-        if(isset($_SESSION['user'])){
-            $userData = $this->user->getUser($_SESSION['user']['id']);
-        }
-        return $userData;
+    {   
+        $this->comment = new Users();
+        $this->connection = Config::connect();
     }
 
-    public function getCurrentId(){
-        $id = 0;
-        if(isset($_GET['id'])){
-             $id = $_GET['id'];
-        } 
-        return $id;
-    }
-    public function getCurrentParams(string $params){
-        if(isset($_GET[$params])){
-             $params = $_GET[$params];
-        } 
-        return $params;
-    }
-
-    public function isSession() {
-        if(isset($_SESSION['user'])){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function role($params = '') {
-        if(isset($_SESSION['user']) && isset($_SESSION['user']['role']) && ($_SESSION['user']['role'] == $params)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function login()
-    {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $userChecked = $this->user->logged($email,$password);
-            if($userChecked){
-                $_SESSION['user'] = $userChecked;
-             
-                header("Location:index.php");
+    public function create($input){
+        // if (!$input->isValid()) return false;
+        try {
+            $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (`name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES (:name, :email, :password, :role, :createdAt, :updatedAt)");
+            $data = [
+                ':name' => $input->getName(),
+                ':email' => $input->getEmail(),
+                ':password' => md5($input->getPassword()),
+                ':role' => $input->getRole(),
+                ':createdAt' => $input->getCreatedAt(),
+                ':updatedAt' => $input->getUpdatedAt(),
+            ];
+            if($stmt->execute($data)){
+                return true;
             } else {
-                error_log($message = "Login failed, please try again!");
+                return false;
             }
+
+        } catch(Exception $e){
+            // logError
+            error_log($e->getMessage());
+            return false;
+        }
     }
     
-    public function register(){
-            $user = new Users();
+    public function index(){
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM .$this->table.");
             
-            $user->setName($_POST['name']);
-            $user->setEmail( $_POST['email']);
-            $user->setPassword($_POST['password']);
-            // $passwordConfirm = $_POST['password_confirm'];
-            $user->setRole($_POST['role']);
-            $user->setCreatedAt(date('Y-m-d H:i:s'));
-            $user->setUpdatedAt(date('Y-m-d H:i:s'));
-          
-            $data =  $this->user->create($user);
+            if($stmt->execute()){
+               $data = $stmt->fetchAll();
+            } else {
+                $data = [];
+            }
             return $data;
-    }
-
-    public function getTeacherName($id){
-        $data = $this->user->getUser($id);
-        if(!empty($data)){
-            return $data['name'];
-        } else {
-            return null;
+        } catch(Exception $e) {
+             // logError
+             error_log($e->getMessage());
+             return $data = [];
         }
     }
-    public function getAllCourses(){
-        $data = $this->course->index();
-        if(!empty($data)){
+
+    public function getUser($id){
+        try{
+            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE id = :id");
+            $data = [
+                ':id' => $id
+            ];
+            $stmt->execute($data);
+            $data = $stmt->fetch();
+            if($stmt->rowCount() == 1) {
+                return $data;
+            }
+        }
+        
+        catch(Exception $e){
+             error_log($e->getMessage());
+            return $data = [];
+        } 
+    }
+
+    public function getUserWithRole($params = ''){
+        try{
+            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE role = :role");
+            $data = [
+                ':role' => $params
+            ];
+            $stmt->execute($data);
+            $data = $stmt->fetchAll();        
             return $data;
-        } else {
+        }
+        
+        catch(Exception $e){
+             error_log($e->getMessage());
+            return [];
+        } 
+    }
+
+    public function logged($email,$password){
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE email = :email AND password = :password");
+            $data = [
+                ':email' => $email,
+                ':password' => md5($password)
+            ];
+            $stmt->execute($data);
+            if($stmt->rowCount() == 1) {
+                $result = $stmt->fetch();
+                return $result;
+            } else {
+                return [];
+            }
+        
+        } catch(Exception $e){
+            $e->getMessage();
             return [];
         }
     }
-    
-    public function list(){
-        $data = $this->subject->index();
-        if(!empty($data)){
-            return $data;
-        } else {
+
+    public function getStudentList($id){
+        try {
+            $sql ="SELECT * FROM subject_list WHERE `subject_id` = :subject_id";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':subject_id' => $id,
+            ];
+                if($stmt->execute($data)){
+                    $result = $stmt->fetchAll();
+                    return $result;
+                } else {
+                    return [];
+                }
+        } catch(Exception $e){
+                // logError
+            error_log($e->getMessage());
             return [];
         }
     }
-    
-    public function getAllTeachers(){
-        $data = $this->user->getUserWithRole('teacher');
-        return $data;
-    }
-    public function getAllStudents(){
-        $data = $this->user->getUserWithRole('student');
-        return $data;
-    }
 
-    public function getCurrentSubject(){
-        $data = $this->subject->get($this->getCurrentParams('subject_id'),$this->getCurrentParams('course_id'));
-        if(!empty($data)){
-            return $data;
-        } else {
-            return null;
-        }
-    }
-    public function getAllCurrentSubjects(){
-        $user = $this->getCurrentUser();
-        $data = $this->subject->getTeacherSubjects($user['id'],$this->getCurrentParams('course_id'));
-        if(!empty($data)){
-            return $data;
-        } else {
-            return null;
-        }
-    }
-    public function getStudentList()
-    {
-        $data = $this->user->getStudentList($this->getCurrentParams('subject_id'));
-        return $data;
-    }
-    public function getExercises(){
-        $user = $this->getCurrentUser();
-        $data = $this->exercise->getStudentExercises($this->getCurrentParams('subject_id'),$this->getCurrentParams('course_id'),$this->getCurrentParams('student_id'),);
-        if(!empty($data)){
-            return $data;
-        } else {
+    public function getStudents($id,$courseId){
+        try {
+            $sql =" SELECT * FROM subject_list WHERE `student_id` = :student_id AND `course_id` = :course_id ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':student_id' => $id,
+                ':course_id' => $courseId
+            ];
+                if($stmt->execute($data)){
+                    $result = $stmt->fetchAll();
+                    return $result;
+                } else {
+                    return [];
+                }
+        } catch(Exception $e){
+            error_log($e->getMessage());
             return [];
         }
     }

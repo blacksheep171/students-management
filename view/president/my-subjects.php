@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once dirname(dirname(__DIR__))."./app/Services/UserServices.php";
+include_once dirname(dirname(__DIR__))."./app/Services/Services.php";
 
-$president = new UserServices();
+$president = new Services();
 if ($president->role('president')) {
     $data = $president->list();
 } else {

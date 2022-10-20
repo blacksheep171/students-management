@@ -1,8 +1,8 @@
 <?php
-require_once dirname(__DIR__)."./app/Services/UserServices.php";
+require_once dirname(__DIR__)."./app/Services/Services.php";
 
 session_start();
-$user = new UserServices();
+$user = new Services();
 
 if (isset($_POST['login'])) {
     $user->login();

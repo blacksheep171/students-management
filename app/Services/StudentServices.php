@@ -1,8 +1,8 @@
 <?php
 
-include dirname(__DIR__)."./Services/UserServices.php";
+include dirname(__DIR__)."./Services/Services.php";
 
-class StudentServices  extends UserServices{
+class StudentServices  extends Services {
     protected $user;
     protected $subject;
     protected $exercise;
@@ -10,14 +10,14 @@ class StudentServices  extends UserServices{
 
     public function __construct()
     {   
-        $this->user = new Users();
-        $this->exercise = new Exercises();
-        $this->comment = new Comments();
-        $this->subject = new Subjects();
+        $this->user = new UserServices();
+        $this->exercise = new ExerciseServices();
+        $this->comment = new CommentServices();
+        $this->subject = new SubjectServices();
     }
 
     public function createExercise(){
-            $input = new Exercises();
+            $input = new ExerciseServices();
             $user = $this->getCurrentUser();
             $subject = $this->getCurrentSubject();
             $input->setName($_POST['name']);
@@ -69,12 +69,13 @@ class StudentServices  extends UserServices{
         $targetDir = dirname(dirname(__DIR__))."/public/uploads/";
         $targetFile = $targetDir.basename($fileName);
         $error = [];
-        $fileUrl = BASE_PATH.$targetFile;
+        $fileUrl = BASE_PATH.$fileName;
         if (empty($fileName)) {
             $error[] = 'please select an images';
         } else {
             if(file_exists($targetFile)){
                 $targetFile =  $targetDir.$rename.basename($fileName);
+                $fileName =  $rename.basename($fileName);
             }
             $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
             //extension
@@ -84,7 +85,7 @@ class StudentServices  extends UserServices{
                 if (!file_exists($targetFile)) {
                     if ($fileSize < 128000000) {
                         move_uploaded_file($filePath, $targetFile);
-                            $data['file_name'] =  $rename.basename($fileName);
+                            $data['file_name'] = $fileName;
                             $data['file_path'] = $fileUrl;
                     } else {
                         $error[] = 'Sorry your file is too large';
@@ -98,6 +99,32 @@ class StudentServices  extends UserServices{
         }
 
         if(empty($error)){
+            return $data;
+        } else {
+            return $data = [];
+        }
+    }
+
+    public function getComments(){
+        $data = $this->comment->index();
+        if(!empty($data)){
+            return $data;
+        } else {
+            return $data = [];
+        }
+    }
+
+    public function createComments() {
+
+        $input = new CommentServices();
+
+        $input->setContent($_POST['content']);
+        $input->setExerciseId($this->getCurrentParams('exercise_id'));
+        $input->setCreatedAt(date('Y-m-d H:i:s'));
+        $input->setUpdatedAt(date('Y-m-d H:i:s'));
+
+        $data = $this->comment->create($input);
+        if(!empty($data)){
             return $data;
         } else {
             return $data = [];

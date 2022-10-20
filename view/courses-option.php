@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once dirname(__DIR__)."./app/Services/UserServices.php";
+include_once dirname(__DIR__)."./app/Services/Services.php";
 
-$data = new UserServices();
+$data = new Services();
 $courses = $data->getAllCourses();
 
 if (isset($_GET['save'])) {

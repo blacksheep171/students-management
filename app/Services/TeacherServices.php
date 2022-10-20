@@ -1,8 +1,8 @@
 <?php
 
-include  dirname(__DIR__)."./Services/UserServices.php";
+include  dirname(__DIR__)."./Services/Services.php";
 
-class TeacherServices  extends UserServices
+class TeacherServices  extends Services
 {
     protected $subject;
     protected $exercise;
@@ -11,10 +11,10 @@ class TeacherServices  extends UserServices
 
     public function __construct()
     {
-        $this->user = new Users();
-        $this->exercise = new Exercises();
-        $this->comment = new Comments();
-        $this->subject = new Subjects();
+        $this->user = new UserServices();
+        $this->exercise = new ExerciseServices();
+        $this->comment = new CommentServices();
+        $this->subject = new SubjectServices();
     }
 
     public function getAllCurrentSubjects()
