@@ -11,7 +11,6 @@ class StudentServices  extends Services {
 
     public function __construct()
     {   
-        
         $this->user = new UserServices();
         $this->course = new CourseServices();
         $this->exercise = new ExerciseServices();

@@ -7,6 +7,7 @@ include_once dirname(__DIR__)."./app/Services/Services.php";
 $user = new Services();
 
 if($user->isSession()) {
+    $permission = $user->permission();
     $data = [];
     if(!empty($user->getExercises())){
         $data = $user->getExercises();
@@ -39,21 +40,6 @@ if($user->isSession()) {
     padding: 40px 60px;
     margin: 0 auto;
 }
-.posts-wrapper {
-width: 50%;
-margin: 20px auto;
-border: 1px solid #eee;
-}
-.post {
-  width: 90%;
-  margin: 20px auto;
-  padding: 10px 5px 0px 5px;
-  border: 1px solid green;
-}
-.post-info {
-  margin: 10px auto 0px;
-  padding: 5px;
-}
 .fa {
   font-size: 3.2em;
 }
@@ -69,9 +55,6 @@ border: 1px solid #eee;
 .fa-thumbs-down, .fa-thumbs-o-down {
   color: black;
 }
-/* i {
-    color: blue;
-} */
 </style>
 
 <div class="wrap wrap-fluid">
@@ -165,7 +148,7 @@ border: 1px solid #eee;
 <script>
 
 $(document).ready(function(){
-  var courseStatus = 0;
+  var courseStatus = <?= $permission?>;
 
   $('.like-btn').on('click', function(e){
     var exercise_id = $(this).data('id');
@@ -254,11 +237,11 @@ $(document).ready(function(){
     window.history.back();
   });
 
-  if(courseStatus == 0) {
     $("#comment_id").click(function(e){
-      e.preventDefault();
-      alert("You don't have permission to comment");
+      if(courseStatus == 0) {
+        e.preventDefault();
+        alert("You don't have permission to comment");
+      }
     });
-  }
 });
 </script>
