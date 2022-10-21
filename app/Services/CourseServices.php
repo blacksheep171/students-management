@@ -13,8 +13,7 @@ class CourseServices extends Courses {
     protected $subject;
 
 
-    public function __construct()
-    {   
+    public function __construct() {   
         $this->course = new Courses();
         $this->connection = Config::connect();
     }
@@ -80,15 +79,18 @@ class CourseServices extends Courses {
             ];
             $stmt->execute($data);
             $data = $stmt->fetch();
-            if($stmt->rowCount() == 1) {
+            if(!empty($data)) {
                 return $data;
+            } else {
+                return [];
             }
         }
         catch(Exception $e){
             error_log($e->getMessage());
-            return false;
+            return [];
         } 
     }
+    
     public function update($input){
         try {
             $sql ="UPDATE ".$this->table." SET `status` = :status WHERE `id` = :id";

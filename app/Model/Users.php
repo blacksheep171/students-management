@@ -18,6 +18,8 @@ class Users {
     private $password;
     private $passwordConfirm;
     private $role;
+    private $exerciseId;
+    private $status;
     private $createdAt;
     private $updatedAt;
 
@@ -61,6 +63,18 @@ class Users {
     }
     public function getRole() {
         return $this->role;
+    }
+    public function setExerciseId($exerciseId) {
+        $this->exerciseId = $exerciseId;
+    }
+    public function getExerciseId() {
+        return $this->exerciseId;
+    }
+    public function setVoteStatus($status) {
+        $this->status = $status;
+    }
+    public function getVoteStatus() {
+        return $this->status;
     }
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;

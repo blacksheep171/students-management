@@ -66,7 +66,6 @@ class ExerciseServices extends Exercises {
     public function getStudentExercises($subjectId,$courseId,$studentId){
         try {
             $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE `subject_id`= :subject_id AND `course_id`= :course_id AND `student_id`= :student_id ");
-            
             $data = [
                 'subject_id' => $subjectId,
                 'course_id' => $courseId,
@@ -81,6 +80,23 @@ class ExerciseServices extends Exercises {
         } catch(Exception $e) {
              error_log($e->getMessage());
              return [];
+        }
+    }
+    public function getVoteExercise($id){
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE `id`= :id");
+            $data = [
+                ':id' => $id
+            ];
+            if($stmt->execute($data)){
+                $result = $stmt->fetch();
+                return $result;
+            } else {
+                return null;
+            }
+        } catch(Exception $e) {
+             error_log($e->getMessage());
+             return null;
         }
     }
     public function upload($input){
@@ -98,7 +114,6 @@ class ExerciseServices extends Exercises {
             }
 
         } catch(Exception $e){
-            // logError
             error_log($e->getMessage());
             return false;
         }

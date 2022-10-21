@@ -5,19 +5,20 @@ include_once dirname(dirname(__DIR__))."./app/Services/StudentServices.php";
 $user = new StudentServices();
 
 if($user->role('student')) {
-$subject = $user->getCurrentSubject();
-if (isset($_POST['save'])) {
-    if(!empty($_FILES)) {
-        $data = $user->createExercise();
-    }
-    if (!empty($data)) {
-        $message = 'Submit successfully!';
-    } else {
-        $error = 'Submit failed!';
-    }
-}
-}
+    $subject = $user->getCurrentSubject();
 
+    if (isset($_POST['save'])) {
+        if(!empty($_FILES)) {
+            $data = $user->createExercise();
+        }
+        if (!empty($data)) {
+            $message = 'Submit successfully!';
+            header("Location: subject-details.php?subject_id=".$subject['id']."&course_id=".$_SESSION['course_id']);
+        } else {
+            $error = 'Submit failed!';
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,6 +73,7 @@ if (isset($_POST['save'])) {
                                     <div class="col-md-12">
                                         <div class="md-form mb-0">
                                             <label for="name" class="">Name</label>
+                                            <input type="hidden" id="course_id" name="course_id" value="<?=$_SESSION['course_id'] ?>" class="form-control" required="required">
                                             <input type="text" id="name" name="name" class="form-control" required="required">
                                         </div>
                                     </div>

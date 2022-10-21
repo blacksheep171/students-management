@@ -15,6 +15,8 @@ class Exercises {
     public $studentId;
     public $subjectId;
     public $commentId;
+    public $userId;
+    public $status;
     public $createdAt;
     public $updatedAt;
 
@@ -72,11 +74,23 @@ class Exercises {
     public function getSubjectId() {
         return $this->subjectId;
     }
-    public function setComment($commentId) {
+    public function setCommentId($commentId) {
         $this->commentId = $commentId;
     }
-    public function getComment() {
+    public function getCommentId() {
         return $this->commentId;
+    }
+    public function setUserId($userId) {
+        $this->userId = $userId;
+    }
+    public function getUserId() {
+        return $this->userId;
+    }
+    public function setVoteStatus($status) {
+        $this->status = $status;
+    }
+    public function getVoteStatus() {
+        return $this->status;
     }
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;

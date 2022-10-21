@@ -6,8 +6,8 @@ include_once dirname(dirname(__DIR__))."./app/Services/StudentServices.php";
 $user = new StudentServices();
 
 if($user->role('student')) {
+    $permission = $user->permission();
     $data = [];
-
     if(!empty($user->getCurrentSubject())){
         $data = $user->getCurrentSubject();
         $students = $user->getStudentList();
@@ -29,6 +29,7 @@ if($user->role('student')) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
     <title>Subject Details</title>
 </head>
@@ -50,7 +51,7 @@ if($user->role('student')) {
                 <div class="wrap__content">
                     <div class="subject__list">
                         <div class="col-3">
-                            <a href='add-exercise.php?subject_id=<?=$data['subject_id']?>&course_id=<?=$data['course_id']?>' class='btn btn-primary btn-sm'>Submit Your Exercises</a>
+                            <a id="add_exercise" href='add-exercise.php?subject_id=<?=$data['subject_id']?>&course_id=<?=$data['course_id']?>' class='btn btn-primary btn-sm'>Submit Your Exercises</a>
                         </div>
                     <div class="col-12">
                     <table class="table table-bordered table-striped" style="margin-top:20px;">
@@ -86,3 +87,14 @@ if($user->role('student')) {
     <?php include  dirname(__DIR__)."/footer.php"?>
 </body>
 </html>
+<script>
+$(document).ready(function() {
+    var courseStatus = <?= $permission?>;
+    $('#add_exercise').click(function(e) {
+        if(courseStatus == 0) {
+            e.preventDefault();
+            alert("You don't have permission.");
+        }
+    });
+});
+</script>

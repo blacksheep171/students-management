@@ -5,12 +5,15 @@ include dirname(__DIR__)."./Services/Services.php";
 class StudentServices  extends Services {
     protected $user;
     protected $subject;
+    protected $course;
     protected $exercise;
     protected $comment;
 
     public function __construct()
     {   
+        
         $this->user = new UserServices();
+        $this->course = new CourseServices();
         $this->exercise = new ExerciseServices();
         $this->comment = new CommentServices();
         $this->subject = new SubjectServices();
@@ -48,7 +51,10 @@ class StudentServices  extends Services {
             return [];
         }
     }
-    
+    public function getCourse(){
+        $data = $this->course->get($this->getCurrentParams('id'));
+        return $data;
+    }
     public function getStudentSubjects(){
         $user = $this->getCurrentUser();
         $data = $this->user->getStudents($user['id'],$this->getCurrentParams('course_id'));

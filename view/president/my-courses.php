@@ -50,24 +50,27 @@ if($president->role('president')) {
                     <th>ID</th>
                     <th>Course</th>
                     <th>Status</th>
-                    <th>Action</th>
                 </thead>
                 <tbody>
                     <?php
                         if(!empty($data)) {
                             foreach($data as $row){
-                               if($row['status'] == 0) {
-                                 $status = 'Disable';
-                               } else if($row['status'] == 1){
-                                $status = 'Enable';
-                               }
-                    ?>
+                        ?>
                         <tr>
                             <td><?= $row['id']?></td>
                             <td><?= $row['name']?></td>
-                            <td><?= $status ?></td>
-                            <td>
-                                <a href='<?=BASE_PATH?>view/president/edit-course.php?id=<?=$row['id']?>' class='btn btn-success btn-sm'>Change Status</a>
+                            <td id="status<?=$row['id']?>" >
+                                <?php
+                                if($row['status'] == 0) {
+                                ?>
+                                <button type="button" onclick="changeStatus(<?=$row['id']?>)" class="btn btn-danger">Disable</button>
+                                <?php
+                                } else if ($row['status'] == 1) {
+                                ?>
+                                <button type="button" onclick="changeStatus(<?=$row['id']?>)" class="btn btn-success">Enable</button>
+                                <?php
+                                }
+                                ?>
                             </td>
                         </tr>
                     <?php
@@ -86,7 +89,18 @@ if($president->role('president')) {
     <?php include dirname(__DIR__)."/footer.php"?>
 </body>
 </html>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
-    
+    function changeStatus(id) {
+        $(document).ready(function() {
+            $.ajax({
+                type: "POST",
+                url: "status.php",
+                data: {id:id},
+                success: function(data){
+                    $("#status" + id).html(data);
+                }
+            });
+        });
+    }
 </script>

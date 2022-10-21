@@ -2,14 +2,14 @@
 session_start();
 include_once  dirname(dirname(__DIR__))."/app/Services/TeacherServices.php";
 
-$data = new TeacherServices();
+$user = new TeacherServices();
 
-if($data->role('teacher')) {
-$students = $data->getAllStudents();
-$subject = $data->getCurrentSubject();
+if($user->role('teacher')) {
+$students = $user->getAllStudents();
+$subject = $user->getCurrentSubject();
 
 if (isset($_POST['save'])) {
-    $data->updateSubject();
+    $data = $user->updateSubject();
     if($data) {
         $message = 'Subject has been updated!';
     } else {
@@ -32,6 +32,7 @@ if (isset($_POST['save'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
     <title>Teacher Management</title>
 </head>
@@ -68,7 +69,7 @@ if (isset($_POST['save'])) {
                             <?php if(isset($message)){
                                 echo '<div class="alert alert-success" role="alert">'.$message.'</div>';
                             } else if(isset($error)){
-                                echo '<div class="alert alert-success" role="alert">'.$error.'</div>';
+                                echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
                             }
                             ?>
                                 <div class="row subject__content">

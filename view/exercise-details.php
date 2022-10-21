@@ -26,6 +26,7 @@ if($user->isSession()) {
     <link rel="stylesheet/less" type="text/css" href="<?=BASE_PATH?>./public/css/sources/styles.less"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
@@ -33,11 +34,44 @@ if($user->isSession()) {
 </head>
 <body>
 <style>
-    .subject__list {
-        display: block;
-        padding: 40px 60px;
-        margin: 0 auto;
-    }
+.subject__list {
+    display: block;
+    padding: 40px 60px;
+    margin: 0 auto;
+}
+.posts-wrapper {
+width: 50%;
+margin: 20px auto;
+border: 1px solid #eee;
+}
+.post {
+  width: 90%;
+  margin: 20px auto;
+  padding: 10px 5px 0px 5px;
+  border: 1px solid green;
+}
+.post-info {
+  margin: 10px auto 0px;
+  padding: 5px;
+}
+.fa {
+  font-size: 3.2em;
+}
+.fa-thumbs-down, .fa-thumbs-o-down {
+  transform:rotateY(180deg);
+}
+.logged_in_user {
+  padding: 10px 30px 0px;
+}
+.fa-thumbs-up, .fa-thumbs-o-up {
+  color: blue;
+}
+.fa-thumbs-down, .fa-thumbs-o-down {
+  color: black;
+}
+/* i {
+    color: blue;
+} */
 </style>
 
 <div class="wrap wrap-fluid">
@@ -48,6 +82,7 @@ if($user->isSession()) {
         </div>
         <div class="wrap__content">
             <div class="subject__list">
+            <div class="col-12 d-flex justify-content-end"><button id="back_btn" class="btn btn-outline-dark"  name="action">Back</button></div>
                 <form class="exercise__details" action="" method="GET">
                 <div class="col-12">
                     <input type="hidden" id="id" name="course_id" value="<?= $_SESSION['course_id']?>" class="form-control" placeholder="Id">
@@ -58,6 +93,7 @@ if($user->isSession()) {
                             <th>Summary</th>
                             <th class="col-4">Content</th>
                             <th class="col-3">File Name</th>
+                            <th class="col-3">Status</th>
                             <th class="col-2">Note</th>
                         </thead>
                         <tbody>
@@ -72,8 +108,34 @@ if($user->isSession()) {
                                     <td><?= $row['content'] ?></td>
                                     <td><?= $row['file_name'] ?></td>
                                     <td>
-                                        <a href='vote-exercise.php?exercise_id=<?=$row['_id']?>' class='btn btn-outline-danger btn-sm'>Vote</a>
-                                        <a href='comment-exercises.php?exercise_id=<?=$row['id']?>' class='btn btn-outline-success btn-sm'>Comment</a>
+                                        <i id="like"
+                                        <?php
+                                        if (($user->userLike($row['id']))) {
+                                        ?>
+                                            class="fa fa-thumbs-up like-btn"
+                                        <?php 
+                                        } else {
+                                        ?>
+                                            class="fa fa-thumbs-o-up like-btn"
+                                        <?php
+                                        }
+                                        ?>
+                                         data-id="<?= $row['id'] ?>"></i>
+                                         <span class="likes"><?php echo $user->getLikes($row['id']); ?></span>
+                                         &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i id="dislike"
+                                        <?php if ($user->userDisLike($row['id'])) {
+                                            ?>
+                                            class="fa fa-thumbs-down dislike-btn"
+                                        <?php } else { ?>
+                                            class="fa fa-thumbs-o-down dislike-btn"
+                                        <?php }?>
+                                        data-id="<?= $row['id'] ?>"></i>
+                                        <span class="dislikes"><?php echo $user->getDisLikes($row['id']); ?></span>
+                                        <!-- <input type="hidden" id="id" name="exercise_id" value="<?= $row['id']?>" class="form-control" placeholder="exercise_id"> -->
+                                    </td>
+                                    <td>
+                                        <a id="comment_id" href='comment-exercises.php?exercise_id=<?=$row['id']?>' class='btn btn-outline-success btn-sm'>Comment</a>
                                     <?php if($user->role('teacher')){
                                     ?>
                                         <a href='teacher/download-exercises.php?path=<?= $row['file_name'] ?>' class='btn btn-outline-primary btn-sm'>Download</a>
@@ -99,3 +161,104 @@ if($user->isSession()) {
     <?php include __DIR__."/footer.php"?>
 </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+  var courseStatus = 0;
+
+  $('.like-btn').on('click', function(e){
+    var exercise_id = $(this).data('id');
+    var data = [];
+    $clicked_btn = $(this);
+    if ($clicked_btn.hasClass('fa-thumbs-o-up')) {
+      action = 'like';
+    } else if($clicked_btn.hasClass('fa-thumbs-up')){
+    action = 'unLike';
+    }
+    if (courseStatus == 1) {
+      $.ajax({
+      url: '<?=BASE_PATH?>view/votes.php',
+      type: 'POST',
+      data: {
+        'action': action,
+        'exercise_id': exercise_id
+      },
+      success: function(data){
+          res = JSON.parse(data);
+        if (action == 'like') {
+          $clicked_btn.removeClass('fa-thumbs-o-up');
+          $clicked_btn.addClass('fa-thumbs-up');
+        } else if(action == 'unLike') {
+          $clicked_btn.removeClass('fa-thumbs-up');
+          $clicked_btn.addClass('fa-thumbs-o-up');
+        }
+        console.log(res);
+        // display the number of likes and dislikes
+        $clicked_btn.siblings('span.likes').text(res.likes);
+        $clicked_btn.siblings('span.dislikes').text(res.dislikes);
+
+        // change button styling of the other button if user is reacting the second time to post
+        $clicked_btn.siblings('i.fa-thumbs-down').removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+      }
+    });		
+    } else {
+      e.preventDefault();
+      alert("You don't have permission to like this exercise!");
+    }
+
+  });
+
+  $('.dislike-btn').on('click', function(e){
+    var exercise_id = $(this).data('id');
+    $clicked_btn = $(this);
+    if ($clicked_btn.hasClass('fa-thumbs-o-down')) {
+      action = 'disLike';
+    } else if($clicked_btn.hasClass('fa-thumbs-down')){
+      action = 'unDisLike';
+    }
+    if (courseStatus == 1) {
+      $.ajax({
+        url: '<?=BASE_PATH?>view/votes.php',
+        type: 'POST',
+        data: {
+          'action': action,
+          'exercise_id': exercise_id
+        },
+        success: function(data){
+          res = JSON.parse(data);
+          if (action == 'disLike') {
+            $clicked_btn.removeClass('fa-thumbs-o-down');
+            $clicked_btn.addClass('fa-thumbs-down');
+          } else if(action == 'unDisLike') {
+            $clicked_btn.removeClass('fa-thumbs-down');
+            $clicked_btn.addClass('fa-thumbs-o-down');
+          }
+          console.log(res);
+          // display the number of likes and dislikes
+          $clicked_btn.siblings('span.likes').text(res.likes);
+          $clicked_btn.siblings('span.dislikes').text(res.dislikes);
+          
+          // change button styling of the other button if user is reacting the second time to post
+          $clicked_btn.siblings('i.fa-thumbs-up').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+        }
+      });	
+    } else {
+      e.preventDefault();
+      alert("You don't have permission to like this exercise!");
+    }
+  });
+
+
+  $("#back_btn").click(function (){
+    window.history.back();
+  });
+
+  if(courseStatus == 0) {
+    $("#comment_id").click(function(e){
+      e.preventDefault();
+      alert("You don't have permission to comment");
+    });
+  }
+});
+</script>

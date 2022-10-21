@@ -159,4 +159,135 @@ class UserServices extends Users {
             return [];
         }
     }
+
+    public function vote($input) {
+        try {
+            $sql ="INSERT INTO `votes` (`user_id`, `exercise_id`, `status`,`created_at`, `updated_at`) VALUES (:user_id, :exercise_id, :status, :created_at, :updated_at) ON DUPLICATE KEY UPDATE `status` = :status";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':user_id' => $input->getId(),
+                ':exercise_id' => $input->getExerciseId(),
+                ':status' => $input->getVoteStatus(),
+                ':created_at' => $input->getCreatedAt(),
+                ':updated_at' => $input->getUpdatedAt(),
+            ];
+
+            if($stmt->execute($data)){
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+    
+    public function unVote($input) {
+        try {
+            $sql ="DELETE FROM votes WHERE `user_id`= :user_id AND `exercise_id` = :exercise_id ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':user_id' => $input->getId(),
+                ':exercise_id' => $input->getExerciseId()
+            ];
+
+            if($stmt->execute($data)){
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public  function userLike($input){
+        try {
+            $sql =" SELECT * FROM votes WHERE `user_id` = :user_id AND `exercise_id` = :exercise_id AND `status` = :status ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':user_id' => $input->getId(),
+                ':exercise_id' => $input->getExerciseId(),
+                ':status' => 'like',
+            ];
+                if($stmt->execute($data)){
+                    $result = $stmt->fetch();
+                    if(!empty($result)) {
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public  function userDisLike($input){
+        try {
+            $sql =" SELECT * FROM votes WHERE `user_id` = :user_id AND `exercise_id` = :exercise_id AND `status` = :status ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':user_id' => $input->getId(),
+                ':exercise_id' => $input->getExerciseId(),
+                ':status' => 'disLike',
+            ];
+                if($stmt->execute($data)){
+                    $result = $stmt->fetch();
+                    if(!empty($result)) {
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public  function getLikes($id){
+        try {
+            $sql =" SELECT COUNT(*) FROM votes WHERE `exercise_id` = :exercise_id AND `status` = :status ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':exercise_id' => $id,
+                ':status' => 'like'
+            ];
+
+            if($stmt->execute($data)){
+               $count = $stmt->fetchColumn();
+                return $count;
+            } else {
+                return 0;
+            }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return 0;
+        }
+    }
+
+    public  function getDisLikes($id){
+        try {
+            $sql =" SELECT COUNT(*) FROM votes WHERE `exercise_id` = :exercise_id AND `status` = :status ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':exercise_id' => $id,
+                ':status' => 'disLike'
+            ];
+
+            if($stmt->execute($data)){
+                $count = $stmt->fetchColumn();
+                return $count;
+            } else {
+                return 0;
+            }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return 0;
+        }
+    }
 }

@@ -36,12 +36,16 @@ class PresidentServices  extends Services{
     }
     
     public function getCourse(){
+        $data = $this->course->get($this->getCurrentParams('id'));
+        return $data;
+    }
+    public function getCourses(){
         $data = $this->course->get($this->getCurrentId());
         return $data;
     }
-    public function changeStatus(){
-        $input = new CourseServices();
-        $input->setStatus($_POST['status']);
+    public function changeStatus(int $param){
+        $input = new CourseServices;
+        $input->setStatus($param);
         $input->setId($_POST['id']);
         $data = $this->course->update($input);
         return $data;

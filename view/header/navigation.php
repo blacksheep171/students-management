@@ -17,20 +17,16 @@
                 </ul>
             </li>
         <?php
-        } else if ($_SESSION['user']['role'] == 'teacher') {
+            } else if ($_SESSION['user']['role'] == 'teacher') {
         ?>
-            <li class="dropdown">
-                <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle template-menu-item" href="#">Subjects<span class="caret"></span></a>
-                <ul role="menu" class="dropdown-menu dropdown-menu-hover u-unstyled">
-                    <li><a href="<?=BASE_PATH?>view/courses-option.php" class="teacher-url">My Subjects</a></li>
-                    <li><a href="#" class="teacher-url">My Exercises</a></li>
-                </ul>
+             <li class="dropdown">
+                <a href="<?=BASE_PATH?>view/courses-option.php">Courses</a>
             </li>
         <?php
-        } else if ($_SESSION['user']['role'] == 'student') {
+            } else if ($_SESSION['user']['role'] == 'student') {
         ?>
             <li class="dropdown">
-                <a href="<?=BASE_PATH?>view/courses-option.php">My Subjects</a>
+                <a href="<?=BASE_PATH?>view/courses-option.php">Courses</a>
             </li>
     <?php
         }

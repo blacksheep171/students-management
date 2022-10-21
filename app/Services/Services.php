@@ -25,8 +25,8 @@ class Services {
 
     public function getCurrentId(){
         $id = 0;
-        if(isset($_GET['id'])){
-             $id = $_GET['id'];
+        if(isset($_REQUEST['id'])){
+             $id = $_REQUEST['id'];
         } 
         return $id;
     }
@@ -72,7 +72,6 @@ class Services {
         $user->setName($_POST['name']);
         $user->setEmail( $_POST['email']);
         $user->setPassword($_POST['password']);
-        // $passwordConfirm = $_POST['password_confirm'];
         $user->setRole($_POST['role']);
         $user->setCreatedAt(date('Y-m-d H:i:s'));
         $user->setUpdatedAt(date('Y-m-d H:i:s'));
@@ -147,9 +146,119 @@ class Services {
             return [];
         }
     }
+    public function getVoteExercise($id){
+        $user = $this->getCurrentUser();
+        $data = $this->exercise->getVoteExercise($id);
+        if(!empty($data)){
+            return $data;
+        } else {
+            return [];
+        }
+    }
 
     public function getCommentList(){
-        $data = $this->comment->index();
+        $data = $this->comment->getExerciseComments($this->getCurrentParams('exercise_id'));
+        if(!empty($data)){
             return $data;
+        } else {
+            return null;
+        }
+    }
+
+    public function vote($status,$id) {
+        $input = new UserServices();
+        
+        $input->setId($_SESSION['user']['id']);
+        $input->setExerciseId($id);
+        $input->setVoteStatus($status);
+        $input->setCreatedAt(date('Y-m-d H:i:s'));
+        $input->setUpdatedAt(date('Y-m-d H:i:s'));
+        
+        $data = $this->user->vote($input);
+
+        if(($data)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function unVote($id) {
+        $input = new UserServices();
+        
+        $input->setId($_SESSION['user']['id']);
+        $input->setExerciseId($id);
+        
+        $data = $this->user->unVote($input);
+
+        if(($data)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function userLike($id){
+        $input = new UserServices();
+        
+        $input->setId($_SESSION['user']['id']);
+        $input->setExerciseId($id);
+        $data = $this->user->userLike($input);
+
+        if($data) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function userDisLike($id){
+        $input = new UserServices();
+        
+        $input->setId($_SESSION['user']['id']);
+        $input->setExerciseId($id);
+
+        $data = $this->user->userDisLike($input);
+
+        if($data) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getLikes($id){;
+        $data = $this->user->getLikes($id);
+        if($data) {
+            return $data;
+        } else {
+            return $data = 0;
+        }
+    }
+
+    public function getDisLikes($id){;
+        $data = $this->user->getDisLikes($id);
+        if($data) {
+            return $data;
+        } else {
+            return $data = 0;
+        }
+    }
+    
+    public function permission(){
+        $courseId = $_SESSION['course_id'];
+        // return (int)$courseId;
+        // echo get_class($this->course);
+        $data = $this->course->get($courseId);
+            if(!empty($data)){
+                $status = $data['status'];
+            if($status == 1){
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+  
     }
 }

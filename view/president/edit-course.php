@@ -7,14 +7,6 @@ $president = new PresidentServices();
 
 if($president->role('president')) {
     $data = $president->getCourse();
-    if(isset($_POST['save'])){
-        $result = $president->changeStatus();
-        if(!empty($result)){
-            header("Location:my-courses.php");
-        } else {
-            echo '<div class="alert alert-danger" role="alert">Failed</div>';
-        }
-    }
 }
 
 ?>

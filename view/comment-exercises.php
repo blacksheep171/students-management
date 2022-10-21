@@ -28,7 +28,7 @@ if($user->isSession()) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
-    <title>Student Management</title>
+    <title>Subject List</title>
 </head>
 <body>
 <style>
@@ -48,13 +48,12 @@ if($user->isSession()) {
         <div class="wrap__content">
             <div class="subject__list">
             <div class="col-3">
-                <a href='create-comments.php?exercise_id=<?=$data[0]['exercise_id']?>' class='btn btn-primary btn-sm'>Add Comments</a>
+                <a href='create-comments.php?exercise_id=<?=$user->getCurrentParams('exercise_id')?>' class='btn btn-primary btn-sm'>Add Comments</a>
             </div>
             <div class="col-12">
             <input type="hidden" id="id" name="id" value="<?= $course['id']?>" class="form-control" placeholder="Id">
             <table class="table table-bordered table-striped" style="margin-top:20px;">
                 <thead>
-                    <th>ID</th>
                     <th>Username</th>
                     <th>Content</th>
                     <th>Date</th>
@@ -65,13 +64,9 @@ if($user->isSession()) {
                         foreach ($data as $row) {
                     ?>
                         <tr>
-                            <td><?= $row['id'] ?></td>
                             <td><?= $row['user_name'] ?></td>
                             <td><?= $row['content'] ?></td>
                             <td><?= $row['created_at'] ?></td>
-                            <!-- <td>
-                                <a href='subject-details.php?subject_id=<?=$row['subject_id']?>&course_id=<?=$_SESSION['course_id']?>' class='btn btn-link btn-sm'>Details</a>
-                            </td> -->
                         </tr>
                     <?php
                         }

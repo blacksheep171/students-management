@@ -37,6 +37,28 @@ class CommentServices extends Comments {
              return $data = [];
         }
     }
+    public function getExerciseComments($id){
+        try {
+            $sql = "SELECT * FROM comment_list WHERE `exercise_id` = :exercise_id";
+            $stmt = $this->connection->prepare($sql);
+            
+            $data = [
+                ':exercise_id' => $id,
+            ];
+            if($stmt->execute($data)){
+               $result = $stmt->fetchAll();
+               if(!empty($result)){
+                return $result;
+               }
+            } else {
+                $result = [];
+            }
+            return $result;
+        } catch(Exception $e) {
+             error_log($e->getMessage());
+             return $result = [];
+        }
+    }
 
     public function create($input){
         try {

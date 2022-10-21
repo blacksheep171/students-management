@@ -8,10 +8,12 @@ class TeacherServices  extends Services
     protected $exercise;
     protected $comment;
     protected $user;
+    protected $course;
 
     public function __construct()
     {
         $this->user = new UserServices();
+        $this->course = new CourseServices();
         $this->exercise = new ExerciseServices();
         $this->comment = new CommentServices();
         $this->subject = new SubjectServices();
@@ -35,9 +37,12 @@ class TeacherServices  extends Services
         $input->setContent($_POST['content']);
         $input->setStudentId($_POST['student_id']);
         $input->setUpdatedAt(date('Y-m-d H:i:s'));
-
-        $data = $this->subject->updateSubject($input);
-        if ($data) {
+        if($this->validateStudents()){
+            $data = $this->subject->updateSubject($input);
+        } else {
+            $data = [];
+        }
+        if (!empty($data)) {
             return true;
         } else {
             return false;
@@ -72,5 +77,16 @@ class TeacherServices  extends Services
             }
         }
         return $checked;
+    }
+
+    public function validateStudents(){
+        $studentId = $_POST['student_id'];
+        $courseId = $_SESSION['course_id'];
+        $students = $this->user->getStudents($studentId,$courseId);
+        if(!$students){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
