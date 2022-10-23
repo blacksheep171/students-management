@@ -1,10 +1,13 @@
 <?php
 session_start();
-include_once  dirname(__DIR__)."./app/Services/Services.php";
+include_once  dirname(__DIR__)."./app/Services/ReportServices.php";
 
-$user = new Services();
+$user = new ReportServices();
 
     $data = $user->list();
+    $list = $user->getSubjectIdList();
+    $mostLikesSubject = $user->getMostRatingSubject();
+    $mostCommentsSubject = $user->getMostCommentsSubject();
 
 ?>
 <!DOCTYPE html>
@@ -63,6 +66,74 @@ $user = new Services();
                                     </tr>
                                 <?php
                                     }
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrap__content">
+                <div class="subject__likes">
+                <h2 class="h1-responsive font-weight-bold text-center my-4">Rating Subject</h2>
+                    <div class="col-12">
+                        <table class="table table-bordered table-striped" style="margin-top:20px;">
+                            <thead>
+                                <th>ID</th>
+                                <th>Course</th>
+                                <th>Subject</th>
+                                <th>Teacher</th>
+                                <th>Rating</th>
+                                <th>Comments</th>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (!empty($mostLikesSubject)) {
+                                ?>
+                                    <tr>
+                                        <td><?= $mostLikesSubject['id'] ?></td>
+                                        <td><?= $mostLikesSubject['name'] ?></td>
+                                        <td><?= $mostLikesSubject['title'] ?></td>
+                                        <td><?= $user->getTeacherName($mostLikesSubject['teacher_id']) ?></td>
+                                        <td><?= $user->getCountLikesSubject($mostLikesSubject['id']) ?></td>
+                                        <td><?= $user->getCountCommentsSubject($mostLikesSubject['id']) ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrap__content">
+                <div class="subject__comments">
+                <h2 class="h1-responsive font-weight-bold text-center my-4">Most Comment Subject</h2>
+                    <div class="col-12">
+                        <table class="table table-bordered table-striped" style="margin-top:20px;">
+                            <thead>
+                                <th>ID</th>
+                                <th>Course</th>
+                                <th>Subject</th>
+                                <th>Teacher</th>
+                                <th>Rating</th>
+                                <th>Comments</th>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (!empty($mostCommentsSubject)) {
+                                ?>
+                                    <tr>
+                                        <td><?= $mostCommentsSubject['id'] ?></td>
+                                        <td><?= $mostCommentsSubject['name'] ?></td>
+                                        <td><?= $mostCommentsSubject['title'] ?></td>
+                                        <td><?= $user->getTeacherName($mostCommentsSubject['teacher_id']) ?></td>
+                                        <td><?= $user->getCountLikesSubject($mostCommentsSubject['id']) ?></td>
+                                        <td><?= $user->getCountCommentsSubject($mostCommentsSubject['id']) ?></td>
+                                    </tr>
+                                <?php
                                 }
                                 ?>
                             </tbody>

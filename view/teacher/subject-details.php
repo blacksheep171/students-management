@@ -51,7 +51,7 @@ if($user->role('teacher')) {
         <div class="wrap__content">
             <div class="subject__list">
                 <div class="col-3">
-                <a id="add_student" href='edit-subjects.php?subject_id=<?=$data['subject_id']?>&course_id=<?=$data['course_id']?>' class='btn btn-primary btn-sm'>Add Student</a>
+                <a id="add_student" data-type="2" href='edit-subjects.php?subject_id=<?=$data['subject_id']?>&course_id=<?=$data['course_id']?>' class='btn btn-primary btn-sm'>Add Student</a>
                 </div>
             <div class="col-12">
             <table class="table table-bordered table-striped" style="margin-top:20px;">
@@ -96,5 +96,6 @@ $(document).ready(function() {
         }
     });
 });
+
 </script>
 </html>

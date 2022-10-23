@@ -6,7 +6,7 @@ include_once dirname(__DIR__)."./app/Services/Services.php";
 
 $user = new Services();
 
-if($user->isSession()) {
+if($user->loggedIn()) {
     $permission = $user->permission();
     $data = [];
     if(!empty($user->getExercises())){
@@ -30,6 +30,7 @@ if($user->isSession()) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
     <title>Exercise Details</title>
 </head>
@@ -115,7 +116,6 @@ if($user->isSession()) {
                                         <?php }?>
                                         data-id="<?= $row['id'] ?>"></i>
                                         <span class="dislikes"><?php echo $user->getDisLikes($row['id']); ?></span>
-                                        <!-- <input type="hidden" id="id" name="exercise_id" value="<?= $row['id']?>" class="form-control" placeholder="exercise_id"> -->
                                     </td>
                                     <td>
                                         <a id="comment_id" href='comment-exercises.php?exercise_id=<?=$row['id']?>' class='btn btn-outline-success btn-sm'>Comment</a>
@@ -144,7 +144,6 @@ if($user->isSession()) {
     <?php include __DIR__."/footer.php"?>
 </body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 
 $(document).ready(function(){
@@ -237,11 +236,5 @@ $(document).ready(function(){
     window.history.back();
   });
 
-    $("#comment_id").click(function(e){
-      if(courseStatus == 0) {
-        e.preventDefault();
-        alert("You don't have permission to comment");
-      }
-    });
 });
 </script>

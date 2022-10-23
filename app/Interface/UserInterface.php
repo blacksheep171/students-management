@@ -1,16 +1,10 @@
 <?php 
 
 interface UserInterface {
-        public function getSubjects();
 
-        public function getAllVote();
+    public function getSubjects();
 
-        public function getAllComment();    
-    // public function create();
+    public function getMostRatingSubject();
 
-    // public function get();
-
-    // public function update();
-
-    // public function delete();
+    public function getMostCommentsSubject();
 }

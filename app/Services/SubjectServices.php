@@ -172,4 +172,64 @@ class SubjectServices extends Subjects {
             return false;
         }
     }
+
+    public function getNumberOfLikes($id,$courseId){
+        try{
+            $sql = "SELECT COUNT(*) FROM exercise_list WHERE subject_id = :subject_id AND course_id = :course_id AND vote_status = :vote_status ";  
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':subject_id' => $id,
+                ':course_id' => $courseId,
+                ':vote_status' => "like",
+            ];
+            $stmt->execute($data);
+            $result = $stmt->fetch(PDO::FETCH_COLUMN);
+            if(!empty($result)) {
+                return $result;
+            } else {
+                return $result = 0;
+            }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return [];
+        }
+    }
+
+    public function getNumberOfComments($id,$courseId){
+        try{
+            $sql = "SELECT COUNT(*) FROM comment_list WHERE subject_id = :subject_id AND course_id = :course_id";  
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':subject_id' => $id,
+                ':course_id' => $courseId,
+            ];
+            $stmt->execute($data);
+            $result = $stmt->fetch(PDO::FETCH_COLUMN);
+            if(!empty($result)) {
+                return $result;
+            } else {
+                return $result = 0;
+            }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return [];
+        }
+    }
+    
+     public function getSubjectIdList() {
+        try{
+            $sql = "SELECT DISTINCT(subject_id) FROM exercise_list";  
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            if(!empty($result)) {
+                return $result;
+            } else {
+                return $result = [];
+            }
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            return [];
+        }
+     }
 }

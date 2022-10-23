@@ -41,7 +41,7 @@ class Services
         return $params;
     }
 
-    public function isSession()
+    public function loggedIn()
     {
         if (isset($_SESSION['user'])) {
             return true;
@@ -248,7 +248,7 @@ class Services
     }
 
     public function getLikes($id)
-    {;
+    {
         $data = $this->user->getLikes($id);
         if ($data) {
             return $data;
@@ -283,5 +283,22 @@ class Services
         } else {
             return 0;
         }
+    }
+
+    public function getCountLikesSubject($id){
+        $courseId = $_SESSION['course_id'];
+        $data = null;
+        if($courseId){
+            $data = $this->subject->getNumberOfLikes($id,$courseId);
+        }
+        return $data;
+    }
+    public function getCountCommentsSubject($id){
+        $courseId = $_SESSION['course_id'];
+        $data = null;
+        if($courseId){
+            $data = $this->subject->getNumberOfComments($id,$courseId);
+        }
+        return $data;
     }
 }

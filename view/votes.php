@@ -4,7 +4,7 @@ include_once dirname(__DIR__)."./app/Services/Services.php";
 
 $user = new Services();
 
-if($user->isSession()) {
+if($user->loggedIn()) {
             $exerciseId = $_POST['exercise_id'] ?? 0;
             $status = $_POST['status'] ?? false;
             $action = $_POST['action'] ?? false;
