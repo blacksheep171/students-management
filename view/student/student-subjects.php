@@ -28,20 +28,13 @@ if($user->role('student')) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
-    <title>Student Management</title>
+    <title>Student Subjects</title>
 </head>
 <body>
-<style>
-    .subject__list {
-        display: block;
-        padding: 40px 60px;
-        margin: 0 auto;
-    }
-</style>
 
-<div class="wrap wrap-fluid">
+<div class="wrap wrap-fluid student">
     <?php include dirname(__DIR__)."/header.php" ?>
-    <div class="wrap__inner">
+    <div class="wrap__inner student__subjects">
         <div class="wrap__title">
             <h1>My Subject List</h1>
         </div>

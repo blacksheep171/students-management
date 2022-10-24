@@ -107,8 +107,12 @@ class Services
     }
 
     public function list()
-    {
-        $data = $this->subject->index();
+    {   
+        $courseId = 2;
+        if(isset($_SESSION['course_id'])){
+            $courseId = $_SESSION['course_id'];
+        }
+        $data = $this->subject->getCurrentCourseSubjects($courseId);
         if (!empty($data)) {
             return $data;
         } else {
@@ -286,7 +290,10 @@ class Services
     }
 
     public function getCountLikesSubject($id){
-        $courseId = $_SESSION['course_id'];
+        $courseId = 2;
+        if(isset($_SESSION['course_id'])){
+            $courseId = $_SESSION['course_id'];
+        }
         $data = null;
         if($courseId){
             $data = $this->subject->getNumberOfLikes($id,$courseId);
@@ -294,7 +301,10 @@ class Services
         return $data;
     }
     public function getCountCommentsSubject($id){
-        $courseId = $_SESSION['course_id'];
+        $courseId = 2;
+        if(isset($_SESSION['course_id'])){
+            $courseId = $_SESSION['course_id'];
+        }
         $data = null;
         if($courseId){
             $data = $this->subject->getNumberOfComments($id,$courseId);

@@ -270,50 +270,5 @@ ul {
     display: block;
     padding: 10px 15px;
 }
-/**register**/
-.signup-form {
-   width: 450px;
-   margin: 0 auto;
-   padding: 30px 0;
-   font-size: 15px;
-}
-.signup-form form {
-   color: #999;
-   border-radius: 3px;
-   margin-bottom: 15px;
-   background: #f2f3f7;
-   box-shadow: 0px 2px 2px rgb(0 0 0 / 30%);
-   padding: 30px;
-}
-.signup-form h2 {
-   color: #636363;
-   margin: 0 0 15px;
-   position: relative;
-   text-align: center;
-}
-.h2, h2 {
-   font-size: 2rem;
-}
-.signup-form .hint-text {
-   color: #999;
-   margin-bottom: 30px;
-   text-align: center;
-}
-.signup-form .form-group {
-   margin-bottom: 20px;
-}
-.row {
-   display: -ms-flexbox;
-   display: flex;
-   -ms-flex-wrap: wrap;
-   flex-wrap: wrap;
-   margin-right: -15px;
-   margin-left: -15px;
-}
 
-.wrap__inner {
-   display: block;
-   padding: 30px 40px;
-   margin: 0 auto;
-}
 

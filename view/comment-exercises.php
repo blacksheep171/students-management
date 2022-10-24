@@ -33,17 +33,10 @@ if($user->loggedIn()) {
     <title>Subject List</title>
 </head>
 <body>
-<style>
-    .subject__list {
-        display: block;
-        padding: 40px 60px;
-        margin: 0 auto;
-    }
-</style>
 
-<div class="wrap wrap-fluid">
+<div class="wrap wrap-fluid exercise">
     <?php include __DIR__."/header.php" ?>
-    <div class="wrap__inner">
+    <div class="wrap__inner exercise__comment">
         <div class="wrap__title">
             <h1>My Subject List</h1>
         </div>

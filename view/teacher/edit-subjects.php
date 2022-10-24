@@ -38,23 +38,10 @@ if (isset($_POST['save'])) {
 </head>
 
 <body>
-    <style>
-        section.mb-4.subject__register {
-            display: block;
-            max-width: 800px;
-            margin: 0 auto;
-        }
 
-        .col-md-12 {
-            margin-bottom: 20px;
-        }
-        .col-md-12.teacher__select {
-            margin-bottom: 80px;
-        }
-    </style>
-    <div class="wrap wrap-fluid">
+    <div class="wrap wrap-fluid teacher">
         <?php include dirname(__DIR__)."/header.php" ?>
-        <div class="wrap__inner">
+        <div class="wrap__inner teacher__edit-subject">
             <div class="wrap__title">
                 <h1>Course: <?= $subject['name']?></h1>
             </div>

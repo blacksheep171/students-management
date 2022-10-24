@@ -38,8 +38,11 @@ class ReportServices extends Services implements UserInterface {
     public function getMostRatingSubject(){
         $ids = $this->getSubjectIdList();
         $data = [];
+        $courseId = 2;
         if(!empty($ids)){
-            $courseId = $_SESSION['course_id'];
+            if(isset($_SESSION['course_id'])){
+                $courseId = $_SESSION['course_id'];
+            }
             if($courseId){
                 $offset = 0;
                 $subjectId = 0;
@@ -62,8 +65,11 @@ class ReportServices extends Services implements UserInterface {
     public function getMostCommentsSubject(){
         $ids = $this->getSubjectIdList();
         $data = [];
+        $courseId = 2;
         if(!empty($ids)){
-            $courseId = $_SESSION['course_id'];
+            if(isset($_SESSION['course_id'])){
+                $courseId = $_SESSION['course_id'];
+            }
             if($courseId){
                 $offset = 0;
                 $subjectId = 0;

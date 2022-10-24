@@ -32,25 +32,11 @@ if (isset($_POST['save'])) {
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
     <title>Courses Management</title>
 </head>
-
 <body>
-    <style>
-        section.mb-4.subject__register {
-            display: block;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .col-md-12 {
-            margin-bottom: 20px;
-        }
-        .col-md-12.teacher__select {
-            margin-bottom: 80px;
-        }
-    </style>
-    <div class="wrap wrap-fluid">
+    
+    <div class="wrap wrap-fluid exercise">
         <?php include  __DIR__."/header.php" ?>
-        <div class="wrap__inner">
+        <div class="wrap__inner exercise__create-comment">
             <div class="wrap__title">
                 <h1>Courses</h1>
             </div>

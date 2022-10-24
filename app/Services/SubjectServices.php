@@ -55,10 +55,9 @@ class SubjectServices extends Subjects {
             return false;
         }
     }
-
     public function index(){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects ORDER BY subject_id");
+            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects  ORDER BY subject_id");
             
             if($stmt->execute()){
                 $data = $stmt->fetchAll();
@@ -70,6 +69,25 @@ class SubjectServices extends Subjects {
              // logError
              error_log($e->getMessage());
              return $data = [];
+        }
+    }
+    public function getCurrentCourseSubjects($courseId){
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects WHERE course_id = :course_id ORDER BY subject_id");
+            
+            $data = [
+                'course_id' => $courseId,
+            ];
+            if($stmt->execute($data)){
+                $result = $stmt->fetchAll();
+            } else {
+                $result = [];
+            }
+            return $result;
+        } catch(Exception $e) {
+             // logError
+             error_log($e->getMessage());
+             return $result = [];
         }
     }
     

@@ -36,23 +36,9 @@ if (isset($_GET['save'])) {
 </head>
 
 <body>
-    <style>
-        section.mb-4.subject__register {
-            display: block;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .col-md-12 {
-            margin-bottom: 20px;
-        }
-        .col-md-12.teacher__select {
-            margin-bottom: 80px;
-        }
-    </style>
-    <div class="wrap wrap-fluid">
+    <div class="wrap wrap-fluid courses">
         <?php include  __DIR__."/header.php" ?>
-        <div class="wrap__inner">
+        <div class="wrap__inner courses__list">
             <div class="wrap__title">
                 <h1>Courses</h1>
             </div>

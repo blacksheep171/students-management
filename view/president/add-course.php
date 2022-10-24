@@ -34,19 +34,9 @@ if($president->role('president')) {
     <title>Student Management</title>
 </head>
 <body>
-<style>
-section.mb-4.subject__register {
-    display: block;
-    max-width: 800px;
-    margin: 0 auto;
-}
-.col-md-12 {
-    margin-bottom: 20px;
-}
-</style>
-<div class="wrap wrap-fluid">
+<div class="wrap wrap-fluid president">
     <?php include dirname(__DIR__)."/header.php"?>
-    <div class="wrap__inner">
+    <div class="wrap__inner president__add-course">
         <div class="wrap__title">
             <h1>Add Courses</h1>    
         </div>

@@ -34,17 +34,10 @@ if($user->role('teacher')) {
     <title>Subject Details</title>
 </head>
 <body>
-<style>
-    .subject__list {
-        display: block;
-        padding: 40px 60px;
-        margin: 0 auto;
-    }
-</style>
 
-<div class="wrap wrap-fluid">
+<div class="wrap wrap-fluid teacher">
     <?php include  dirname(__DIR__)."/header.php" ?>
-    <div class="wrap__inner">
+    <div class="wrap__inner teacher__subject-details">
         <div class="wrap__title">
             <h1>My Subject: <?=$data['title']?></h1>
         </div>

@@ -32,9 +32,9 @@ if($user->role('teacher')) {
     <title>Teacher Management</title>
 </head>
 <body>
-<div class="wrap wrap-fluid">
+<div class="wrap wrap-fluid teacher">
     <?php include dirname(__DIR__)."/header.php" ?>
-    <div class="wrap__inner">
+    <div class="wrap__inner teacher__subjects">
         <div class="wrap__title">
             <h1>My Subject List</h1>
         </div>

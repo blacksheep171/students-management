@@ -35,32 +35,10 @@ if($user->loggedIn()) {
     <title>Exercise Details</title>
 </head>
 <body>
-<style>
-.subject__list {
-    display: block;
-    padding: 40px 60px;
-    margin: 0 auto;
-}
-.fa {
-  font-size: 3.2em;
-}
-.fa-thumbs-down, .fa-thumbs-o-down {
-  transform:rotateY(180deg);
-}
-.logged_in_user {
-  padding: 10px 30px 0px;
-}
-.fa-thumbs-up, .fa-thumbs-o-up {
-  color: blue;
-}
-.fa-thumbs-down, .fa-thumbs-o-down {
-  color: black;
-}
-</style>
 
-<div class="wrap wrap-fluid">
+<div class="wrap wrap-fluid exercise">
     <?php include __DIR__."/header.php" ?>
-    <div class="wrap__inner">
+    <div class="wrap__inner exercise__details">
         <div class="wrap__title">
             <h1>Exercise Details</h1>
         </div>
@@ -175,7 +153,7 @@ $(document).ready(function(){
           $clicked_btn.removeClass('fa-thumbs-up');
           $clicked_btn.addClass('fa-thumbs-o-up');
         }
-        console.log(res);
+
         // display the number of likes and dislikes
         $clicked_btn.siblings('span.likes').text(res.likes);
         $clicked_btn.siblings('span.dislikes').text(res.dislikes);

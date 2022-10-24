@@ -37,7 +37,7 @@ $user = new ReportServices();
         }
     </style>
 
-    <div class="wrap wrap-fluid">
+    <div class="wrap wrap-fluid homepage">
         <?php include __DIR__."/header.php" ?>
         <div class="wrap__inner">
             <div class="wrap__title">

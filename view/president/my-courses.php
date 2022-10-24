@@ -28,17 +28,10 @@ if($president->role('president')) {
     <title>Student Management</title>
 </head>
 <body>
-<style>
-    .subject__list {
-        display: block;
-        padding: 40px 60px;
-        margin: 0 auto;
-    }
-</style>
-
-<div class="wrap wrap-fluid">
+    
+<div class="wrap wrap-fluid president">
     <?php include dirname(__DIR__)."/header.php" ?>
-    <div class="wrap__inner">
+    <div class="wrap__inner president__courses">
         <div class="wrap__title">
             <h1>My Courses List</h1>
         </div>

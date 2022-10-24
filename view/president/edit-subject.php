@@ -34,27 +34,13 @@ if (isset($_POST['save'])) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
-    <title>Student Management</title>
+    <title>Edit Subject</title>
 </head>
 
 <body>
-    <style>
-        section.mb-4.subject__register {
-            display: block;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .col-md-12 {
-            margin-bottom: 20px;
-        }
-        .col-md-12.teacher__select {
-            margin-bottom: 80px;
-        }
-    </style>
-    <div class="wrap wrap-fluid">
+    <div class="wrap wrap-fluid president">
         <?php include  dirname(__DIR__)."/header.php" ?>
-        <div class="wrap__inner">
+        <div class="wrap__inner president__edit-subject">
             <div class="wrap__title">
                 <h1>Add Teacher</h1>
             </div>
