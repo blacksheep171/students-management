@@ -85,6 +85,9 @@ a:active, a:hover {
     position: sticky;
     top: 0;
     z-index: 200;
+    .navbar-nav > li > a#my-account {
+        color: red;
+    }
 }
 
 /** logo **/
@@ -249,6 +252,7 @@ ul.logon-block.nav.navbar-nav.nav-list.navbar-right.u-unstyled {
     background-color: #fafafa;
     border-top: 1px solid #ccc;
     min-height: 46px;
+    margin-top:80px;
 }
 .footer-bottom {
     background-color: rgba(51,51,51,.95);
@@ -316,9 +320,12 @@ ul.logon-block.nav.navbar-nav.nav-list.navbar-right.u-unstyled {
 
 /** content styles **/
 .wrap__inner {
-    margin-bottom: 80px;
+    padding-top: 40px;
+    padding-bottom: 80px;
  }
-
+ .wrap__title {
+    margin-left: 80px;
+}
  /** login **/
  .login-form {
     width: 340px;
@@ -425,7 +432,24 @@ ul.logon-block.nav.navbar-nav.nav-list.navbar-right.u-unstyled {
         margin-bottom: 80px;
     }
 }
-
+/** icon styles **/
+.wrap__content {
+.fa {
+    font-size: 1.2em;
+  }
+  .fa-thumbs-down, .fa-thumbs-o-down {
+    transform:rotateY(180deg);
+  }
+  .logged_in_user {
+    padding: 10px 30px 0px;
+  }
+  .fa-thumbs-up, .fa-thumbs-o-up {
+    color: blue;
+  }
+  .fa-thumbs-down, .fa-thumbs-o-down {
+    color: black;
+  }
+}
 /** homepage ***/
     .subject__list {
         display: block;

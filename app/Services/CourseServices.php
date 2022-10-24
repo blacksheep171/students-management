@@ -56,7 +56,7 @@ class CourseServices extends Courses {
     }
     public function getAll(){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects");
+            $stmt = $this->connection->prepare("SELECT * FROM course_list");
             
             if($stmt->execute()){
                 return $stmt->fetchAll();

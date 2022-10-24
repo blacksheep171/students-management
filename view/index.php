@@ -6,8 +6,8 @@ $user = new ReportServices();
 
     $data = $user->list();
     $list = $user->getSubjectIdList();
-    $mostLikesSubject = $user->getMostRatingSubject();
-    $mostCommentsSubject = $user->getMostCommentsSubject();
+    $ratingSubject = $user->getMostRatingSubject();
+    $commentSubject = $user->getMostCommentsSubject();
 
 ?>
 <!DOCTYPE html>
@@ -23,6 +23,7 @@ $user = new ReportServices();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
     <title>Student Management</title>
@@ -44,8 +45,8 @@ $user = new ReportServices();
                 <h1>Welcome to Homepage</h1>
             </div>
             <div class="wrap__content">
-                <div class="subject__list">
-                    <div class="col-12">
+                <div class="subject__list d-flex flex-column align-items-center">
+                    <div class="col-10">
                         <table class="table table-bordered table-striped" style="margin-top:20px;">
                             <thead>
                                 <th>ID</th>
@@ -75,9 +76,9 @@ $user = new ReportServices();
             </div>
 
             <div class="wrap__content">
-                <div class="subject__likes">
+                <div class="subject__likes d-flex flex-column align-items-center">
                 <h2 class="h1-responsive font-weight-bold text-center my-4">Rating Subject</h2>
-                    <div class="col-12">
+                    <div class="col-10">
                         <table class="table table-bordered table-striped" style="margin-top:20px;">
                             <thead>
                                 <th>ID</th>
@@ -89,15 +90,15 @@ $user = new ReportServices();
                             </thead>
                             <tbody>
                                 <?php
-                                if (!empty($mostLikesSubject)) {
+                                if (!empty($ratingSubject)) {
                                 ?>
                                     <tr>
-                                        <td><?= $mostLikesSubject['id'] ?></td>
-                                        <td><?= $mostLikesSubject['name'] ?></td>
-                                        <td><?= $mostLikesSubject['title'] ?></td>
-                                        <td><?= $user->getTeacherName($mostLikesSubject['teacher_id']) ?></td>
-                                        <td><?= $user->getCountLikesSubject($mostLikesSubject['id']) ?></td>
-                                        <td><?= $user->getCountCommentsSubject($mostLikesSubject['id']) ?></td>
+                                        <td><?= $ratingSubject['id'] ?></td>
+                                        <td><?= $ratingSubject['name'] ?></td>
+                                        <td><?= $ratingSubject['title'] ?></td>
+                                        <td><?= $user->getTeacherName($ratingSubject['teacher_id']) ?></td>
+                                        <td><i id="like" class="fa fa-thumbs-up like-btn" data-id="<?= $ratingSubject['id'] ?>"></i><?= $user->getCountLikesSubject($ratingSubject['id']) ?></td>
+                                        <td><?= $user->getCountCommentsSubject($ratingSubject['id']) ?></td>
                                     </tr>
                                 <?php
                                 }
@@ -109,9 +110,9 @@ $user = new ReportServices();
             </div>
 
             <div class="wrap__content">
-                <div class="subject__comments">
+                <div class="subject__comments d-flex flex-column align-items-center">
                 <h2 class="h1-responsive font-weight-bold text-center my-4">Most Comment Subject</h2>
-                    <div class="col-12">
+                    <div class="col-10">
                         <table class="table table-bordered table-striped" style="margin-top:20px;">
                             <thead>
                                 <th>ID</th>
@@ -123,15 +124,15 @@ $user = new ReportServices();
                             </thead>
                             <tbody>
                                 <?php
-                                if (!empty($mostCommentsSubject)) {
+                                if (!empty($commentSubject)) {
                                 ?>
                                     <tr>
-                                        <td><?= $mostCommentsSubject['id'] ?></td>
-                                        <td><?= $mostCommentsSubject['name'] ?></td>
-                                        <td><?= $mostCommentsSubject['title'] ?></td>
-                                        <td><?= $user->getTeacherName($mostCommentsSubject['teacher_id']) ?></td>
-                                        <td><?= $user->getCountLikesSubject($mostCommentsSubject['id']) ?></td>
-                                        <td><?= $user->getCountCommentsSubject($mostCommentsSubject['id']) ?></td>
+                                        <td><?= $commentSubject['id'] ?></td>
+                                        <td><?= $commentSubject['name'] ?></td>
+                                        <td><?= $commentSubject['title'] ?></td>
+                                        <td><?= $user->getTeacherName($commentSubject['teacher_id']) ?></td>
+                                        <td><i id="like" class="fa fa-thumbs-up like-btn" data-id="<?= $commentSubject['id'] ?>"></i><?= $user->getCountLikesSubject($commentSubject['id']) ?></td>
+                                        <td><?= $user->getCountCommentsSubject($commentSubject['id']) ?></td>
                                     </tr>
                                 <?php
                                 }

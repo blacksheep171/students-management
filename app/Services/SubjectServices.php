@@ -57,7 +57,7 @@ class SubjectServices extends Subjects {
     }
     public function index(){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects  ORDER BY subject_id");
+            $stmt = $this->connection->prepare("SELECT * FROM course_list  ORDER BY subject_id");
             
             if($stmt->execute()){
                 $data = $stmt->fetchAll();
@@ -73,7 +73,7 @@ class SubjectServices extends Subjects {
     }
     public function getCurrentCourseSubjects($courseId){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects WHERE course_id = :course_id ORDER BY subject_id");
+            $stmt = $this->connection->prepare("SELECT * FROM course_list WHERE course_id = :course_id ORDER BY subject_id");
             
             $data = [
                 'course_id' => $courseId,
@@ -93,7 +93,7 @@ class SubjectServices extends Subjects {
     
     public function getTeacherSubjects($teacherId,$courseId){
         try{
-            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects WHERE (teacher_id = :teacher_id AND course_id = :course_id)");
+            $stmt = $this->connection->prepare("SELECT * FROM course_list WHERE (teacher_id = :teacher_id AND course_id = :course_id)");
             $data = [
                 ':teacher_id' => $teacherId,
                 ':course_id' => $courseId,
@@ -116,7 +116,7 @@ class SubjectServices extends Subjects {
     }
     public function get($id,$courseId){
         try{
-            $stmt = $this->connection->prepare("SELECT * FROM courses_subjects WHERE (id = :id AND course_id = :course_id)");
+            $stmt = $this->connection->prepare("SELECT * FROM course_list WHERE (id = :id AND course_id = :course_id)");
             $data = [
                 ':id' => $id,
                 ':course_id' => $courseId,

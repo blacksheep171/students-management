@@ -274,8 +274,6 @@ class Services
     public function permission()
     {
         $courseId = $_SESSION['course_id'];
-        // return (int)$courseId;
-        // echo get_class($this->course);
         $data = $this->course->get($courseId);
         if (!empty($data)) {
             $status = $data['status'];

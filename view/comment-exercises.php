@@ -38,7 +38,7 @@ if($user->loggedIn()) {
     <?php include __DIR__."/header.php" ?>
     <div class="wrap__inner exercise__comment">
         <div class="wrap__title">
-            <h1>My Subject List</h1>
+            <h1>My Comments</h1>
         </div>
         <div class="wrap__content">
             <div class="subject__list">
@@ -51,7 +51,7 @@ if($user->loggedIn()) {
                 <thead>
                     <th>Username</th>
                     <th>Content</th>
-                    <th>Date</th>
+                    <th>Time</th>
                 </thead>
                 <tbody>
                 <?php
@@ -61,7 +61,7 @@ if($user->loggedIn()) {
                         <tr>
                             <td><?= $row['user_name'] ?></td>
                             <td><?= $row['content'] ?></td>
-                            <td><?= $row['created_at'] ?></td>
+                            <td><?=  date("H:i:s d/m/Y", strtotime($row['created_at'])) ?></td>
                         </tr>
                     <?php
                         }

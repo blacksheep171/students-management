@@ -17,7 +17,7 @@ $user = new Services();
                 <?php
                 if($user->loggedIn()) {
                     ?>
-                    <li><a href='index.php'>Welcome <?=$_SESSION['user']['name']?></a></li><li class='divider-vertical'></li>
+                    <li><a id="my-account" href='index.php'>Welcome <?=$_SESSION['user']['name']?></a></li><li class='divider-vertical'></li>
                     <li><a href='<?=BASE_PATH?>view/logout.php'>Logout</a></li><li class='divider-vertical'></li> 
                 <?php
                 } else {
