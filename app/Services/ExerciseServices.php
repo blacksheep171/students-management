@@ -41,7 +41,7 @@ class ExerciseServices extends Exercises {
 
         } catch(Exception $e){
             // logError
-            error_log($e->getMessage());
+           Log::logError($e->getMessage());
             return false;
         }
     }
@@ -58,7 +58,7 @@ class ExerciseServices extends Exercises {
             return $data;
         } catch(Exception $e) {
              // logError
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
              return $data = [];
         }
     }
@@ -78,7 +78,7 @@ class ExerciseServices extends Exercises {
                 return [];
             }
         } catch(Exception $e) {
-             error_log($e->getMessage());
+            Log::logError($e->getMessage());
              return [];
         }
     }
@@ -95,8 +95,28 @@ class ExerciseServices extends Exercises {
                 return null;
             }
         } catch(Exception $e) {
-             error_log($e->getMessage());
+            Log::logError($e->getMessage());
              return null;
+        }
+    }
+    public function getNumberOfSubmitted($id,$courseId){
+        try{
+            $sql = "SELECT COUNT(*) FROM ".$this->table." WHERE subject_id = :subject_id AND course_id = :course_id";  
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':subject_id' => $id,
+                ':course_id' => $courseId,
+            ];
+            $stmt->execute($data);
+            $result = $stmt->fetch(PDO::FETCH_COLUMN);
+            if(!empty($result)) {
+                return $result;
+            } else {
+                return $result = 0;
+            }
+        } catch(Exception $e){
+           Log::logError($e->getMessage());
+            return [];
         }
     }
     public function upload($input){
@@ -114,7 +134,7 @@ class ExerciseServices extends Exercises {
             }
 
         } catch(Exception $e){
-            error_log($e->getMessage());
+           Log::logError($e->getMessage());
             return false;
         }
     }

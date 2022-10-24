@@ -40,8 +40,7 @@ class UserServices extends Users {
             }
 
         } catch(Exception $e){
-            // logError
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
@@ -57,8 +56,7 @@ class UserServices extends Users {
             }
             return $data;
         } catch(Exception $e) {
-             // logError
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
              return $data = [];
         }
     }
@@ -77,7 +75,7 @@ class UserServices extends Users {
         }
         
         catch(Exception $e){
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
             return $data = [];
         } 
     }
@@ -94,7 +92,7 @@ class UserServices extends Users {
         }
         
         catch(Exception $e){
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
             return [];
         } 
     }
@@ -115,7 +113,7 @@ class UserServices extends Users {
             }
         
         } catch(Exception $e){
-            $e->getMessage();
+            Log::logError($e->getMessage());
             return [];
         }
     }
@@ -134,8 +132,7 @@ class UserServices extends Users {
                     return [];
                 }
         } catch(Exception $e){
-                // logError
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return [];
         }
     }
@@ -155,7 +152,27 @@ class UserServices extends Users {
                     return [];
                 }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
+            return [];
+        }
+    }
+    public function getStudentSubject($id,$courseId,$subjectId){
+        try {
+            $sql =" SELECT * FROM subject_list WHERE `student_id` = :student_id AND `course_id` = :course_id AND subject_id = :subject_id ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':student_id' => $id,
+                ':course_id' => $courseId,
+                ':subject_id' => $subjectId
+            ];
+                if($stmt->execute($data)){
+                    $result = $stmt->fetchAll();
+                    return $result;
+                } else {
+                    return [];
+                }
+        } catch(Exception $e){
+            Log::logError($e->getMessage());
             return [];
         }
     }
@@ -178,7 +195,7 @@ class UserServices extends Users {
                 return false;
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
@@ -198,7 +215,7 @@ class UserServices extends Users {
                 return false;
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
@@ -221,7 +238,7 @@ class UserServices extends Users {
                     return false;
                 }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
@@ -244,7 +261,7 @@ class UserServices extends Users {
                     return false;
                 }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
@@ -265,7 +282,7 @@ class UserServices extends Users {
                 return 0;
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return 0;
         }
     }
@@ -286,7 +303,7 @@ class UserServices extends Users {
                 return 0;
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return 0;
         }
     }

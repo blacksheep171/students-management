@@ -1,6 +1,8 @@
 <?php
 
 require_once dirname(__DIR__)."./Config.php";
+require_once dirname(__DIR__)."./Helper/Log.php";
+
 class Users {
 
     protected $table = "users";

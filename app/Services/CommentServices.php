@@ -33,7 +33,7 @@ class CommentServices extends Comments {
             }
             return $data;
         } catch(Exception $e) {
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
              return $data = [];
         }
     }
@@ -55,7 +55,7 @@ class CommentServices extends Comments {
             }
             return $result;
         } catch(Exception $e) {
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
              return $result = [];
         }
     }
@@ -88,7 +88,7 @@ class CommentServices extends Comments {
                 return false;
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }

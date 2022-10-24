@@ -18,15 +18,45 @@
             </li>
         <?php
             } else if ($_SESSION['user']['role'] == 'teacher') {
-        ?>
-             <li class="dropdown">
+        ?>  
+            <li class="dropdown">
                 <a href="<?=BASE_PATH?>view/courses-option.php">Courses</a>
+            </li>   
+            <li class="dropdown">
+                <a  <?php
+                if(isset($_SESSION['course_id'])){
+                ?>                
+                href="<?=BASE_PATH?>view/teacher/subjects.php?course_id=<?=$_SESSION['course_id']?>"
+                <?php
+                } else {
+                ?>
+                    href="<?=BASE_PATH?>view/courses-option.php"
+                <?php
+                    }
+                ?>
+                >Subjects
+                </a>
             </li>
         <?php
             } else if ($_SESSION['user']['role'] == 'student') {
         ?>
             <li class="dropdown">
                 <a href="<?=BASE_PATH?>view/courses-option.php">Courses</a>
+            </li>
+            <li class="dropdown">
+                <a  <?php
+                if(isset($_SESSION['course_id'])){
+                ?>                
+                href="<?=BASE_PATH?>view/student/subjects.php?course_id=<?=$_SESSION['course_id']?>"
+                <?php
+                } else {
+                ?>
+                    href="<?=BASE_PATH?>view/courses-option.php"
+                <?php
+                    }
+                ?>
+                >Subjects
+                </a>
             </li>
     <?php
         }

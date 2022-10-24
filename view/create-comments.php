@@ -4,7 +4,7 @@ include_once dirname(__DIR__)."./app/Services/StudentServices.php";
 
 $user = new StudentServices();
 $courses = $user->getExercises();
-
+if($user->loggedIn()) {
 if (isset($_POST['save'])) {
     $data = $user->createComments();
     if(!empty($data)){
@@ -12,6 +12,9 @@ if (isset($_POST['save'])) {
     } else {
         $error = 'Comment created failed!';
     }
+}
+} else {
+    header("Location:index.php");
 }
 
 ?>

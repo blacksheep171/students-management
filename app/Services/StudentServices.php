@@ -55,8 +55,8 @@ class StudentServices  extends Services {
         return $data;
     }
     public function getStudentSubjects(){
-        $user = $this->getCurrentUser();
-        $data = $this->user->getStudents($user['id'],$this->getCurrentParams('course_id'));
+        $userId = $_SESSION['user']['id'];
+        $data = $this->user->getStudents($userId,$this->getCurrentParams('course_id'));
         if(!empty($data)){
             return $data;
         } else {
@@ -106,6 +106,9 @@ class StudentServices  extends Services {
         if(empty($error)){
             return $data;
         } else {
+            foreach ($error as $e){
+                Log::logError($e);
+            }
             return $data = [];
         }
     }
@@ -115,6 +118,7 @@ class StudentServices  extends Services {
         if(!empty($data)){
             return $data;
         } else {
+            Log::logError('Data empty');
             return $data = [];
         }
     }
@@ -131,9 +135,9 @@ class StudentServices  extends Services {
 
         $data = $this->comment->create($input);
         if(!empty($data)){
-            // return $data;
             header("Location: comment-exercises.php?exercise_id=".htmlspecialchars($_POST['exercise_id']));
         } else {
+            Log::logError("Create comment failed");
             return $data = [];
         }
     }

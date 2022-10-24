@@ -5,7 +5,7 @@ include_once  dirname(__DIR__)."./app/Services/ReportServices.php";
 $user = new ReportServices();
 
     $data = $user->list();
-    $list = $user->getSubjectIdList();
+    $submitSubject = $user->getMostSubmitSubject();
     $ratingSubject = $user->getMostRatingSubject();
     $commentSubject = $user->getMostCommentsSubject();
 
@@ -30,13 +30,6 @@ $user = new ReportServices();
 </head>
 
 <body>
-    <style>
-        .subject__list {
-            display: block;
-            padding: 40px 60px;
-            margin: 0 auto;
-        }
-    </style>
 
     <div class="wrap wrap-fluid homepage">
         <?php include __DIR__."/header.php" ?>
@@ -74,15 +67,15 @@ $user = new ReportServices();
                     </div>
                 </div>
             </div>
-
+            
             <div class="wrap__content">
-                <div class="subject__likes d-flex flex-column align-items-center">
-                <h2 class="h1-responsive font-weight-bold text-center my-4">Rating Subject</h2>
-                    <div class="col-10">
+                <div class="subject__submit d-flex flex-column align-items-center">
+                <h2 class="h1-responsive font-weight-bold text-center my-4">TOP RATING</h2>
+                    <div class="col-9">
                         <table class="table table-bordered table-striped" style="margin-top:20px;">
                             <thead>
                                 <th>ID</th>
-                                <th>Course</th>
+                                <th>Title</th>
                                 <th>Subject</th>
                                 <th>Teacher</th>
                                 <th>Rating</th>
@@ -90,11 +83,23 @@ $user = new ReportServices();
                             </thead>
                             <tbody>
                                 <?php
+                                if (!empty($submitSubject)) {
+                                ?>
+                                    <tr>
+                                        <td><?= $submitSubject['id'] ?></td>
+                                        <td class="font-weight-bold">Most Submit</td>
+                                        <td><?= $submitSubject['title'] ?></td>
+                                        <td><?= $user->getTeacherName($submitSubject['teacher_id']) ?></td>
+                                        <td><i id="like" class="fa fa-thumbs-up like-btn" data-id="<?= $submitSubject['id'] ?>"></i><?= $user->getCountLikesSubject($submitSubject['id']) ?></td>
+                                        <td><?= $user->getCountCommentsSubject($submitSubject['id']) ?></td>
+                                    </tr>
+                                <?php
+                                }
                                 if (!empty($ratingSubject)) {
                                 ?>
                                     <tr>
                                         <td><?= $ratingSubject['id'] ?></td>
-                                        <td><?= $ratingSubject['name'] ?></td>
+                                        <td class="font-weight-bold">Most Likes</td>
                                         <td><?= $ratingSubject['title'] ?></td>
                                         <td><?= $user->getTeacherName($ratingSubject['teacher_id']) ?></td>
                                         <td><i id="like" class="fa fa-thumbs-up like-btn" data-id="<?= $ratingSubject['id'] ?>"></i><?= $user->getCountLikesSubject($ratingSubject['id']) ?></td>
@@ -102,33 +107,11 @@ $user = new ReportServices();
                                     </tr>
                                 <?php
                                 }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wrap__content">
-                <div class="subject__comments d-flex flex-column align-items-center">
-                <h2 class="h1-responsive font-weight-bold text-center my-4">Most Comment Subject</h2>
-                    <div class="col-10">
-                        <table class="table table-bordered table-striped" style="margin-top:20px;">
-                            <thead>
-                                <th>ID</th>
-                                <th>Course</th>
-                                <th>Subject</th>
-                                <th>Teacher</th>
-                                <th>Rating</th>
-                                <th>Comments</th>
-                            </thead>
-                            <tbody>
-                                <?php
                                 if (!empty($commentSubject)) {
                                 ?>
                                     <tr>
                                         <td><?= $commentSubject['id'] ?></td>
-                                        <td><?= $commentSubject['name'] ?></td>
+                                        <td class="font-weight-bold">Most Comments</td>
                                         <td><?= $commentSubject['title'] ?></td>
                                         <td><?= $user->getTeacherName($commentSubject['teacher_id']) ?></td>
                                         <td><i id="like" class="fa fa-thumbs-up like-btn" data-id="<?= $commentSubject['id'] ?>"></i><?= $user->getCountLikesSubject($commentSubject['id']) ?></td>

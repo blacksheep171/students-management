@@ -17,6 +17,7 @@ class PresidentServices  extends Services{
         if(!empty($data)){
             return $data;
         } else {
+            Log::logError("subject not exists");
             return null;
         }
     }
@@ -81,6 +82,7 @@ class PresidentServices  extends Services{
         if(!empty($data)){
             return $data;
         } else {
+            Log::logError('Data empty');
             return [];
         }
     }

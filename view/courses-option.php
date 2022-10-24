@@ -9,9 +9,9 @@ if (isset($_GET['save'])) {
     if(isset($_GET['course_id'])){
         $_SESSION['course_id'] = $_GET['course_id'];
         if($data->role('teacher')){
-            header("Location: teacher/teacher-subjects.php?course_id=".$_SESSION['course_id']);
+            header("Location: teacher/subjects.php?course_id=".$_SESSION['course_id']);
         } else if($data->role('student')) {
-            header("Location: student/student-subjects.php?course_id=".$_SESSION['course_id']);
+            header("Location: student/subjects.php?course_id=".$_SESSION['course_id']);
         }
     }
 }

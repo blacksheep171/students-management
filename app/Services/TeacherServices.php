@@ -70,9 +70,9 @@ class TeacherServices  extends Services
                 flush();
                 //Read the size of the file
                 readfile($fileName, true);
-                // die();
                 $checked = true;
             } else {
+                Log::logError("Cannot Download this file!");
                 $checked = false;
             }
         }
@@ -82,10 +82,12 @@ class TeacherServices  extends Services
     public function validateStudents(){
         $studentId = $_POST['student_id'];
         $courseId = $_SESSION['course_id'];
-        $students = $this->user->getStudents($studentId,$courseId);
-        if(!$students){
+        $subjectId = $this->getCurrentParams('subject_id');
+        $students = $this->user->getStudentSubject($studentId,$courseId,$subjectId);
+        if(empty($students)){
             return true;
         } else {
+            Log::logError("Student Already Exists!");
             return false;
         }
     }

@@ -36,7 +36,7 @@ class CourseServices extends Courses {
             }
 
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
@@ -50,7 +50,7 @@ class CourseServices extends Courses {
                 return [];
             }
         } catch(Exception $e) {
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
              return [];
         }
     }
@@ -65,7 +65,7 @@ class CourseServices extends Courses {
             }
         } catch(Exception $e) {
              // logError
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
              return false;
         }
     }
@@ -86,7 +86,7 @@ class CourseServices extends Courses {
             }
         }
         catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return [];
         } 
     }
@@ -106,7 +106,7 @@ class CourseServices extends Courses {
             }
             
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }

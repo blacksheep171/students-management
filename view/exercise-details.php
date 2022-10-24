@@ -121,7 +121,6 @@ if($user->loggedIn()) {
 </div>
     <?php include __DIR__."/footer.php"?>
 </body>
-</html>
 <script>
 
 $(document).ready(function(){
@@ -209,10 +208,10 @@ $(document).ready(function(){
     }
   });
 
-
   $("#back_btn").click(function (){
     window.history.back();
   });
 
 });
 </script>
+</html>

@@ -51,7 +51,7 @@ class SubjectServices extends Subjects {
             }
         } catch(Exception $e){
               // logError
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
@@ -67,7 +67,7 @@ class SubjectServices extends Subjects {
             return $data;
         } catch(Exception $e) {
              // logError
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
              return $data = [];
         }
     }
@@ -86,7 +86,7 @@ class SubjectServices extends Subjects {
             return $result;
         } catch(Exception $e) {
              // logError
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
              return $result = [];
         }
     }
@@ -109,7 +109,7 @@ class SubjectServices extends Subjects {
         
         catch(Exception $e){
              // logError
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
             //  return false;
             return $data = [];
         } 
@@ -131,7 +131,7 @@ class SubjectServices extends Subjects {
         }
         
         catch(Exception $e){
-             error_log($e->getMessage());
+             Log::logError($e->getMessage());
             //  return false;
             return $data = [];
         } 
@@ -154,7 +154,7 @@ class SubjectServices extends Subjects {
             }
             
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
@@ -186,14 +186,14 @@ class SubjectServices extends Subjects {
                 return false;
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return false;
         }
     }
 
     public function getNumberOfLikes($id,$courseId){
         try{
-            $sql = "SELECT COUNT(*) FROM exercise_list WHERE subject_id = :subject_id AND course_id = :course_id AND vote_status = :vote_status ";  
+            $sql = "SELECT COUNT(*) FROM vote_list WHERE subject_id = :subject_id AND course_id = :course_id AND vote_status = :vote_status ";  
             $stmt = $this->connection->prepare($sql);
             $data = [
                 ':subject_id' => $id,
@@ -208,7 +208,7 @@ class SubjectServices extends Subjects {
                 return $result = 0;
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return [];
         }
     }
@@ -229,14 +229,14 @@ class SubjectServices extends Subjects {
                 return $result = 0;
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return [];
         }
     }
     
      public function getSubjectIdList() {
         try{
-            $sql = "SELECT DISTINCT(subject_id) FROM exercise_list";  
+            $sql = "SELECT DISTINCT(subject_id) FROM vote_list";  
             $stmt = $this->connection->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -246,7 +246,7 @@ class SubjectServices extends Subjects {
                 return $result = [];
             }
         } catch(Exception $e){
-            error_log($e->getMessage());
+            Log::logError($e->getMessage());
             return [];
         }
      }

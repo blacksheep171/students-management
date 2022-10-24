@@ -287,6 +287,18 @@ class Services
         }
     }
 
+    public function getCountSubmitSubject($id){
+        $courseId = 2;
+        if(isset($_SESSION['course_id'])){
+            $courseId = $_SESSION['course_id'];
+        }
+        $data = null;
+        if($courseId){
+            $data = $this->exercise->getNumberOfSubmitted($id,$courseId);
+        }
+        return $data;
+    }
+
     public function getCountLikesSubject($id){
         $courseId = 2;
         if(isset($_SESSION['course_id'])){
