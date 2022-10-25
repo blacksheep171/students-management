@@ -195,8 +195,11 @@ class Services
         $input->setVoteStatus($status);
         $input->setCreatedAt(date('Y-m-d H:i:s'));
         $input->setUpdatedAt(date('Y-m-d H:i:s'));
-
-        $data = $this->user->vote($input);
+        if($this->user->voted($input)){
+            $data = $this->user->updateVote($input);
+        } else {
+            $data = $this->user->vote($input);
+        }
 
         if (($data)) {
             return true;

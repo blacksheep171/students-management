@@ -24,7 +24,8 @@ class UserServices extends Users {
     public function create($input){
         // if (!$input->isValid()) return false;
         try {
-            $stmt = $this->connection->prepare("INSERT INTO ".$this->table." (`name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES (:name, :email, :password, :role, :createdAt, :updatedAt)");
+            $sql ="INSERT INTO ".$this->table." (`name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES (:name, :email, :password, :role, :createdAt, :updatedAt)";
+            $stmt = $this->connection->prepare($sql);
             $data = [
                 ':name' => $input->getName(),
                 ':email' => $input->getEmail(),
@@ -47,7 +48,8 @@ class UserServices extends Users {
     
     public function index(){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM .$this->table.");
+            $sql = "SELECT * FROM ".$this->table;
+            $stmt = $this->connection->prepare($sql);
             
             if($stmt->execute()){
                $data = $stmt->fetchAll();
@@ -63,7 +65,8 @@ class UserServices extends Users {
 
     public function getUser($id){
         try{
-            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE id = :id");
+            $sql ="SELECT * FROM ".$this->table." WHERE id = :id";
+            $stmt = $this->connection->prepare($sql);
             $data = [
                 ':id' => $id
             ];
@@ -82,7 +85,8 @@ class UserServices extends Users {
 
     public function getUserWithRole($params = ''){
         try{
-            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE role = :role");
+            $sql = "SELECT * FROM ".$this->table." WHERE role = :role";
+            $stmt = $this->connection->prepare($sql);
             $data = [
                 ':role' => $params
             ];
@@ -99,7 +103,8 @@ class UserServices extends Users {
 
     public function logged($email,$password){
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM ".$this->table." WHERE email = :email AND password = :password");
+            $sql = "SELECT * FROM ".$this->table." WHERE email = :email AND password = :password";
+            $stmt = $this->connection->prepare($sql);
             $data = [
                 ':email' => $email,
                 ':password' => md5($password)
@@ -177,9 +182,51 @@ class UserServices extends Users {
         }
     }
 
+    public function voted($input) {
+        try {
+            $sql ="SELECT * FROM `votes` WHERE `user_id` = :id AND `exercise_id` = :exercise_id ";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':id' => $input->getId(),
+                ':exercise_id' => $input->getExerciseId()
+            ];
+
+            $stmt->execute($data);
+            $result = $stmt->fetch();
+            if(!empty($result)){
+                return true;
+            }  else {
+                return false;
+            }
+        } catch(Exception $e){
+            Log::logError($e->getMessage());
+            return false;
+        }
+    }
+    public function updateVote($input) {
+        try {
+            $sql ="UPDATE votes SET `status` = :status,`updated_at` = :updated_at  WHERE `user_id` = :id AND `exercise_id` = :exercise_id";
+            $stmt = $this->connection->prepare($sql);
+            $data = [
+                ':status' => $input->getVoteStatus(),
+                ':updated_at' => $input->getUpdatedAt(),
+                ':id' => $input->getId(),
+                ':exercise_id' => $input->getExerciseId(),
+            ];
+
+            if($stmt->execute($data)){
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception $e){
+            Log::logError($e->getMessage());
+            return false;
+        }
+    }
     public function vote($input) {
         try {
-            $sql ="INSERT INTO `votes` (`user_id`, `exercise_id`, `status`,`created_at`, `updated_at`) VALUES (:user_id, :exercise_id, :status, :created_at, :updated_at) ON DUPLICATE KEY UPDATE `status` = :status";
+            $sql ="INSERT INTO `votes` (`user_id`, `exercise_id`, `status`,`created_at`, `updated_at`) VALUES (:user_id, :exercise_id, :status, :created_at, :updated_at)";
             $stmt = $this->connection->prepare($sql);
             $data = [
                 ':user_id' => $input->getId(),

@@ -86,7 +86,7 @@ $(document).ready(function() {
     $('#add_exercise').click(function(e) {
         if(courseStatus == 0) {
             e.preventDefault();
-            alert("You don't have permission.");
+            alert("Don't have permission.");
         }
     });
 });

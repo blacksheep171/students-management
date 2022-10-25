@@ -163,7 +163,7 @@ $(document).ready(function(){
     });		
     } else {
       e.preventDefault();
-      alert("You don't have permission to like this exercise!");
+      alert("Don't have permission!");
     }
 
   });
@@ -204,7 +204,7 @@ $(document).ready(function(){
       });	
     } else {
       e.preventDefault();
-      alert("You don't have permission to like this exercise!");
+      alert("Don't have permission!");
     }
   });
 
