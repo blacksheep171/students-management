@@ -55,10 +55,12 @@ if($user->role('teacher')) {
                     <th>Note</th>
                 </thead>
                 <tbody>
-                    <?php foreach ($students as $student){
+                    <?php
+                    $index = 1; 
+                    foreach ($students as $student){
                     ?>
                     <tr>
-                        <td><?= $student['student_id'] ?></td>
+                        <td><?= $index ?></td>
                         <td><?= $student['student_name'] ?></td>
                         <td><?= $student['content'] ?></td>
                         <td>
@@ -66,6 +68,7 @@ if($user->role('teacher')) {
                         </td>
                     </tr>
                     <?php
+                    $index++;
                         }
                     ?>  
                 </tbody>

@@ -50,15 +50,17 @@ $user = new ReportServices();
                             <tbody>
                                 <?php
                                 if (!empty($data)) {
+                                    $index = 1;
                                     foreach ($data as $row) {
                                 ?>
                                     <tr>
-                                        <td><?= $row['id'] ?></td>
+                                        <td><?= $index ?></td>
                                         <td><?= $row['name'] ?></td>
                                         <td><?= $row['title'] ?></td>
                                         <td><?= $user->getTeacherName($row['teacher_id']) ?></td>
                                     </tr>
                                 <?php
+                                    $index++;
                                     }
                                 }
                                 ?>

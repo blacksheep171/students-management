@@ -53,10 +53,11 @@ if($user->role('student')) {
                 <tbody>
                 <?php
                     if (!empty($data)) {
+                        $index = 1;
                         foreach ($data as $row) {
                     ?>
                         <tr>
-                            <td><?= $row['id'] ?></td>
+                            <td><?= $index ?></td>
                             <td><?= $row['title'] ?></td>
                             <td><?= $row['content'] ?></td>
                             <td><?= $user->getTeacherName($row['teacher_id']) ?></td>
@@ -65,6 +66,7 @@ if($user->role('student')) {
                             </td>
                         </tr>
                     <?php
+                        $index++;
                         }
                     }
                     ?>

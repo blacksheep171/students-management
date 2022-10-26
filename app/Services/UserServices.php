@@ -125,7 +125,7 @@ class UserServices extends Users {
 
     public function getStudentList($id){
         try {
-            $sql ="SELECT * FROM subject_list WHERE `subject_id` = :subject_id";
+            $sql ="SELECT * FROM subject_list WHERE `subject_id` = :subject_id ORDER BY add_date DESC";
             $stmt = $this->connection->prepare($sql);
             $data = [
                 ':subject_id' => $id,

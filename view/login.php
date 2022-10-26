@@ -3,7 +3,9 @@ require_once dirname(__DIR__)."./app/Services/Services.php";
 
 session_start();
 $user = new Services();
-
+if($user->loggedIn()){
+    header("Location:index.php");
+}
 if (isset($_POST['login'])) {
     $user->login();
 }
