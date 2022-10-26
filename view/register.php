@@ -8,7 +8,7 @@ if(isset($_POST['save'])){
         if($data) {
             $message = 'Register successfully!';
         } else {
-            $message = 'Register failed!';
+            $error = 'Register failed!';
         }
 }
 ?>
@@ -34,8 +34,10 @@ if(isset($_POST['save'])){
 
 <div class="signup-form">
     <?php if(isset($message)){
-            echo "<label class = 'text-danger'>".$message."</label>";
-        }
+        echo '<div class="alert alert-success" role="alert">'.$message.'</div>';
+    } else if(isset($error)){
+        echo '<div class="alert alert-success" role="alert">'.$error.'</div>';
+    }
     ?>
     <form action="" method="POST">
 		<h2>Register</h2>
@@ -43,7 +45,7 @@ if(isset($_POST['save'])){
         <div class="form-group">
 			<div class="row">
 				<div class="col"><input type="text" class="form-control" name="name" placeholder="User Name" required="required"></div>
-			</div>        	
+			</div>
         </div>
         <div class="form-group">
         	<input type="email" class="form-control" name="email" placeholder="Email" required="required">

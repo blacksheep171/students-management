@@ -2,8 +2,6 @@
 session_start();
 include_once dirname(__DIR__,2)."./app/Services/PresidentServices.php";
 
-$id = $_REQUEST['id'];
-
 $president = new PresidentServices();
 if($president->role('president')) {
     $data = $president->getCourses();
@@ -12,6 +10,7 @@ if($president->role('president')) {
     } else if($data['status'] == 1){
         $update = $president->changeStatus(0);
     }
+
     $course = $president->getCourses();
     $status = ($course['status'] == 1) ? "Enable" : "Disable";
     $result = [

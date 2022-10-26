@@ -174,9 +174,11 @@ class SubjectServices extends Subjects {
                 if($stmt->execute($data2)){
                     return true;
                 } else {
+                    Log::logError("Cannot update subject content!");
                     return false;
                 }
             } else {
+                Log::logError("Cannot update subject!");
                 return false;
             }
         } catch(Exception $e){
