@@ -54,7 +54,7 @@ class TeacherServices  extends Services
         $checked = false;
         if (isset($_GET['path'])) {
             $file = $_GET['path'];
-            $targetDir = dirname(dirname(__DIR__))."/public/uploads/";
+            $targetDir = dirname(__DIR__,2)."/public/uploads/";
             $fileName = $targetDir.basename($file);
             //Clear the cache
             clearstatcache();

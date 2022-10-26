@@ -182,7 +182,7 @@ class UserServices extends Users {
         }
     }
 
-    public function voted($input) {
+    public function isUserAlreadyVoted($input) {
         try {
             $sql ="SELECT * FROM `votes` WHERE `user_id` = :id AND `exercise_id` = :exercise_id ";
             $stmt = $this->connection->prepare($sql);

@@ -195,13 +195,13 @@ class Services
         $input->setVoteStatus($status);
         $input->setCreatedAt(date('Y-m-d H:i:s'));
         $input->setUpdatedAt(date('Y-m-d H:i:s'));
-        if($this->user->voted($input)){
+        if($this->user->isUserAlreadyVoted($input)){
             $data = $this->user->updateVote($input);
         } else {
             $data = $this->user->vote($input);
         }
 
-        if (($data)) {
+        if ($data) {
             return true;
         } else {
             return false;
@@ -217,7 +217,7 @@ class Services
 
         $data = $this->user->unVote($input);
 
-        if (($data)) {
+        if ($data) {
             return true;
         } else {
             return false;
@@ -313,7 +313,7 @@ class Services
         }
         return $data;
     }
-    public function getCountCommentsSubject($id){
+    public function getCountSubmittedSubject($id){
         $courseId = 2;
         if(isset($_SESSION['course_id'])){
             $courseId = $_SESSION['course_id'];
@@ -324,4 +324,6 @@ class Services
         }
         return $data;
     }
+    
+   
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once  dirname(dirname(__DIR__))."/app/Services/TeacherServices.php";
+include_once  dirname(__DIR__,2)."/app/Services/TeacherServices.php";
 
 $user = new TeacherServices();
 
@@ -12,6 +12,7 @@ if (isset($_POST['save'])) {
     $data = $user->updateSubject();
     if($data) {
         $message = 'Subject has been updated!';
+        header("Location: subject-details.php?subject_id=".$subject['id']."&course_id=".$subject['course_id']."");
     } else {
         $error = 'Something went wrong, please try later!';
     }
@@ -54,10 +55,10 @@ if (isset($_POST['save'])) {
                         <div class="col-md-12 mb-md-0 mb-5">
                             <form id="subject-form" name="subject-form" action="" method="POST">
                             <?php if(isset($message)){
-                                echo '<div class="alert alert-success" role="alert">'.$message.'</div>';
-                            } else if(isset($error)){
-                                echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
-                            }
+                                    echo '<div class="alert alert-success" role="alert">'.$message.'</div>';
+                                } else if(isset($error)){
+                                    echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
+                                }
                             ?>
                                 <div class="row subject__content">
                                     <div class="col-md-12">

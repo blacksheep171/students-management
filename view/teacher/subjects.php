@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-include_once dirname(dirname(__DIR__))."./app/Services/TeacherServices.php";
+include_once dirname(__DIR__,2)."./app/Services/TeacherServices.php";
 
 $user = new TeacherServices();
 

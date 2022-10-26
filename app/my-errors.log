@@ -39,3 +39,27 @@ SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in you
 SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(`status` = 'like', `updated_at` = '2022-10-25 05:04:39')  WHERE `user_id` = ...' at line 1
 SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(`status` = 'disLike', `updated_at` = '2022-10-25 05:07:00')  WHERE (`user_id...' at line 1
 SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hsm.vptes' doesn't exist
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Student Already Exists!
+Cannot Download this file!
+Cannot Download this file!
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'subject_id INNER JOIN comment_exercises ce ON e.id = ce.exercise_id GROUP BY ...' at line 1
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'subject_id INNER JOIN comment_exercises ce ON e.id = ce.exercise_id GROUP BY ...' at line 1
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'subject_id INNER JOIN comment_exercises ce ON e.id = ce.exercise_id GROUP BY ...' at line 1
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'subject_id INNER JOIN comment_exercises ce ON e.id = ce.exercise_id GROUP BY ...' at line 1

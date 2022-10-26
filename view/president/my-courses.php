@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-include_once dirname(dirname(__DIR__))."./app/Services/PresidentServices.php";
+include_once dirname(__DIR__,2)."./app/Services/PresidentServices.php";
 
 $president = new PresidentServices();
 if($president->role('president')) {

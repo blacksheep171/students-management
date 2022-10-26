@@ -50,7 +50,6 @@ class SubjectServices extends Subjects {
                 return false;
             }
         } catch(Exception $e){
-              // logError
             Log::logError($e->getMessage());
             return false;
         }
@@ -66,7 +65,6 @@ class SubjectServices extends Subjects {
             }
             return $data;
         } catch(Exception $e) {
-             // logError
              Log::logError($e->getMessage());
              return $data = [];
         }
@@ -85,7 +83,6 @@ class SubjectServices extends Subjects {
             }
             return $result;
         } catch(Exception $e) {
-             // logError
              Log::logError($e->getMessage());
              return $result = [];
         }
@@ -108,9 +105,7 @@ class SubjectServices extends Subjects {
         }
         
         catch(Exception $e){
-             // logError
              Log::logError($e->getMessage());
-            //  return false;
             return $data = [];
         } 
     }
@@ -132,7 +127,6 @@ class SubjectServices extends Subjects {
         
         catch(Exception $e){
              Log::logError($e->getMessage());
-            //  return false;
             return $data = [];
         } 
     }
@@ -190,7 +184,7 @@ class SubjectServices extends Subjects {
             return false;
         }
     }
-
+    
     public function getNumberOfLikes($id,$courseId){
         try{
             $sql = "SELECT COUNT(*) FROM vote_list WHERE subject_id = :subject_id AND course_id = :course_id AND vote_status = :vote_status ";  
@@ -212,7 +206,79 @@ class SubjectServices extends Subjects {
             return [];
         }
     }
-
+    public function getMostSubmitted($courseId) {
+        try{
+            $sql = "SELECT s.id, s.title, s.teacher_id, count(e.id) AS total_submitted FROM subjects s 
+            INNER JOIN exercises e ON s.id = e.subject_id 
+            INNER JOIN courses c ON e.course_id = c.id 
+            WHERE c.id = :course_id
+            GROUP BY s.id ORDER BY total_submitted DESC LIMIT 1";  
+            $stmt = $this->connection->prepare($sql);
+            
+            $data = [
+                ':course_id' => $courseId,
+            ];
+            $stmt->execute($data);
+            $result = $stmt->fetch();
+            if(!empty($result)) {
+                return $result;
+            } else {
+                return $result = [];
+            }
+        } catch(Exception $e){
+            Log::logError($e->getMessage());
+            return [];
+        }
+    }
+    public function getMostRating($courseId) {
+        try{
+            $sql = "SELECT s.id, s.title, s.teacher_id, count(v.status) AS total_rate FROM subjects s 
+            INNER JOIN exercises e ON s.id = e.subject_id 
+            INNER JOIN votes v ON e.id = v.exercise_id 
+            WHERE v.status = 'like' AND e.course_id = :course_id 
+            GROUP BY s.id ORDER BY total_rate DESC LIMIT 1;";  
+            $stmt = $this->connection->prepare($sql);
+            
+            $data = [
+                ':course_id' => $courseId,
+            ];
+            $stmt->execute($data);
+            $result = $stmt->fetch();
+            if(!empty($result)) {
+                return $result;
+            } else {
+                return $result = [];
+            }
+        } catch(Exception $e){
+            Log::logError($e->getMessage());
+            return [];
+        }
+    }
+    public function getMostComments($courseId){
+        try{
+            $sql = "SELECT s.id, s.title, s.teacher_id, count(ce.comment_id) AS total_comment FROM subjects AS s 
+            INNER JOIN exercises AS e ON s.id = e.subject_id 
+            INNER JOIN comment_exercises AS ce ON e.id = ce.exercise_id
+            WHERE  e.course_id = :course_id 
+            GROUP BY s.id ORDER BY total_comment DESC LIMIT 1";  
+            $stmt = $this->connection->prepare($sql);
+            
+            $data = [
+                ':course_id' => $courseId,
+            ];
+            $stmt->execute($data);
+            $result = $stmt->fetch();
+            if(!empty($result)) {
+                return $result;
+            } else {
+                return $result = [];
+            }
+        } catch(Exception $e){
+            Log::logError($e->getMessage());
+            return [];
+        }
+    }
+    
     public function getNumberOfComments($id,$courseId){
         try{
             $sql = "SELECT COUNT(*) FROM comment_list WHERE subject_id = :subject_id AND course_id = :course_id";  
@@ -234,20 +300,4 @@ class SubjectServices extends Subjects {
         }
     }
     
-     public function getSubjectIdList() {
-        try{
-            $sql = "SELECT DISTINCT(subject_id) FROM vote_list";  
-            $stmt = $this->connection->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_COLUMN);
-            if(!empty($result)) {
-                return $result;
-            } else {
-                return $result = [];
-            }
-        } catch(Exception $e){
-            Log::logError($e->getMessage());
-            return [];
-        }
-     }
 }

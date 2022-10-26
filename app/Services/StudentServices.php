@@ -71,7 +71,7 @@ class StudentServices  extends Services {
         $fileName = $_FILES['fileToUpload']['name'];
         $filePath = $_FILES['fileToUpload']['tmp_name'];
         $fileSize = $_FILES['fileToUpload']['size'];
-        $targetDir = dirname(dirname(__DIR__))."/public/uploads/";
+        $targetDir = dirname(__DIR__,2)."/public/uploads/";
         $targetFile = $targetDir.basename($fileName);
         $error = [];
         $fileUrl = BASE_PATH.$fileName;
@@ -83,7 +83,7 @@ class StudentServices  extends Services {
                 $fileName =  $rename.basename($fileName);
             }
             $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-            //extension
+
             $extension = ['jpg', 'png', 'gif', 'jpeg','gif'];
 
             if (!in_array($fileExt, $extension)) {
