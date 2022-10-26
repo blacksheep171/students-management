@@ -24,6 +24,7 @@ if($president->role('president')) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alkalami&family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script rel="preload" as="script" crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.3/less.min.js"></script>
     <title>Student Management</title>
 </head>
@@ -56,11 +57,11 @@ if($president->role('president')) {
                                 <?php
                                 if($row['status'] == 0) {
                                 ?>
-                                <button type="button" onclick="changeStatus(<?=$row['id']?>)" class="btn btn-danger">Disable</button>
+                                <button type="button" id="course__status<?=$row['id'] ?>" onclick="changeStatus(<?=$row['id']?>)" class="btn btn-danger">Disable</button>
                                 <?php
                                 } else if ($row['status'] == 1) {
                                 ?>
-                                <button type="button" onclick="changeStatus(<?=$row['id']?>)" class="btn btn-success">Enable</button>
+                                <button type="button" id="course__status<?=$row['id'] ?>" onclick="changeStatus(<?=$row['id']?>)" class="btn btn-success">Enable</button>
                                 <?php
                                 }
                                 ?>
@@ -82,7 +83,6 @@ if($president->role('president')) {
     <?php include dirname(__DIR__)."/footer.php"?>
 </body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
     function changeStatus(id) {
         $(document).ready(function() {
@@ -91,7 +91,17 @@ if($president->role('president')) {
                 url: "status.php",
                 data: {id:id},
                 success: function(data){
-                    $("#status" + id).html(data);
+                    res = JSON.parse(data);
+                    if(res.status == 0){
+                        $('#course__status' + id).removeClass('btn btn-success');
+                        $('#course__status' + id).addClass('btn btn-danger');
+                        $('#course__status' + id).text(res.action);
+                    } else if (res.status == 1) {
+                        $('#course__status' + id).removeClass('btn btn-danger');
+                        $('#course__status'+ id).addClass('btn btn-success');
+                        $('#course__status' + id).text(res.action);
+                    }
+                   
                 }
             });
         });

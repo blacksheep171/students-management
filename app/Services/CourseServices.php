@@ -20,7 +20,7 @@ class CourseServices extends Courses {
 
     public function create($input){
         try {
-            $sql = "INSERT INTO ".$this->table." (name,created_by, status, created_at, updated_at) VALUES (:name, :created_by,:status, :created_at, :updated_at)";
+            $sql = "INSERT INTO ".$this->table." (name, created_by, status, created_at, updated_at) VALUES (:name, :created_by,:status, :created_at, :updated_at)";
             $stmt = $this->connection->prepare($sql);
             $data = [
                 ':name' => $input->getName(),
